@@ -15,7 +15,7 @@ namespace KeyConverterGUI.Models
         #region Fields
         private string buttonText = DISABLED_TEXT;
 
-        InterceptKeys keyLogger;
+        InterceptKeys interceptKeys;
         private bool isEnabled = false;
         #endregion
 
@@ -31,19 +31,19 @@ namespace KeyConverterGUI.Models
         {
             if (!isEnabled)
             {
-                keyLogger = InterceptKeys.Instance;
-                keyLogger.Initialize();
+                interceptKeys = InterceptKeys.Instance;
+                interceptKeys.Initialize();
                 
                 var processes = Process.GetProcessesByName("Client");
                 if (processes.Length > 0)
-                    keyLogger.SpecificProcessId = processes[0].Id;
+                    interceptKeys.SpecificProcessId = processes[0].Id;
 
                 isEnabled = true;
                 ButtonText = ENABLED_TEXT;
             }
             else
             {
-                keyLogger.Dispose();
+                interceptKeys.Dispose();
 
                 isEnabled = false;
                 ButtonText = DISABLED_TEXT;
@@ -54,7 +54,7 @@ namespace KeyConverterGUI.Models
         #region IDisposable
         public void Dispose()
         {
-            keyLogger?.Dispose();
+            interceptKeys?.Dispose();
         }
         #endregion
     }
