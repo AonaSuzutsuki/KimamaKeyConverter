@@ -36,7 +36,7 @@ namespace KeyConverterGUI.Models
                 
                 var processes = Process.GetProcessesByName("Client");
                 if (processes.Length > 0)
-                    InterceptKeys.SpecificProcessId = processes[0].Id;
+                    keyLogger.SpecificProcessId = processes[0].Id;
 
                 isEnabled = true;
                 ButtonText = ENABLED_TEXT;

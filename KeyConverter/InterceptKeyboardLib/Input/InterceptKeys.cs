@@ -19,8 +19,8 @@ namespace InterceptKeyboardLib.Input
         private const int WM_KEYUP = 0x0101;
         private const int WM_SYSKEYDOWN = 0x0104;
         private const int WM_SYSKEYUP = 0x0105;
-        private LowLevelKeyboardProc proc = HookProcedure;
-        private static IntPtr hookID = IntPtr.Zero;
+        private LowLevelKeyboardProc proc;
+        private IntPtr hookID = IntPtr.Zero;
         #endregion
 
         #region Win32API Structures
@@ -70,14 +70,14 @@ namespace InterceptKeyboardLib.Input
         #endregion
 
         #region Fields
-        private static InterceptInput input = new InterceptInput();
+        private InterceptInput input = new InterceptInput();
         private bool isIntercepted = false;
 
-        private static Dictionary<Key, INPUT> inkeys = new Dictionary<Key, INPUT>();
+        private Dictionary<Key, INPUT> inkeys = new Dictionary<Key, INPUT>();
         #endregion
 
         #region Properties
-        public static int SpecificProcessId { get; set; } = 0;
+        public int SpecificProcessId { get; set; } = 0;
         #endregion
 
         #region Singleton
@@ -91,6 +91,7 @@ namespace InterceptKeyboardLib.Input
         {
             if (!isIntercepted)
             {
+                proc = HookProcedure;
                 hookID = SetHook(proc);
                 inkeys = new Dictionary<Key, INPUT>();
                 isIntercepted = true;
@@ -108,7 +109,7 @@ namespace InterceptKeyboardLib.Input
             }
         }
 
-        private static IntPtr HookProcedure(int nCode, IntPtr wParam, IntPtr lParam)
+        private IntPtr HookProcedure(int nCode, IntPtr wParam, IntPtr lParam)
         {
             if (SpecificProcessId > 0)
             {
@@ -126,7 +127,7 @@ namespace InterceptKeyboardLib.Input
             return CallNextHookEx(hookID, nCode, wParam, lParam);
         }
 
-        private static IntPtr KeyboardProcedure(int nCode, IntPtr wParam, IntPtr lParam)
+        private IntPtr KeyboardProcedure(int nCode, IntPtr wParam, IntPtr lParam)
         {
             if (nCode >= 0 && (wParam == (IntPtr)WM_KEYDOWN || wParam == (IntPtr)WM_SYSKEYDOWN))
             {
