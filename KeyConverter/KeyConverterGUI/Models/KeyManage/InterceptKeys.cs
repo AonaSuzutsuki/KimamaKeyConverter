@@ -104,7 +104,7 @@ namespace KeyConverterGUI.Models.KeyManage
             }
         }
 
-        private static INPUT inkey;
+        private static Dictionary<Key, INPUT> inkeys = new Dictionary<Key, INPUT>();
         private static IntPtr HookCallback(int nCode, IntPtr wParam, IntPtr lParam)
         {
             IntPtr func()
@@ -119,7 +119,9 @@ namespace KeyConverterGUI.Models.KeyManage
                         IntPtr inputFunc(Key argKey)
                         {
                             var inputKey = KeyConverter.KeyToCode(argKey);
-                            inkey = input.KeyDown(inputKey);
+                            var inkey = input.KeyDown(inputKey);
+                            if (!inkeys.ContainsKey(key))
+                                inkeys.Add(key, inkey);
                             return new IntPtr(1);
                         }
 
@@ -131,7 +133,15 @@ namespace KeyConverterGUI.Models.KeyManage
                 }
                 else if (nCode >= 0 && (wParam == (IntPtr)WM_KEYUP || wParam == (IntPtr)WM_SYSKEYUP))
                 {
-                    input.KeyUp(inkey);
+                    KBDLLHOOKSTRUCT kb = (KBDLLHOOKSTRUCT)Marshal.PtrToStructure(lParam, typeof(KBDLLHOOKSTRUCT));
+                    var vkCode = (int)kb.vkCode;
+                    var key = KeyConverter.KeyCodeToKey(vkCode);
+                    if (inkeys.ContainsKey(key))
+                    {
+                        var inkey = inkeys[key];
+                        inkeys.Remove(key);
+                        input.KeyUp(inkey);
+                    }
                 }
 
                 return CallNextHookEx(_hookID, nCode, wParam, lParam);
