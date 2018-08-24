@@ -136,4 +136,17 @@
     <None Include="App.config" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
+  <PropertyGroup>
+    <PostBuildEvent># For Release
+SET BinDir=$(SolutionDir)\bin
+if exist "%25BinDir%25" (
+    echo ""
+) else (
+    mkdir "%25BinDir%25"
+)
+
+copy /y "$(TargetPath)" "%25BinDir%25\$(TargetFileName)"
+copy /y "$(TargetDir)\$(TargetFileName).config" "%25BinDir%25\$(TargetFileName).config"
+xcopy "$(TargetDir)*.dll" "%25BinDir%25\" /E /Y</PostBuildEvent>
+  </PropertyGroup>
 </Project>
