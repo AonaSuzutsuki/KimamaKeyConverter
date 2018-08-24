@@ -2,6 +2,7 @@
 using KeyConverterGUI.Models.KeyManage;
 using System;
 using System.Collections.Generic;
+using System.Diagnostics;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -34,7 +35,12 @@ namespace KeyConverterGUI.Models
         {
             if (!isEnabled)
             {
-                keyLogger = new InterceptKeys();
+                keyLogger = InterceptKeys.Instance;
+                keyLogger.Initialize();
+                
+                var processes = Process.GetProcessesByName("Client");
+                if (processes.Length > 0)
+                    InterceptKeys.SpecificProcessId = processes[0].Id;
 
                 isEnabled = true;
                 ButtonText = ENABLED_TEXT;

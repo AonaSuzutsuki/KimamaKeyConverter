@@ -10,8 +10,9 @@ using static KeyConverterGUI.Models.KeyManage.InterceptInput;
 
 namespace KeyConverterGUI.Models.KeyManage
 {
-    class InterceptKeys : IDisposable
+    public class InterceptKeys : IDisposable
     {
+        #region Win32API Constants
         private const int WH_KEYBOARD_LL = 13;
         private const int WM_KEYDOWN = 0x0100;
         private const int WM_KEYUP = 0x0101;
@@ -19,9 +20,9 @@ namespace KeyConverterGUI.Models.KeyManage
         private const int WM_SYSKEYUP = 0x0105;
         private LowLevelKeyboardProc _proc = HookCallback;
         private static IntPtr _hookID = IntPtr.Zero;
+        #endregion
 
-        private static InterceptInput input = new InterceptInput();
-
+        #region Win32API Structures
         [StructLayout(LayoutKind.Sequential)]
         public class KBDLLHOOKSTRUCT
         {
@@ -40,8 +41,9 @@ namespace KeyConverterGUI.Models.KeyManage
             KEYEVENTF_SCANCODE = 0x0008,
             KEYEVENTF_UNICODE = 0x0004,
         }
+        #endregion
 
-
+        #region Win32API Methods
         [DllImport("user32.dll", CharSet = CharSet.Auto, SetLastError = true)]
         private static extern IntPtr SetWindowsHookEx(int idHook, LowLevelKeyboardProc lpfn, IntPtr hMod, uint dwThreadId);
         
@@ -54,12 +56,41 @@ namespace KeyConverterGUI.Models.KeyManage
         
         [DllImport("kernel32.dll", CharSet = CharSet.Auto, SetLastError = true)]
         private static extern IntPtr GetModuleHandle(string lpModuleName);
-        
-        private delegate IntPtr LowLevelKeyboardProc(int nCode, IntPtr wParam, IntPtr lParam);
 
-        public InterceptKeys()
+        [DllImport("user32.dll")]
+        private static extern IntPtr GetForegroundWindow();
+
+        [DllImport("user32.dll", SetLastError = true)]
+        private static extern uint GetWindowThreadProcessId(IntPtr hWnd, out uint lpdwProcessId);
+        #endregion
+
+        #region Delegates
+        private delegate IntPtr LowLevelKeyboardProc(int nCode, IntPtr wParam, IntPtr lParam);
+        #endregion
+
+        #region Fields
+        private static InterceptInput input = new InterceptInput();
+        private bool isIntercepted = false;
+        #endregion
+
+        #region Properties
+        public static int SpecificProcessId { get; set; } = 0;
+        #endregion
+
+        #region Singleton
+        public static InterceptKeys Instance { get; } = new InterceptKeys();
+        private InterceptKeys()
         {
-            _hookID = SetHook(_proc);
+        }
+        #endregion
+
+        public void Initialize()
+        {
+            if (!isIntercepted)
+            {
+                _hookID = SetHook(_proc);
+                isIntercepted = true;
+            }
         }
         
         private IntPtr SetHook(LowLevelKeyboardProc proc)
@@ -71,36 +102,53 @@ namespace KeyConverterGUI.Models.KeyManage
                     return SetWindowsHookEx(WH_KEYBOARD_LL, proc, GetModuleHandle(curModule.ModuleName), 0);
                 }
             }
-
         }
 
         private static INPUT inkey;
         private static IntPtr HookCallback(int nCode, IntPtr wParam, IntPtr lParam)
         {
-            if (nCode >= 0 && (wParam == (IntPtr)WM_KEYDOWN || wParam == (IntPtr)WM_SYSKEYDOWN))
+            IntPtr func()
             {
-                KBDLLHOOKSTRUCT kb = (KBDLLHOOKSTRUCT)Marshal.PtrToStructure(lParam, typeof(KBDLLHOOKSTRUCT));
-                var vkCode = (int)kb.vkCode;
-                var key = KeyConverter.KeyCodeToKey(vkCode);
-                if (kb.dwExtraInfo.ToUInt32() != 102u)
+                if (nCode >= 0 && (wParam == (IntPtr)WM_KEYDOWN || wParam == (IntPtr)WM_SYSKEYDOWN))
                 {
-                    IntPtr func(Key argKey)
+                    KBDLLHOOKSTRUCT kb = (KBDLLHOOKSTRUCT)Marshal.PtrToStructure(lParam, typeof(KBDLLHOOKSTRUCT));
+                    var vkCode = (int)kb.vkCode;
+                    var key = KeyConverter.KeyCodeToKey(vkCode);
+                    if (kb.dwExtraInfo.ToUInt32() != 102u)
                     {
-                        var inputKey = KeyConverter.KeyToCode(argKey);
-                        inkey = input.KeyDown(inputKey);
-                        return new IntPtr(1);
-                    }
+                        IntPtr inputFunc(Key argKey)
+                        {
+                            var inputKey = KeyConverter.KeyToCode(argKey);
+                            inkey = input.KeyDown(inputKey);
+                            return new IntPtr(1);
+                        }
 
-                    if (key.Equals(Key.LeftAlt))
-                        return func(Key.LeftCtrl);
-                    else if (key.Equals(Key.LeftCtrl))
-                        return func(Key.LeftAlt);
+                        if (key.Equals(Key.LeftAlt))
+                            return inputFunc(Key.LeftCtrl);
+                        else if (key.Equals(Key.LeftCtrl))
+                            return inputFunc(Key.LeftAlt);
+                    }
+                }
+                else if (nCode >= 0 && (wParam == (IntPtr)WM_KEYUP || wParam == (IntPtr)WM_SYSKEYUP))
+                {
+                    input.KeyUp(inkey);
+                }
+
+                return CallNextHookEx(_hookID, nCode, wParam, lParam);
+            }
+
+            if (SpecificProcessId > 0)
+            {
+                IntPtr handle = GetForegroundWindow();
+                uint threadID = GetWindowThreadProcessId(handle, out var _processID);
+                int processId = Convert.ToInt32(_processID);
+                if (processId == SpecificProcessId)
+                {
+                    return func();
                 }
             }
-            else if (nCode >= 0 && (wParam == (IntPtr)WM_KEYUP || wParam == (IntPtr)WM_SYSKEYUP))
-            {
-                input.KeyUp(inkey);
-            }
+            else if (SpecificProcessId == 0)
+                return func();
 
             return CallNextHookEx(_hookID, nCode, wParam, lParam);
         }
@@ -109,6 +157,7 @@ namespace KeyConverterGUI.Models.KeyManage
         public void Dispose()
         {
             UnhookWindowsHookEx(_hookID);
+            isIntercepted = false;
         }
     }
 }
