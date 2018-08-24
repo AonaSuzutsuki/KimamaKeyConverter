@@ -60,7 +60,7 @@
                         </i:EventTrigger>
                     </i:Interaction.Triggers>
                 </Image>
-                <Label Content="Savannah Manager" Style="{DynamicResource ResourceKey=StatTitle}" />
+                <Label Content="Mabinogi Ctrl &amp; Alt Reverser" Style="{DynamicResource ResourceKey=StatTitle}" />
             </StackPanel>
             <StackPanel Orientation="Horizontal" Margin="5"
                         HorizontalAlignment="Right"
