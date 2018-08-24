@@ -8,7 +8,7 @@
         xmlns:local="clr-namespace:KeyConverterGUI"
         mc:Ignorable="d"
         Icon="pack://application:,,,/CommonStyleLib;component/Resources/1.ico"
-        Title="MainWindow" Height="450" Width="800"
+        Title="MainWindow" Height="200" Width="400"
         TextOptions.TextFormattingMode="Display" TextOptions.TextRenderingMode="ClearType" UseLayoutRounding="True">
 
     <i:Interaction.Triggers>
@@ -69,16 +69,16 @@
                 <Button Name="MainMaximumBT" Content="{Binding MainWindowMaximumBTContent}" Style="{DynamicResource CaptionButtonStyleKey}" Command="{Binding MainWindowMaximumBTClick}" />
                 <Button Name="MainWindowCloseBT" Content="{Binding MainWindowCloseBTContent}" Style="{DynamicResource CaptionButtonStyleKey}" Command="{Binding MainWindowCloseBTClick}" />
             </StackPanel>
-            <StackPanel Margin="1,25,1,0" HorizontalAlignment="Stretch" VerticalAlignment="Top">
+            <!--<StackPanel Margin="1,25,1,0" HorizontalAlignment="Stretch" VerticalAlignment="Top">
                 <Menu IsMainMenu="True" Name="Menu" Height="25" Padding="3" VerticalAlignment="Top">
                     <MenuItem Header="File(_F)">
                         <Separator Style="{DynamicResource MLB_Separator}" />
                         <MenuItem Header="Exit(_X)" Command="{Binding MainWindowCloseBTClick}" />
                     </MenuItem>
                 </Menu>
-            </StackPanel>
+            </StackPanel>-->
 
-            <Grid Margin="5,55,5,5">
+            <Grid Margin="5,25,5,5">
 
                 <Button Content="{Binding ButtonText.Value}" Command="{Binding EnabledBtClicked}" Style="{DynamicResource FlatButton}" />
 
