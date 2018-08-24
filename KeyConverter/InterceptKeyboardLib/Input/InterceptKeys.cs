@@ -5,7 +5,6 @@ using System.Text;
 using System.Threading.Tasks;
 using System.Diagnostics;
 using System.Runtime.InteropServices;
-using System.Windows.Input;
 using static InterceptKeyboardLib.Input.InterceptInput;
 using InterceptKeyboardLib.KeyMap;
 

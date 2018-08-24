@@ -38,11 +38,11 @@
     <Reference Include="System.Data" />
     <Reference Include="System.Net.Http" />
     <Reference Include="System.Xml" />
-    <Reference Include="WindowsBase" />
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Input\InterceptInput.cs" />
     <Compile Include="Input\InterceptKeys.cs" />
+    <Compile Include="KeyMap\KeyMap.cs" />
     <Compile Include="KeyMap\KeyMapConverter.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
