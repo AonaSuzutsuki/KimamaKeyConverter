@@ -53,17 +53,28 @@ namespace InterceptKeyboardLib.KeyMap
         X = 77,
         Y = 89,
         Z = 90,
-
+        
         LeftShift = 160,
         RightShift = 161,
         LeftCtrl = 162,
         LeftAlt = 164,
         Multiply = 186,
+        Plus = 187,
+        Comma = 188,
+        Equal = 189,
         Period = 190,
         Question = 191,
         AtMark = 192,
+        LeftBrace = 219,
+        VerticalBar = 220,
+        RightBrace = 221,
+        Tilde = 222,
 
+        UnderBar = 226,
+
+        Caps = 240,
         Hankaku = 243,
         Zenkaku = 244,
+        HankakuZenkaku = 9999,
     }
 }
