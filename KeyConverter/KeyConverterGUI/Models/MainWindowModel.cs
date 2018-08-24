@@ -1,11 +1,7 @@
 ﻿using CommonStyleLib.Models;
-using KeyConverterGUI.Models.KeyManage;
+using InterceptKeyboardLib.Input;
 using System;
-using System.Collections.Generic;
 using System.Diagnostics;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace KeyConverterGUI.Models
 {

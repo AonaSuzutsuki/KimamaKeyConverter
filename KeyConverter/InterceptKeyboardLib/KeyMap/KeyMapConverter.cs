@@ -5,13 +5,13 @@ using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Input;
 
-namespace KeyConverterGUI.Models.KeyManage
+namespace InterceptKeyboardLib.KeyMap
 {
-    public class KeyConverter
+    public class KeyMapConverter
     {
         private static Dictionary<int, Key> map;
 
-        static KeyConverter()
+        static KeyMapConverter()
         {
             if (map != null)
                 return;

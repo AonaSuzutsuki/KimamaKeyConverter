@@ -97,9 +97,6 @@
       <DependentUpon>App.xaml</DependentUpon>
       <SubType>Code</SubType>
     </Compile>
-    <Compile Include="Models\KeyManage\InterceptInput.cs" />
-    <Compile Include="Models\KeyManage\InterceptKeys.cs" />
-    <Compile Include="Models\KeyManage\KeyConverter.cs" />
     <Compile Include="Models\MainWindowModel.cs" />
     <Compile Include="ViewModels\MainWindowViewModel.cs" />
     <Compile Include="Views\MainWindow.xaml.cs">
@@ -134,6 +131,12 @@
   </ItemGroup>
   <ItemGroup>
     <None Include="App.config" />
+  </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\InterceptKeyboardLib\InterceptKeyboardLib.csproj">
+      <Project>{3640a051-4c23-412d-9461-921a17f72d5c}</Project>
+      <Name>InterceptKeyboardLib</Name>
+    </ProjectReference>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <PropertyGroup>
