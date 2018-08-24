@@ -6,7 +6,7 @@ using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Input;
 
-namespace KeyConverterGUI
+namespace KeyConverterGUI.Models.KeyManage
 {
     public class InterceptInput
     {
@@ -53,59 +53,35 @@ namespace KeyConverterGUI
         };
 
         [DllImport("user32.dll")]
-        private extern static void SendInput(int nInputs, ref INPUT pInputs, int cbsize);
+        private static extern void SendInput(int nInputs, ref INPUT pInputs, int cbsize);
         [DllImport("user32.dll", EntryPoint = "MapVirtualKeyA")]
-        private extern static int MapVirtualKey(int wCode, int wMapType);
+        private static extern int MapVirtualKey(int wCode, int wMapType);
 
         private const int INPUT_KEYBOARD = 1;
         private const int KEYEVENTF_KEYDOWN = 0x0;
         private const int KEYEVENTF_KEYUP = 0x2;
         private const int KEYEVENTF_EXTENDEDKEY = 0x1;
-
-        public void Send(int key, bool isEXTEND)
+        private const int MAGIC_NUMBER = 0x10209;
+        
+        public INPUT KeyDown(int key, bool isExtend = false)
         {
-            /*
-             * Keyを送る
-             * 入力
-             *     isEXTEND : 拡張キーかどうか
-             */
-
-            INPUT inp = new INPUT();
-
-            // 押す
-            inp.type = INPUT_KEYBOARD;
+            INPUT inp = new INPUT
+            {
+                type = INPUT_KEYBOARD
+            };
             inp.ki.wVk = (short)key;
             inp.ki.wScan = (short)MapVirtualKey(inp.ki.wVk, 0);
-            inp.ki.dwFlags = ((isEXTEND) ? (KEYEVENTF_EXTENDEDKEY) : 0x0) | KEYEVENTF_KEYDOWN;
+            inp.ki.dwFlags = ((isExtend) ? (KEYEVENTF_EXTENDEDKEY) : 0x0) | KEYEVENTF_KEYDOWN;
             inp.ki.time = 0;
-            inp.ki.dwExtraInfo = 102;
-            SendInput(1, ref inp, Marshal.SizeOf(inp));
+            inp.ki.dwExtraInfo = MAGIC_NUMBER;
 
-            System.Threading.Thread.Sleep(100);
-
-            // 離す
-            inp.ki.dwFlags = ((isEXTEND) ? (KEYEVENTF_EXTENDEDKEY) : 0x0) | KEYEVENTF_KEYUP;
-            SendInput(1, ref inp, Marshal.SizeOf(inp));
-        }
-
-        public INPUT KeyDown(int key)
-        {
-            INPUT inp = new INPUT();
-
-            // 押す
-            inp.type = INPUT_KEYBOARD;
-            inp.ki.wVk = (short)key;
-            inp.ki.wScan = (short)MapVirtualKey(inp.ki.wVk, 0);
-            inp.ki.dwFlags = ((false) ? (KEYEVENTF_EXTENDEDKEY) : 0x0) | KEYEVENTF_KEYDOWN;
-            inp.ki.time = 0;
-            inp.ki.dwExtraInfo = 102;
             SendInput(1, ref inp, Marshal.SizeOf(inp));
             return inp;
         }
 
-        public void KeyUp(INPUT input)
+        public void KeyUp(INPUT input, bool isExtend = false)
         {
-            input.ki.dwFlags = ((false) ? (KEYEVENTF_EXTENDEDKEY) : 0x0) | KEYEVENTF_KEYUP;
+            input.ki.dwFlags = ((isExtend) ? (KEYEVENTF_EXTENDEDKEY) : 0x0) | KEYEVENTF_KEYUP;
             SendInput(1, ref input, Marshal.SizeOf(input));
         }
     }

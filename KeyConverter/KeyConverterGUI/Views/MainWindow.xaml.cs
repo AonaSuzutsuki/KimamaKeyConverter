@@ -13,7 +13,7 @@ using System.Windows.Media.Imaging;
 using System.Windows.Navigation;
 using System.Windows.Shapes;
 
-namespace KeyConverterGUI
+namespace KeyConverterGUI.Views
 {
     /// <summary>
     /// MainWindow.xaml の相互作用ロジック
@@ -24,14 +24,9 @@ namespace KeyConverterGUI
         {
             InitializeComponent();
 
-            keyLogger = new InterceptKeys();
-        }
-
-        InterceptKeys keyLogger;
-
-        private void Window_Closing(object sender, System.ComponentModel.CancelEventArgs e)
-        {
-            keyLogger.Dispose();
+            var model = new Models.MainWindowModel();
+            var vm = new ViewModels.MainWindowViewModel(this, model);
+            DataContext = vm;
         }
     }
 }

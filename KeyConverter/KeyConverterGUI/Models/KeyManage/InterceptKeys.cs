@@ -6,9 +6,9 @@ using System.Threading.Tasks;
 using System.Diagnostics;
 using System.Runtime.InteropServices;
 using System.Windows.Input;
-using static KeyConverterGUI.InterceptInput;
+using static KeyConverterGUI.Models.KeyManage.InterceptInput;
 
-namespace KeyConverterGUI
+namespace KeyConverterGUI.Models.KeyManage
 {
     class InterceptKeys : IDisposable
     {
@@ -31,13 +31,14 @@ namespace KeyConverterGUI
             public uint time;
             public UIntPtr dwExtraInfo;
         }
+
         [Flags]
         public enum KBDLLHOOKSTRUCTFlags : uint
         {
-            LLKHF_EXTENDED = 0x01,
-            LLKHF_INJECTED = 0x10,
-            LLKHF_ALTDOWN = 0x20,
-            LLKHF_UP = 0x80,
+            KEYEVENTF_EXTENDEDKEY = 0x0001,
+            KEYEVENTF_KEYUP = 0x0002,
+            KEYEVENTF_SCANCODE = 0x0008,
+            KEYEVENTF_UNICODE = 0x0004,
         }
 
 
@@ -78,30 +79,22 @@ namespace KeyConverterGUI
         {
             if (nCode >= 0 && (wParam == (IntPtr)WM_KEYDOWN || wParam == (IntPtr)WM_SYSKEYDOWN))
             {
-                //int vkCode = Marshal.ReadInt32(lParam);
                 KBDLLHOOKSTRUCT kb = (KBDLLHOOKSTRUCT)Marshal.PtrToStructure(lParam, typeof(KBDLLHOOKSTRUCT));
                 var vkCode = (int)kb.vkCode;
                 var key = KeyConverter.KeyCodeToKey(vkCode);
-                //if (key.Equals(Key.LeftAlt))
-                //{
                 if (kb.dwExtraInfo.ToUInt32() != 102u)
                 {
+                    IntPtr func(Key argKey)
+                    {
+                        var inputKey = KeyConverter.KeyToCode(argKey);
+                        inkey = input.KeyDown(inputKey);
+                        return new IntPtr(1);
+                    }
+
                     if (key.Equals(Key.LeftAlt))
-                    {
-                        var inputKey = KeyConverter.KeyToCode(Key.LeftCtrl);
-                        inkey = input.KeyDown(inputKey);
-                        return new IntPtr(1);
-                    }
+                        return func(Key.LeftCtrl);
                     else if (key.Equals(Key.LeftCtrl))
-                    {
-                        var inputKey = KeyConverter.KeyToCode(Key.LeftAlt);
-                        inkey = input.KeyDown(inputKey);
-                        return new IntPtr(1);
-                    }
-                }
-                else
-                {
-                    return CallNextHookEx(_hookID, nCode, wParam, lParam);
+                        return func(Key.LeftAlt);
                 }
             }
             else if (nCode >= 0 && (wParam == (IntPtr)WM_KEYUP || wParam == (IntPtr)WM_SYSKEYUP))

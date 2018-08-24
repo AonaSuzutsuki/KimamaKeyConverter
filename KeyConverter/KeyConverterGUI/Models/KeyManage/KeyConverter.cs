@@ -5,7 +5,7 @@ using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Input;
 
-namespace KeyConverterGUI
+namespace KeyConverterGUI.Models.KeyManage
 {
     public class KeyConverter
     {
