@@ -71,7 +71,7 @@ namespace KeyConverterGUI.Views
                     new KeyValuePair<TKey, TValue>(key, value)));
                 PropertyChanged(this, new PropertyChangedEventArgs("Count"));
                 PropertyChanged(this, new PropertyChangedEventArgs("Keys"));
-                PropertyChanged(this, new PropertyChangedEventArgs("Values"));
+                PropertyChanged(this, new PropertyChangedEventArgs(Binding.IndexerName));
 
                 return true;
             }
