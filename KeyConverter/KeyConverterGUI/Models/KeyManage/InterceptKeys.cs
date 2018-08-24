@@ -71,6 +71,8 @@ namespace KeyConverterGUI.Models.KeyManage
         #region Fields
         private static InterceptInput input = new InterceptInput();
         private bool isIntercepted = false;
+
+        private static Dictionary<Key, INPUT> inkeys = new Dictionary<Key, INPUT>();
         #endregion
 
         #region Properties
@@ -89,10 +91,11 @@ namespace KeyConverterGUI.Models.KeyManage
             if (!isIntercepted)
             {
                 _hookID = SetHook(_proc);
+                inkeys = new Dictionary<Key, INPUT>();
                 isIntercepted = true;
             }
         }
-        
+
         private IntPtr SetHook(LowLevelKeyboardProc proc)
         {
             using (Process curProcess = Process.GetCurrentProcess())
@@ -104,7 +107,6 @@ namespace KeyConverterGUI.Models.KeyManage
             }
         }
 
-        private static Dictionary<Key, INPUT> inkeys = new Dictionary<Key, INPUT>();
         private static IntPtr HookCallback(int nCode, IntPtr wParam, IntPtr lParam)
         {
             IntPtr func()
@@ -162,12 +164,21 @@ namespace KeyConverterGUI.Models.KeyManage
 
             return CallNextHookEx(_hookID, nCode, wParam, lParam);
         }
-        
 
+
+        #region IDisposable
         public void Dispose()
         {
+            AllKeyUp();
             UnhookWindowsHookEx(_hookID);
             isIntercepted = false;
         }
+        public void AllKeyUp()
+        {
+            var keys = inkeys.Values;
+            foreach (var key in keys)
+                input.KeyUp(key);
+        }
+        #endregion
     }
 }
