@@ -10,8 +10,13 @@ namespace KeyConverterGUI.Models
 {
     public class MainWindowModel : ModelBase, IDisposable
     {
+        #region Constants
+        private const string DISABLED_TEXT = "Now Disabled";
+        private const string ENABLED_TEXT = "Now Enabled";
+        #endregion
+
         #region Fields
-        private string buttonText = "Disabled";
+        private string buttonText = DISABLED_TEXT;
 
         InterceptKeys keyLogger;
         private bool isEnabled = false;
@@ -32,14 +37,14 @@ namespace KeyConverterGUI.Models
                 keyLogger = new InterceptKeys();
 
                 isEnabled = true;
-                ButtonText = "Enabled";
+                ButtonText = ENABLED_TEXT;
             }
             else
             {
                 keyLogger.Dispose();
 
                 isEnabled = false;
-                ButtonText = "Disabled";
+                ButtonText = DISABLED_TEXT;
             }
         }
 
