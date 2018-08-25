@@ -10,7 +10,7 @@ using InterceptKeyboardLib.KeyMap;
 
 namespace InterceptKeyboardLib.Input
 {
-    public class InterceptKeys : IDisposable
+    public abstract class InterceptKeys : IDisposable
     {
         #region Win32API Constants
         private const int WH_KEYBOARD_LL = 13;
@@ -80,10 +80,10 @@ namespace InterceptKeyboardLib.Input
         #endregion
 
         #region Singleton
-        public static InterceptKeys Instance { get; } = new InterceptKeys();
-        private InterceptKeys()
-        {
-        }
+        //public static InterceptKeys Instance { get; } = new InterceptKeys();
+        //private InterceptKeys()
+        //{
+        //}
         #endregion
 
         public void Initialize()
@@ -133,21 +133,23 @@ namespace InterceptKeyboardLib.Input
                 KBDLLHOOKSTRUCT kb = (KBDLLHOOKSTRUCT)Marshal.PtrToStructure(lParam, typeof(KBDLLHOOKSTRUCT));
                 var vkCode = (int)kb.vkCode;
                 var key = KeyMapConverter.KeyCodeToKey(vkCode);
+                Console.WriteLine(vkCode);
                 if (kb.dwExtraInfo.ToUInt32() != InterceptInput.MAGIC_NUMBER)
                 {
-                    IntPtr inputFunc(Key argKey)
-                    {
-                        var inputKey = KeyMapConverter.KeyToCode(argKey);
-                        var inkey = input.KeyDown(inputKey);
-                        if (!inkeys.ContainsKey(key))
-                            inkeys.Add(key, inkey);
-                        return new IntPtr(1);
-                    }
+                    //IntPtr inputFunc(Key argKey)
+                    //{
+                    //    var inputKey = KeyMapConverter.KeyToCode(argKey);
+                    //    var inkey = input.KeyDown(inputKey);
+                    //    if (!inkeys.ContainsKey(key))
+                    //        inkeys.Add(key, inkey);
+                    //    return new IntPtr(1);
+                    //}
 
-                    if (key.Equals(Key.LeftAlt))
-                        return inputFunc(Key.LeftCtrl);
-                    else if (key.Equals(Key.LeftCtrl))
-                        return inputFunc(Key.LeftAlt);
+                    //if (key.Equals(Key.LeftAlt))
+                    //    return inputFunc(Key.LeftCtrl);
+                    //else if (key.Equals(Key.LeftCtrl))
+                    //    return inputFunc(Key.LeftAlt);
+                    return KeyDownAction(key, () => CallNextHookEx(hookID, nCode, wParam, lParam));
                 }
             }
             else if (nCode >= 0 && (wParam == (IntPtr)WM_KEYUP || wParam == (IntPtr)WM_SYSKEYUP))
@@ -155,12 +157,7 @@ namespace InterceptKeyboardLib.Input
                 KBDLLHOOKSTRUCT kb = (KBDLLHOOKSTRUCT)Marshal.PtrToStructure(lParam, typeof(KBDLLHOOKSTRUCT));
                 var vkCode = (int)kb.vkCode;
                 var key = KeyMapConverter.KeyCodeToKey(vkCode);
-                if (inkeys.ContainsKey(key))
-                {
-                    var inkey = inkeys[key];
-                    inkeys.Remove(key);
-                    input.KeyUp(inkey);
-                }
+                KeyUpAction(key);
 
                 foreach (var k in inkeys.Keys)
                 {
@@ -171,6 +168,34 @@ namespace InterceptKeyboardLib.Input
             return CallNextHookEx(hookID, nCode, wParam, lParam);
         }
 
+        protected IntPtr InputFunc(Key pushedKey, Key destKey)
+        {
+            var inputKey = KeyMapConverter.KeyToCode(destKey);
+            var inkey = input.KeyDown(inputKey);
+            if (!inkeys.ContainsKey(pushedKey))
+                inkeys.Add(pushedKey, inkey);
+            return new IntPtr(1);
+        }
+
+        protected virtual IntPtr KeyDownAction(Key pushedKey, Func<IntPtr> defaultReturnFunc)
+        {
+            if (pushedKey.Equals(Key.LeftAlt))
+                return InputFunc(pushedKey, Key.LeftCtrl);
+            else if (pushedKey.Equals(Key.LeftCtrl))
+                return InputFunc(pushedKey, Key.LeftAlt);
+
+            return defaultReturnFunc();
+        }
+
+        protected virtual void KeyUpAction(Key upKey)
+        {
+            if (inkeys.ContainsKey(upKey))
+            {
+                var inkey = inkeys[upKey];
+                inkeys.Remove(upKey);
+                input.KeyUp(inkey);
+            }
+        }
 
         #region IDisposable
         public void Dispose()

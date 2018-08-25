@@ -1,5 +1,6 @@
 ﻿using CommonStyleLib.Models;
 using InterceptKeyboardLib.Input;
+using KeyConverterGUI.Models.InterceptKey;
 using System;
 using System.Diagnostics;
 
@@ -31,7 +32,7 @@ namespace KeyConverterGUI.Models
         {
             if (!isEnabled)
             {
-                interceptKeys = InterceptKeys.Instance;
+                interceptKeys = CtrlAltReverser.Instance;
                 interceptKeys.Initialize();
                 
                 var processes = Process.GetProcessesByName("Client");
