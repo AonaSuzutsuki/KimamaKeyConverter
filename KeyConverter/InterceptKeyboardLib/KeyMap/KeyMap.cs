@@ -14,6 +14,9 @@ namespace InterceptKeyboardLib.KeyMap
         Tab = 9,
         Enter = 13,
         ESC = 27,
+        Henkan = 28,
+        Muhenkan = 29,
+        Space = 32,
         Home = 36,
         Insert = 45,
 
@@ -55,6 +58,10 @@ namespace InterceptKeyboardLib.KeyMap
         Y = 89,
         Z = 90,
         
+        LeftWindows = 91,
+        RightWindows = 92,
+        Menu = 93,
+
         F1 = 112,
         F2 = 113,
         F3 = 114,
@@ -71,6 +78,8 @@ namespace InterceptKeyboardLib.KeyMap
         LeftShift = 160,
         RightShift = 161,
         LeftCtrl = 162,
+        RightCtrl = 163,
+        RightAlt = 165,
         LeftAlt = 164,
         Multiply = 186,
         Plus = 187,
@@ -87,6 +96,7 @@ namespace InterceptKeyboardLib.KeyMap
         UnderBar = 226,
 
         Caps = 240,
+        Kana = 242,
         Hankaku = 243,
         Zenkaku = 244,
         HankakuZenkaku = 9999,

@@ -376,44 +376,44 @@
                             <Label Content="{Binding Path=Label.Value[(key:OriginalKey)LeftCtrl]}" HorizontalAlignment="Center" Style="{DynamicResource DefinedLabel}" />
                         </StackPanel>
                         <StackPanel Style="{DynamicResource StandardButtonStackPanel}">
-                            <Button Content="Win" Width="40" Height="40" Style="{DynamicResource FlatButton}" Command="{Binding KeyboardBtClicked}" CommandParameter="{x:Static key:OriginalKey.Unknown}" />
-                            <Label Content="{Binding Path=Label.Value[(key:OriginalKey)Unknown]}" HorizontalAlignment="Center" Style="{DynamicResource DefinedLabel}" />
+                            <Button Content="Win" Width="40" Height="40" Style="{DynamicResource FlatButton}" Command="{Binding KeyboardBtClicked}" CommandParameter="{x:Static key:OriginalKey.LeftWindows}" />
+                            <Label Content="{Binding Path=Label.Value[(key:OriginalKey)LeftWindows]}" HorizontalAlignment="Center" Style="{DynamicResource DefinedLabel}" />
                         </StackPanel>
                         <StackPanel Style="{DynamicResource StandardButtonStackPanel}">
                             <Button Content="Alt" Width="40" Height="40" Style="{DynamicResource FlatButton}" Command="{Binding KeyboardBtClicked}" CommandParameter="{x:Static key:OriginalKey.LeftAlt}" />
                             <Label Content="{Binding Path=Label.Value[(key:OriginalKey)LeftAlt]}" HorizontalAlignment="Center" Style="{DynamicResource DefinedLabel}" />
                         </StackPanel>
                         <StackPanel Style="{DynamicResource StandardButtonStackPanel}">
-                            <Button Content="無変換" Width="40" Height="40" FontSize="10" Style="{DynamicResource FlatButton}" Command="{Binding KeyboardBtClicked}" CommandParameter="{x:Static key:OriginalKey.Unknown}" />
-                            <Label Content="{Binding Path=Label.Value[(key:OriginalKey)Unknown]}" HorizontalAlignment="Center" Style="{DynamicResource DefinedLabel}" />
+                            <Button Content="無変換" Width="40" Height="40" FontSize="10" Style="{DynamicResource FlatButton}" Command="{Binding KeyboardBtClicked}" CommandParameter="{x:Static key:OriginalKey.Muhenkan}" />
+                            <Label Content="{Binding Path=Label.Value[(key:OriginalKey)Muhenkan]}" HorizontalAlignment="Center" Style="{DynamicResource DefinedLabel}" />
                         </StackPanel>
                         <StackPanel Style="{DynamicResource StandardButtonStackPanel}">
-                            <Button Content=" " Width="200" Height="40" Style="{DynamicResource FlatButton}" Command="{Binding KeyboardBtClicked}" CommandParameter="{x:Static key:OriginalKey.Unknown}" />
-                            <Label Content="{Binding Path=Label.Value[(key:OriginalKey)Unknown]}" HorizontalAlignment="Center" Style="{DynamicResource DefinedLabel}" />
+                            <Button Content=" " Width="200" Height="40" Style="{DynamicResource FlatButton}" Command="{Binding KeyboardBtClicked}" CommandParameter="{x:Static key:OriginalKey.Space}" />
+                            <Label Content="{Binding Path=Label.Value[(key:OriginalKey)Space]}" HorizontalAlignment="Center" Style="{DynamicResource DefinedLabel}" />
                         </StackPanel>
                         <StackPanel Style="{DynamicResource StandardButtonStackPanel}">
-                            <Button Content="変換" Width="40" Height="40" FontSize="10" Style="{DynamicResource FlatButton}" Command="{Binding KeyboardBtClicked}" CommandParameter="{x:Static key:OriginalKey.Unknown}" />
-                            <Label Content="{Binding Path=Label.Value[(key:OriginalKey)Unknown]}" HorizontalAlignment="Center" Style="{DynamicResource DefinedLabel}" />
+                            <Button Content="変換" Width="40" Height="40" FontSize="10" Style="{DynamicResource FlatButton}" Command="{Binding KeyboardBtClicked}" CommandParameter="{x:Static key:OriginalKey.Henkan}" />
+                            <Label Content="{Binding Path=Label.Value[(key:OriginalKey)Henkan]}" HorizontalAlignment="Center" Style="{DynamicResource DefinedLabel}" />
                         </StackPanel>
                         <StackPanel Style="{DynamicResource StandardButtonStackPanel}">
-                            <Button Content="カナ&#xa;かな" Width="40" Height="40" FontSize="10" Style="{DynamicResource FlatButton}" Command="{Binding KeyboardBtClicked}" CommandParameter="{x:Static key:OriginalKey.Unknown}" />
-                            <Label Content="{Binding Path=Label.Value[(key:OriginalKey)Unknown]}" HorizontalAlignment="Center" Style="{DynamicResource DefinedLabel}" />
+                            <Button Content="カナ&#xa;かな" Width="40" Height="40" FontSize="10" IsEnabled="False" Style="{DynamicResource FlatButton}" Command="{Binding KeyboardBtClicked}" CommandParameter="{x:Static key:OriginalKey.Kana}" />
+                            <Label Content="{Binding Path=Label.Value[(key:OriginalKey)Kana]}" HorizontalAlignment="Center" Style="{DynamicResource DefinedLabel}" />
                         </StackPanel>
                         <StackPanel Style="{DynamicResource StandardButtonStackPanel}">
-                            <Button Content="Alt" Width="40" Height="40" Style="{DynamicResource FlatButton}" Command="{Binding KeyboardBtClicked}" CommandParameter="{x:Static key:OriginalKey.Unknown}" />
-                            <Label Content="{Binding Path=Label.Value[(key:OriginalKey)Unknown]}" HorizontalAlignment="Center" Style="{DynamicResource DefinedLabel}" />
+                            <Button Content="Alt" Width="40" Height="40" Style="{DynamicResource FlatButton}" Command="{Binding KeyboardBtClicked}" CommandParameter="{x:Static key:OriginalKey.RightAlt}" />
+                            <Label Content="{Binding Path=Label.Value[(key:OriginalKey)RightAlt]}" HorizontalAlignment="Center" Style="{DynamicResource DefinedLabel}" />
                         </StackPanel>
                         <StackPanel Style="{DynamicResource StandardButtonStackPanel}">
-                            <Button Content="Win" Width="40" Height="40" Style="{DynamicResource FlatButton}" Command="{Binding KeyboardBtClicked}" CommandParameter="{x:Static key:OriginalKey.Unknown}" />
-                            <Label Content="{Binding Path=Label.Value[(key:OriginalKey)Unknown]}" HorizontalAlignment="Center" Style="{DynamicResource DefinedLabel}" />
+                            <Button Content="Win" Width="40" Height="40" Style="{DynamicResource FlatButton}" Command="{Binding KeyboardBtClicked}" CommandParameter="{x:Static key:OriginalKey.RightWindows}" />
+                            <Label Content="{Binding Path=Label.Value[(key:OriginalKey)RightWindows]}" HorizontalAlignment="Center" Style="{DynamicResource DefinedLabel}" />
                         </StackPanel>
                         <StackPanel Style="{DynamicResource StandardButtonStackPanel}">
-                            <Button Content="App." Width="40" Height="40" Style="{DynamicResource FlatButton}" Command="{Binding KeyboardBtClicked}" CommandParameter="{x:Static key:OriginalKey.Unknown}" />
-                            <Label Content="{Binding Path=Label.Value[(key:OriginalKey)Unknown]}" HorizontalAlignment="Center" Style="{DynamicResource DefinedLabel}" />
+                            <Button Content="App." Width="40" Height="40" Style="{DynamicResource FlatButton}" Command="{Binding KeyboardBtClicked}" CommandParameter="{x:Static key:OriginalKey.Menu}" />
+                            <Label Content="{Binding Path=Label.Value[(key:OriginalKey)Menu]}" HorizontalAlignment="Center" Style="{DynamicResource DefinedLabel}" />
                         </StackPanel>
                         <StackPanel Style="{DynamicResource StandardButtonStackPanel}">
-                            <Button Content="Ctrl" Width="49" Height="40" Style="{DynamicResource FlatButton}" Command="{Binding KeyboardBtClicked}" CommandParameter="{x:Static key:OriginalKey.Unknown}" />
-                            <Label Content="{Binding Path=Label.Value[(key:OriginalKey)Unknown]}" HorizontalAlignment="Center" Style="{DynamicResource DefinedLabel}" />
+                            <Button Content="Ctrl" Width="49" Height="40" Style="{DynamicResource FlatButton}" Command="{Binding KeyboardBtClicked}" CommandParameter="{x:Static key:OriginalKey.RightCtrl}" />
+                            <Label Content="{Binding Path=Label.Value[(key:OriginalKey)RightCtrl]}" HorizontalAlignment="Center" Style="{DynamicResource DefinedLabel}" />
                         </StackPanel>
                     </StackPanel>
 
