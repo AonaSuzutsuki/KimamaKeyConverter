@@ -6,10 +6,11 @@ using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Input;
 
-namespace KeyConverterGUI.Models.KeyManage
+namespace InterceptKeyboardLib.Input
 {
     public class InterceptInput
     {
+        #region Win32API Structures
         [StructLayout(LayoutKind.Sequential)]
         public struct MOUSEINPUT
         {
@@ -51,32 +52,43 @@ namespace KeyConverterGUI.Models.KeyManage
             [FieldOffset(4)]
             public HARDWAREINPUT hi;
         };
+        #endregion
 
+        #region Win32API Methods
         [DllImport("user32.dll")]
         private static extern void SendInput(int nInputs, ref INPUT pInputs, int cbsize);
         [DllImport("user32.dll", EntryPoint = "MapVirtualKeyA")]
         private static extern int MapVirtualKey(int wCode, int wMapType);
+        #endregion
 
+        #region Win32API Constants
         private const int INPUT_KEYBOARD = 1;
         private const int KEYEVENTF_KEYDOWN = 0x0;
         private const int KEYEVENTF_KEYUP = 0x2;
         private const int KEYEVENTF_EXTENDEDKEY = 0x1;
-        private const int MAGIC_NUMBER = 0x10209;
-        
+        #endregion
+
+        #region Constants
+        public const int MAGIC_NUMBER = 0x10209;
+        #endregion
+
         public INPUT KeyDown(int key, bool isExtend = false)
         {
-            INPUT inp = new INPUT
+            INPUT input = new INPUT
             {
-                type = INPUT_KEYBOARD
+                type = INPUT_KEYBOARD,
+                ki = new KEYBDINPUT()
+                {
+                    wVk = (short)key,
+                    wScan = (short)MapVirtualKey((short)key, 0),
+                    dwFlags = ((isExtend) ? (KEYEVENTF_EXTENDEDKEY) : 0x0) | KEYEVENTF_KEYDOWN,
+                    time = 0,
+                    dwExtraInfo = MAGIC_NUMBER
+                },
             };
-            inp.ki.wVk = (short)key;
-            inp.ki.wScan = (short)MapVirtualKey(inp.ki.wVk, 0);
-            inp.ki.dwFlags = ((isExtend) ? (KEYEVENTF_EXTENDEDKEY) : 0x0) | KEYEVENTF_KEYDOWN;
-            inp.ki.time = 0;
-            inp.ki.dwExtraInfo = MAGIC_NUMBER;
 
-            SendInput(1, ref inp, Marshal.SizeOf(inp));
-            return inp;
+            SendInput(1, ref input, Marshal.SizeOf(input));
+            return input;
         }
 
         public void KeyUp(INPUT input, bool isExtend = false)
