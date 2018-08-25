@@ -1,7 +1,10 @@
 ﻿using CommonStyleLib.Models;
 using InterceptKeyboardLib.Input;
+using InterceptKeyboardLib.KeyMap;
 using KeyConverterGUI.Models.InterceptKey;
+using KeyConverterGUI.Views;
 using System;
+using System.Collections.Generic;
 using System.Diagnostics;
 
 namespace KeyConverterGUI.Models
@@ -16,8 +19,15 @@ namespace KeyConverterGUI.Models
         #region Fields
         private string buttonText = DISABLED_TEXT;
 
-        InterceptKeys interceptKeys;
+        private KeyboardWindow keymapping;
+        private CtrlAltReverser interceptKeys;
         private bool isEnabled = false;
+
+        private Dictionary<OriginalKey, OriginalKey> keyMap = new Dictionary<OriginalKey, OriginalKey>()
+                {
+                    { OriginalKey.LeftCtrl, OriginalKey.LeftAlt },
+                    { OriginalKey.LeftAlt, OriginalKey.LeftCtrl },
+                };
         #endregion
 
         #region Properties
@@ -33,6 +43,7 @@ namespace KeyConverterGUI.Models
             if (!isEnabled)
             {
                 interceptKeys = CtrlAltReverser.Instance;
+                interceptKeys.KeyMap = keyMap;
                 interceptKeys.Initialize();
                 
                 var processes = Process.GetProcessesByName("Client");
@@ -51,11 +62,18 @@ namespace KeyConverterGUI.Models
             }
         }
 
+        public void OpenKeyMapping()
+        {
+            keymapping = new KeyboardWindow(keyMap);
+            keymapping.ShowDialog();
+        }
+
 
         #region IDisposable
         public void Dispose()
         {
             interceptKeys?.Dispose();
+            keymapping?.Dispose();
         }
         #endregion
     }

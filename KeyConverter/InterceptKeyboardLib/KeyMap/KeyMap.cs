@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace InterceptKeyboardLib.KeyMap
 {
-    public enum Key
+    public enum OriginalKey
     {
         Unknown = 0,
 

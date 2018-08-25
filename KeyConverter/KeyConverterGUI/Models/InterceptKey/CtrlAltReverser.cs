@@ -17,14 +17,27 @@ namespace KeyConverterGUI.Models.InterceptKey
         }
         #endregion
 
-        protected override IntPtr KeyDownAction(Key pushedKey, Func<IntPtr> defaultReturnFunc)
+        public Dictionary<OriginalKey, OriginalKey> KeyMap { get; set; } = new Dictionary<OriginalKey, OriginalKey>();
+
+        protected override IntPtr KeyDownAction(OriginalKey pushedKey, Func<IntPtr> defaultReturnFunc)
         {
-            return base.KeyDownAction(pushedKey, defaultReturnFunc);
+            if (KeyMap.ContainsKey(pushedKey))
+            {
+                var input = KeyMap[pushedKey];
+                return InputFunc(pushedKey, input);
+            }
+
+            return defaultReturnFunc();
         }
 
-        protected override void KeyUpAction(Key upKey)
+        protected override void KeyUpAction(OriginalKey upKey)
         {
-            base.KeyUpAction(upKey);
+            if (inkeys.ContainsKey(upKey))
+            {
+                var inkey = inkeys[upKey];
+                inkeys.Remove(upKey);
+                input.KeyUp(inkey);
+            }
         }
     }
 }

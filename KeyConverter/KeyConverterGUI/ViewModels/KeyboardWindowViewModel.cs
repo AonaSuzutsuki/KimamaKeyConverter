@@ -13,6 +13,7 @@ using System.Collections.Concurrent;
 using Reactive.Bindings;
 using Reactive.Bindings.Extensions;
 using KeyConverterGUI.Views;
+using System.Windows.Controls.Primitives;
 
 namespace KeyConverterGUI.ViewModels
 {
@@ -24,13 +25,16 @@ namespace KeyConverterGUI.ViewModels
 
             #region Initialize Properties
             Label = model.ToReactivePropertyAsSynchronized(m => m.Label);
+            SettingWindowVisibility = model.ToReactivePropertyAsSynchronized(m => m.SettingWindowVisibility);
+            SourceKeyText = model.ToReactivePropertyAsSynchronized(m => m.SourceKeyText);
+            DestKeyText = model.ToReactivePropertyAsSynchronized(m => m.DestKeyText);
             #endregion
 
             #region Initialize Events
-            KeyboardBtClicked = new DelegateCommand<InterceptKeyboardLib.KeyMap.Key?>(KeyboardBt_Clicked);
+            KeyboardBtClicked = new DelegateCommand<InterceptKeyboardLib.KeyMap.OriginalKey?>(KeyboardBt_Clicked);
+            OkPopupBtClicked = new DelegateCommand(OkPopupBt_Clicked);
+            ClosePopupBtClicked = new DelegateCommand(ClosePopupBt_Clicked);
             #endregion
-
-            model.Initialize();
         }
 
         #region Fields
@@ -38,23 +42,32 @@ namespace KeyConverterGUI.ViewModels
         #endregion
 
         #region Properties
-
+        public ReactiveProperty<Visibility> SettingWindowVisibility { get; set; }
+        public ReactiveProperty<string> SourceKeyText { get; set; }
+        public ReactiveProperty<string> DestKeyText { get; set; }
         #endregion
 
         #region Events Properties
         public ICommand KeyboardBtClicked { get; set; }
+        
+        public ICommand OkPopupBtClicked { get; set; }
+        public ICommand ClosePopupBtClicked { get; set; }
         #endregion
 
         #region Events Methods
-        protected override void MainWindow_Loaded()
+        public void KeyboardBt_Clicked(InterceptKeyboardLib.KeyMap.OriginalKey? key)
         {
+            if (key != null)
+                model.OpenPopup(key.Value);
         }
 
-        public void KeyboardBt_Clicked(InterceptKeyboardLib.KeyMap.Key? key)
+        public void OkPopupBt_Clicked()
         {
-            Console.WriteLine(key);
-            if (key != null)
-                model.Test(key.Value);
+            model.ApplyPopup();
+        }
+        public void ClosePopupBt_Clicked()
+        {
+            model.ClosePopup();
         }
         #endregion
 
@@ -63,7 +76,7 @@ namespace KeyConverterGUI.ViewModels
         #endregion
 
         #region Label Properties
-        public ReactiveProperty<ObservableDictionary<InterceptKeyboardLib.KeyMap.Key, string>> Label
+        public ReactiveProperty<ObservableDictionary<InterceptKeyboardLib.KeyMap.OriginalKey, string>> Label
         {
             get;
             set;

@@ -25,6 +25,7 @@ namespace KeyConverterGUI.ViewModels
 
             #region Initialize Events
             EnabledBtClicked = new DelegateCommand(EnabledBt_Clicked);
+            KeyboardMappingBtClicked = new DelegateCommand(KeyboardMappingBt_Clicked);
             #endregion
         }
 
@@ -38,6 +39,7 @@ namespace KeyConverterGUI.ViewModels
 
         #region Event Properties
         public ICommand EnabledBtClicked { get; set; }
+        public ICommand KeyboardMappingBtClicked { get; set; }
         #endregion
 
         #region Event Methods
@@ -49,6 +51,11 @@ namespace KeyConverterGUI.ViewModels
         public void EnabledBt_Clicked()
         {
             model.EnabledOrDisabled();
+        }
+
+        public void KeyboardMappingBt_Clicked()
+        {
+            model.OpenKeyMapping();
         }
         #endregion
     }

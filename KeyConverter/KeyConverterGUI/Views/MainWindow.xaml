@@ -80,7 +80,15 @@
 
             <Grid Margin="5,25,5,5">
 
+                <Grid.RowDefinitions>
+                    <RowDefinition />
+                    <RowDefinition Height="5" />
+                    <RowDefinition Height="30" />
+                </Grid.RowDefinitions>
+                
                 <Button Content="{Binding ButtonText.Value}" Command="{Binding EnabledBtClicked}" Style="{DynamicResource FlatButton}" />
+
+                <Button Grid.Row="2" Content="Keyboard Mapping" Style="{DynamicResource FlatButton}" Command="{Binding KeyboardMappingBtClicked}" />
 
             </Grid>
         </Grid>

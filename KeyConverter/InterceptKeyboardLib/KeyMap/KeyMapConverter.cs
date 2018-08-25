@@ -9,15 +9,15 @@ namespace InterceptKeyboardLib.KeyMap
 {
     public class KeyMapConverter
     {
-        public static Key KeyCodeToKey(int keycode)
+        public static OriginalKey KeyCodeToKey(int keycode)
         {
-            if (Enum.IsDefined(typeof(Key), keycode))
-                return (Key)keycode;
+            if (Enum.IsDefined(typeof(OriginalKey), keycode))
+                return (OriginalKey)keycode;
 
-            return Key.Unknown;
+            return OriginalKey.Unknown;
         }
 
-        public static int KeyToCode(Key key)
+        public static int KeyToCode(OriginalKey key)
         {
             return (int)key;
         }
