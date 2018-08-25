@@ -10,7 +10,7 @@ using InterceptKeyboardLib.KeyMap;
 
 namespace InterceptKeyboardLib.Input
 {
-    public abstract class InterceptKeys : IDisposable
+    public class InterceptKeys : IDisposable
     {
         #region Win32API Constants
         private const int WH_KEYBOARD_LL = 13;
@@ -69,21 +69,35 @@ namespace InterceptKeyboardLib.Input
         #endregion
 
         #region Fields
-        private InterceptInput input = new InterceptInput();
         private bool isIntercepted = false;
 
-        private Dictionary<Key, INPUT> inkeys = new Dictionary<Key, INPUT>();
+        protected InterceptInput input = new InterceptInput();
+        protected Dictionary<OriginalKey, INPUT> inkeys = new Dictionary<OriginalKey, INPUT>();
         #endregion
 
         #region Properties
         public int SpecificProcessId { get; set; } = 0;
         #endregion
 
-        #region Singleton
-        //public static InterceptKeys Instance { get; } = new InterceptKeys();
-        //private InterceptKeys()
-        //{
-        //}
+        #region InputEvent
+        public class OriginalKeyEventArg : EventArgs
+        {
+            public int KeyCode { get; }
+            public OriginalKey Key { get; }
+
+            public OriginalKeyEventArg(int keyCode, OriginalKey key)
+            {
+                KeyCode = keyCode;
+                Key = key;
+            }
+        }
+        public delegate void KeyEventHandler(object sender, OriginalKeyEventArg e);
+        public event KeyEventHandler KeyDownEvent;
+
+        protected virtual void OnKeyDownEvent(int keyCode, OriginalKey key)
+        {
+            KeyDownEvent?.Invoke(this, new OriginalKeyEventArg(keyCode, key));
+        }
         #endregion
 
         public void Initialize()
@@ -92,7 +106,7 @@ namespace InterceptKeyboardLib.Input
             {
                 proc = HookProcedure;
                 hookID = SetHook(proc);
-                inkeys = new Dictionary<Key, INPUT>();
+                inkeys = new Dictionary<OriginalKey, INPUT>();
                 isIntercepted = true;
             }
         }
@@ -122,7 +136,7 @@ namespace InterceptKeyboardLib.Input
             {
                 return KeyboardProcedure(nCode, wParam, lParam);
             }
-
+            
             return CallNextHookEx(hookID, nCode, wParam, lParam);
         }
 
@@ -133,6 +147,7 @@ namespace InterceptKeyboardLib.Input
                 KBDLLHOOKSTRUCT kb = (KBDLLHOOKSTRUCT)Marshal.PtrToStructure(lParam, typeof(KBDLLHOOKSTRUCT));
                 var vkCode = (int)kb.vkCode;
                 var key = KeyMapConverter.KeyCodeToKey(vkCode);
+                OnKeyDownEvent(vkCode, key);
                 Console.WriteLine(vkCode);
                 if (kb.dwExtraInfo.ToUInt32() != InterceptInput.MAGIC_NUMBER)
                 {
@@ -168,7 +183,7 @@ namespace InterceptKeyboardLib.Input
             return CallNextHookEx(hookID, nCode, wParam, lParam);
         }
 
-        protected IntPtr InputFunc(Key pushedKey, Key destKey)
+        protected IntPtr InputFunc(OriginalKey pushedKey, OriginalKey destKey)
         {
             var inputKey = KeyMapConverter.KeyToCode(destKey);
             var inkey = input.KeyDown(inputKey);
@@ -177,24 +192,14 @@ namespace InterceptKeyboardLib.Input
             return new IntPtr(1);
         }
 
-        protected virtual IntPtr KeyDownAction(Key pushedKey, Func<IntPtr> defaultReturnFunc)
+        protected virtual IntPtr KeyDownAction(OriginalKey pushedKey, Func<IntPtr> defaultReturnFunc)
         {
-            if (pushedKey.Equals(Key.LeftAlt))
-                return InputFunc(pushedKey, Key.LeftCtrl);
-            else if (pushedKey.Equals(Key.LeftCtrl))
-                return InputFunc(pushedKey, Key.LeftAlt);
-
             return defaultReturnFunc();
         }
 
-        protected virtual void KeyUpAction(Key upKey)
+        protected virtual void KeyUpAction(OriginalKey upKey)
         {
-            if (inkeys.ContainsKey(upKey))
-            {
-                var inkey = inkeys[upKey];
-                inkeys.Remove(upKey);
-                input.KeyUp(inkey);
-            }
+            return;
         }
 
         #region IDisposable
