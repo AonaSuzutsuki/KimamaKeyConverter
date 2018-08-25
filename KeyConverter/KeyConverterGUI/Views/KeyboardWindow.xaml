@@ -8,7 +8,7 @@
         xmlns:CommonViews="clr-namespace:CommonStyleLib.Views;assembly=CommonStyleLib"
         xmlns:local="clr-namespace:KeyConverterGUI.Views"
         mc:Ignorable="d"
-        Title="KeyboardWindow" Height="420" Width="710">
+        Title="KeyboardWindow" Height="420" Width="710" ResizeMode="CanMinimize">
     <i:Interaction.Triggers>
         <i:EventTrigger EventName="Closing">
             <i:InvokeCommandAction Command="{Binding Closing}" />
@@ -65,7 +65,6 @@
                         HorizontalAlignment="Right"
                         VerticalAlignment="Top">
                 <Button Name="MainWindowMinimumBT" Content="{Binding MainWindowMinimumBTContent}" Style="{DynamicResource CaptionButtonStyleKey}" Command="{Binding MainWindowMinimumBTClick}" />
-                <Button Name="MainMaximumBT" Content="{Binding MainWindowMaximumBTContent}" Style="{DynamicResource CaptionButtonStyleKey}" Command="{Binding MainWindowMaximumBTClick}" />
                 <Button Name="MainWindowCloseBT" Content="{Binding MainWindowCloseBTContent}" Style="{DynamicResource CaptionButtonStyleKey}" Command="{Binding MainWindowCloseBTClick}" />
             </StackPanel>
             <!--<StackPanel Margin="1,25,1,0" HorizontalAlignment="Stretch" VerticalAlignment="Top">
@@ -78,7 +77,7 @@
             </StackPanel>-->
 
             <Grid Margin="10,25,10,10">
-                <StackPanel VerticalAlignment="Center" HorizontalAlignment="Center">
+                <StackPanel VerticalAlignment="Center" HorizontalAlignment="Center" IsEnabled="{Binding KeyboardIsEnabled.Value}">
                     <StackPanel Orientation="Horizontal" VerticalAlignment="Top">
                         <StackPanel Style="{DynamicResource StandardButtonStackPanel}">
                             <Button Content="ESC" Width="40" Height="30" Style="{DynamicResource FlatButton}" Command="{Binding KeyboardBtClicked}" CommandParameter="{x:Static key:OriginalKey.ESC}" />

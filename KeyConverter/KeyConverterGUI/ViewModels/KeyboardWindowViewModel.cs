@@ -25,6 +25,7 @@ namespace KeyConverterGUI.ViewModels
 
             #region Initialize Properties
             Label = model.ToReactivePropertyAsSynchronized(m => m.Label);
+            KeyboardIsEnabled = model.ToReactivePropertyAsSynchronized(m => m.KeyboardIsEnabled);
             SettingWindowVisibility = model.ToReactivePropertyAsSynchronized(m => m.SettingWindowVisibility);
             SourceKeyText = model.ToReactivePropertyAsSynchronized(m => m.SourceKeyText);
             DestKeyText = model.ToReactivePropertyAsSynchronized(m => m.DestKeyText);
@@ -42,6 +43,7 @@ namespace KeyConverterGUI.ViewModels
         #endregion
 
         #region Properties
+        public ReactiveProperty<bool> KeyboardIsEnabled { get; set; }
         public ReactiveProperty<Visibility> SettingWindowVisibility { get; set; }
         public ReactiveProperty<string> SourceKeyText { get; set; }
         public ReactiveProperty<string> DestKeyText { get; set; }

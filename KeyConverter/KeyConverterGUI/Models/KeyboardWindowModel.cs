@@ -25,6 +25,7 @@ namespace KeyConverterGUI.Models
 
         private InterceptKeys interceptKeys;
 
+        private bool keyboardIsEnabled = true;
         private Visibility settingWindowVisibility = Visibility.Collapsed;
         private string sourceKeyText;
         private string destKeyText;
@@ -37,6 +38,12 @@ namespace KeyConverterGUI.Models
         {
             get => label;
             set => SetProperty(ref label, value);
+        }
+
+        public bool KeyboardIsEnabled
+        {
+            get => keyboardIsEnabled;
+            set => SetProperty(ref keyboardIsEnabled, value);
         }
 
         public Visibility SettingWindowVisibility
@@ -87,6 +94,8 @@ namespace KeyConverterGUI.Models
             }
             interceptKeys.KeyDownEvent += Keyinput_KeyDownEvent;
             interceptKeys.Initialize();
+
+            KeyboardIsEnabled = false;
             SettingWindowVisibility = Visibility.Visible;
         }
 
@@ -125,16 +134,22 @@ namespace KeyConverterGUI.Models
         {
             interceptKeys.Dispose();
             interceptKeys = null;
-            
+
+            KeyboardIsEnabled = true;
             SettingWindowVisibility = Visibility.Collapsed;
         }
 
 
 
         #region IDisposable
+        private bool isDisposed = false;
         public void Dispose()
         {
-            interceptKeys?.Dispose();
+            if (!isDisposed)
+            {
+                interceptKeys?.Dispose();
+                isDisposed = true;
+            }
         }
         #endregion
     }

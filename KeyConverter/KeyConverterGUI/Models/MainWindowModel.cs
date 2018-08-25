@@ -3,9 +3,12 @@ using InterceptKeyboardLib.Input;
 using InterceptKeyboardLib.KeyMap;
 using KeyConverterGUI.Models.InterceptKey;
 using KeyConverterGUI.Views;
+using Newtonsoft.Json;
 using System;
 using System.Collections.Generic;
 using System.Diagnostics;
+using System.IO;
+using System.Text;
 
 namespace KeyConverterGUI.Models
 {
@@ -18,6 +21,8 @@ namespace KeyConverterGUI.Models
 
         #region Fields
         private string buttonText = DISABLED_TEXT;
+        private bool enabledBtEnabled = true;
+        private bool keymappingBtEnabled = true;
 
         private KeyboardWindow keymapping;
         private CtrlAltReverser interceptKeys;
@@ -36,7 +41,35 @@ namespace KeyConverterGUI.Models
             get => buttonText;
             set => SetProperty(ref buttonText, value);
         }
+        public bool EnabledBtEnabled
+        {
+            get => enabledBtEnabled;
+            set => SetProperty(ref enabledBtEnabled, value);
+        }
+        public bool KeymappingBtEnabled
+        {
+            get => keymappingBtEnabled;
+            set => SetProperty(ref keymappingBtEnabled, value);
+        }
         #endregion
+
+        public MainWindowModel()
+        {
+            string json = null;
+            if (File.Exists(Constants.KeyMapFileName))
+            {
+                using (var fs = new FileStream(Constants.KeyMapFileName, FileMode.Open, FileAccess.Read, FileShare.None))
+                {
+                    using (var sr = new StreamReader(fs, Encoding.UTF8))
+                    {
+                        json = sr.ReadToEnd();
+                    }
+                }
+            }
+
+            if (!string.IsNullOrEmpty(json))
+                keyMap = JsonConvert.DeserializeObject<Dictionary<OriginalKey, OriginalKey>>(json);
+        }
 
         public void EnabledOrDisabled()
         {
@@ -60,12 +93,25 @@ namespace KeyConverterGUI.Models
                 isEnabled = false;
                 ButtonText = DISABLED_TEXT;
             }
+            KeymappingBtEnabled = !isEnabled;
         }
 
         public void OpenKeyMapping()
         {
+            EnabledBtEnabled = false;
             keymapping = new KeyboardWindow(keyMap);
             keymapping.ShowDialog();
+            keymapping.Dispose();
+            EnabledBtEnabled = true;
+
+            var json = JsonConvert.SerializeObject(keyMap);
+            using (var fs = new FileStream(Constants.KeyMapFileName, FileMode.Create, FileAccess.Write, FileShare.None))
+            {
+                using (var sw = new StreamWriter(fs, Encoding.UTF8))
+                {
+                    sw.Write(json);
+                }
+            }
         }
 
 

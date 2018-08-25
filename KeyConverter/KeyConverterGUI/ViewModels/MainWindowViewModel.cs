@@ -21,6 +21,8 @@ namespace KeyConverterGUI.ViewModels
 
             #region Initialize Properties
             ButtonText = model.ToReactivePropertyAsSynchronized(m => m.ButtonText);
+            EnabledBtEnabled = model.ToReactivePropertyAsSynchronized(m => m.EnabledBtEnabled);
+            KeymappingBtEnabled = model.ToReactivePropertyAsSynchronized(m => m.KeymappingBtEnabled);
             #endregion
 
             #region Initialize Events
@@ -35,6 +37,8 @@ namespace KeyConverterGUI.ViewModels
 
         #region Properties
         public ReactiveProperty<string> ButtonText { get; set; }
+        public ReactiveProperty<bool> EnabledBtEnabled { get; set; }
+        public ReactiveProperty<bool> KeymappingBtEnabled { get; set; }
         #endregion
 
         #region Event Properties

@@ -32,6 +32,7 @@ namespace KeyConverterGUI.Views
             DataContext = vm;
         }
 
+        
         public void Dispose()
         {
             model?.Dispose();
