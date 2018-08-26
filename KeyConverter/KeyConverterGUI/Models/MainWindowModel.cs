@@ -18,12 +18,10 @@ namespace KeyConverterGUI.Models
     public class MainWindowModel : ModelBase, IDisposable
     {
         #region Constants
-        private const string DISABLED_TEXT = "Now Disabled";
-        private const string ENABLED_TEXT = "Now Enabled";
         #endregion
 
         #region Fields
-        private string buttonText = DISABLED_TEXT;
+        private string buttonText = LangResource.Resources.Resources.UI_Disabled;
         private bool enabledBtEnabled = true;
         private bool keymappingBtEnabled = true;
 
@@ -109,7 +107,7 @@ namespace KeyConverterGUI.Models
                 ChangeBaseBackground?.Invoke(resourceDictionary["EnabledColor"] as SolidColorBrush);
 
                 isEnabled = true;
-                ButtonText = ENABLED_TEXT;
+                ButtonText = LangResource.Resources.Resources.UI_Enabled;
             }
             else
             {
@@ -122,7 +120,7 @@ namespace KeyConverterGUI.Models
                 ChangeBaseBackground?.Invoke(resourceDictionary["MainColor"] as SolidColorBrush);
 
                 isEnabled = false;
-                ButtonText = DISABLED_TEXT;
+                ButtonText = LangResource.Resources.Resources.UI_Disabled;
             }
             KeymappingBtEnabled = !isEnabled;
         }
