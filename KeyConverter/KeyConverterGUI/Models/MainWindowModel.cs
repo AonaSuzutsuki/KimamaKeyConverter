@@ -1,4 +1,5 @@
-﻿using CommonStyleLib.Models;
+﻿using CommonCoreLib.Ini;
+using CommonStyleLib.Models;
 using InterceptKeyboardLib.Input;
 using InterceptKeyboardLib.KeyMap;
 using KeyConverterGUI.Models.InterceptKey;
@@ -9,6 +10,8 @@ using System.Collections.Generic;
 using System.Diagnostics;
 using System.IO;
 using System.Text;
+using System.Windows;
+using System.Windows.Media;
 
 namespace KeyConverterGUI.Models
 {
@@ -27,6 +30,7 @@ namespace KeyConverterGUI.Models
         private KeyboardWindow keymapping;
         private CtrlAltReverser interceptKeys;
         private bool isEnabled = false;
+        private bool isDetectMabinogi = true;
 
         private Dictionary<OriginalKey, OriginalKey> keyMap = new Dictionary<OriginalKey, OriginalKey>()
                 {
@@ -51,6 +55,15 @@ namespace KeyConverterGUI.Models
             get => keymappingBtEnabled;
             set => SetProperty(ref keymappingBtEnabled, value);
         }
+        public bool IsDetectMabinogi
+        {
+            get => isDetectMabinogi;
+            set => SetProperty(ref isDetectMabinogi, value);
+        }
+        #endregion
+
+        #region Actions
+        public Action<SolidColorBrush> ChangeBaseBackground { get; set; } = null;
         #endregion
 
         public MainWindowModel()
@@ -69,6 +82,8 @@ namespace KeyConverterGUI.Models
 
             if (!string.IsNullOrEmpty(json))
                 keyMap = JsonConvert.DeserializeObject<Dictionary<OriginalKey, OriginalKey>>(json);
+
+            LoadSetting();
         }
 
         public void EnabledOrDisabled()
@@ -79,9 +94,19 @@ namespace KeyConverterGUI.Models
                 interceptKeys.KeyMap = keyMap;
                 interceptKeys.Initialize();
                 
-                var processes = Process.GetProcessesByName("Client");
-                if (processes.Length > 0)
-                    interceptKeys.SpecificProcessId = processes[0].Id;
+                if (IsDetectMabinogi)
+                {
+                    var processes = Process.GetProcessesByName("Client");
+                    if (processes.Length > 0)
+                        interceptKeys.SpecificProcessId = processes[0].Id;
+                }
+                
+
+                var resourceDictionary = new ResourceDictionary
+                {
+                    Source = new Uri("../Styles/Constants.xaml", UriKind.Relative)
+                };
+                ChangeBaseBackground?.Invoke(resourceDictionary["EnabledColor"] as SolidColorBrush);
 
                 isEnabled = true;
                 ButtonText = ENABLED_TEXT;
@@ -89,6 +114,12 @@ namespace KeyConverterGUI.Models
             else
             {
                 interceptKeys.Dispose();
+
+                var resourceDictionary = new ResourceDictionary
+                {
+                    Source = new Uri("/CommonStyleLib;component/Styles/Constants.xaml", UriKind.Relative)
+                };
+                ChangeBaseBackground?.Invoke(resourceDictionary["MainColor"] as SolidColorBrush);
 
                 isEnabled = false;
                 ButtonText = DISABLED_TEXT;
@@ -115,9 +146,23 @@ namespace KeyConverterGUI.Models
         }
 
 
+        #region Setting
+        public void SaveSetting()
+        {
+            var iniLoader = new IniLoader(Constants.IniFileName);
+            iniLoader.SetValue("Main", "IsDetectMabinogi", IsDetectMabinogi);
+        }
+        public void LoadSetting()
+        {
+            var iniLoader = new IniLoader(Constants.IniFileName);
+            var IsDetectMabinogi = iniLoader.GetValue("Main", "IsDetectMabinogi", true);
+        }
+        #endregion
+
         #region IDisposable
         public void Dispose()
         {
+            SaveSetting();
             interceptKeys?.Dispose();
             keymapping?.Dispose();
         }
