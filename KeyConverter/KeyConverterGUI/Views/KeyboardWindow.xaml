@@ -135,7 +135,7 @@
 
                     <StackPanel Margin="0,0,0,0" Orientation="Horizontal" VerticalAlignment="Top">
                         <StackPanel Style="{DynamicResource StandardButtonStackPanel}">
-                            <Button Content="半/全" Width="40" Height="40" Style="{DynamicResource FlatButton}" Command="{Binding KeyboardBtClicked}" CommandParameter="{x:Static key:OriginalKey.HankakuZenkaku}" />
+                            <Button Content="半/全" Width="40" Height="40" IsEnabled="False" Style="{DynamicResource FlatButton}" Command="{Binding KeyboardBtClicked}" CommandParameter="{x:Static key:OriginalKey.HankakuZenkaku}" />
                             <Label Content="{Binding Path=Label.Value[(key:OriginalKey)HankakuZenkaku]}" HorizontalAlignment="Center" Style="{DynamicResource DefinedLabel}" />
                         </StackPanel>
                         <StackPanel Style="{DynamicResource StandardButtonStackPanel}">
