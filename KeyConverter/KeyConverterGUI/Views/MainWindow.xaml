@@ -5,6 +5,7 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:i="http://schemas.microsoft.com/expression/2010/interactivity"
         xmlns:CommonViews="clr-namespace:CommonStyleLib.Views;assembly=CommonStyleLib"
+        xmlns:lang="clr-namespace:LangResource"
         xmlns:local="clr-namespace:KeyConverterGUI"
         mc:Ignorable="d"
         Icon="pack://application:,,,/CommonStyleLib;component/Resources/1.ico"
@@ -91,9 +92,9 @@
 
                 <Button Content="{Binding ButtonText.Value}" IsEnabled="{Binding EnabledBtEnabled.Value}" Command="{Binding EnabledBtClicked}" Style="{DynamicResource CustomFlatButton}" />
 
-                <Button Grid.Row="2" Content="Keyboard Mapping" IsEnabled="{Binding KeymappingBtEnabled.Value}" Style="{DynamicResource FlatButton}" Command="{Binding KeyboardMappingBtClicked}" />
+                <Button Grid.Row="2" Content="{Binding Source={x:Static lang:ResourceService.Current}, Path=Resources.UI_Keyboard_Mapping, Mode=OneWay}" IsEnabled="{Binding KeymappingBtEnabled.Value}" Style="{DynamicResource FlatButton}" Command="{Binding KeyboardMappingBtClicked}" />
 
-                <CheckBox Grid.Row="4" Content="Detect Mabinogi" IsChecked="{Binding IsDetectMabinogi.Value}" VerticalAlignment="Center" />
+                <CheckBox Grid.Row="4" Content="{Binding Source={x:Static lang:ResourceService.Current}, Path=Resources.UI_Detect_Mabinogi, Mode=OneWay}" IsChecked="{Binding IsDetectMabinogi.Value}" VerticalAlignment="Center" />
 
             </Grid>
         </Grid>

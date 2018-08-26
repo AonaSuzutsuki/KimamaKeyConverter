@@ -6,6 +6,7 @@
         xmlns:i="http://schemas.microsoft.com/expression/2010/interactivity"
         xmlns:key="clr-namespace:InterceptKeyboardLib.KeyMap;assembly=InterceptKeyboardLib"
         xmlns:CommonViews="clr-namespace:CommonStyleLib.Views;assembly=CommonStyleLib"
+        xmlns:lang="clr-namespace:LangResource"
         xmlns:local="clr-namespace:KeyConverterGUI.Views"
         mc:Ignorable="d"
         Title="KeyboardWindow" Height="420" Width="710" ResizeMode="CanMinimize">
@@ -429,14 +430,16 @@
                         
                         <StackPanel Margin="20">
                             <StackPanel Orientation="Horizontal">
-                                <Label Content="Source Key: " />
+                                <Label Content="{Binding Source={x:Static lang:ResourceService.Current}, Path=ResourcesKeyboard.UI_SourceKey, Mode=OneWay}" />
+                                <Label Content=":" />
                                 <Label Content="{Binding SourceKeyText.Value}" FontWeight="Bold" />
                             </StackPanel>
 
                             <StackPanel Orientation="Horizontal">
-                                <Label Content="Dest Key: " Height="25" />
+                                <Label Content="{Binding Source={x:Static lang:ResourceService.Current}, Path=ResourcesKeyboard.UI_DestKey, Mode=OneWay}" Height="25" />
+                                <Label Content=":" Height="25" />
                                 <TextBox Text="{Binding DestKeyText.Value}" Width="100" Height="25" IsReadOnly="True" />
-                                <Label Content=" Please push converted key." Height="25" />
+                                <Label Content="{Binding Source={x:Static lang:ResourceService.Current}, Path=ResourcesKeyboard.UI_PushKeyDescript, Mode=OneWay}" Height="25" />
                             </StackPanel>
                         </StackPanel>
                         
