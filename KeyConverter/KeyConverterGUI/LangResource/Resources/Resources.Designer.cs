@@ -8,7 +8,7 @@
 // </auto-generated>
 //------------------------------------------------------------------------------
 
-namespace KeyConverterGUI.Properties {
+namespace KeyConverterGUI.LangResource.Resources {
     using System;
     
     
@@ -22,7 +22,7 @@ namespace KeyConverterGUI.Properties {
     [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Resources.Tools.StronglyTypedResourceBuilder", "15.0.0.0")]
     [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
     [global::System.Runtime.CompilerServices.CompilerGeneratedAttribute()]
-    internal class Resources {
+    public class Resources {
         
         private static global::System.Resources.ResourceManager resourceMan;
         
@@ -36,10 +36,10 @@ namespace KeyConverterGUI.Properties {
         ///   このクラスで使用されているキャッシュされた ResourceManager インスタンスを返します。
         /// </summary>
         [global::System.ComponentModel.EditorBrowsableAttribute(global::System.ComponentModel.EditorBrowsableState.Advanced)]
-        internal static global::System.Resources.ResourceManager ResourceManager {
+        public static global::System.Resources.ResourceManager ResourceManager {
             get {
                 if (object.ReferenceEquals(resourceMan, null)) {
-                    global::System.Resources.ResourceManager temp = new global::System.Resources.ResourceManager("KeyConverterGUI.Properties.Resources", typeof(Resources).Assembly);
+                    global::System.Resources.ResourceManager temp = new global::System.Resources.ResourceManager("KeyConverterGUI.LangResource.Resources.Resources", typeof(Resources).Assembly);
                     resourceMan = temp;
                 }
                 return resourceMan;
@@ -51,12 +51,48 @@ namespace KeyConverterGUI.Properties {
         ///   現在のスレッドの CurrentUICulture プロパティをオーバーライドします。
         /// </summary>
         [global::System.ComponentModel.EditorBrowsableAttribute(global::System.ComponentModel.EditorBrowsableState.Advanced)]
-        internal static global::System.Globalization.CultureInfo Culture {
+        public static global::System.Globalization.CultureInfo Culture {
             get {
                 return resourceCulture;
             }
             set {
                 resourceCulture = value;
+            }
+        }
+        
+        /// <summary>
+        ///   マビノギを検出 に類似しているローカライズされた文字列を検索します。
+        /// </summary>
+        public static string UI_Detect_Mabinogi {
+            get {
+                return ResourceManager.GetString("UI_Detect_Mabinogi", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   無効化中 に類似しているローカライズされた文字列を検索します。
+        /// </summary>
+        public static string UI_Disabled {
+            get {
+                return ResourceManager.GetString("UI_Disabled", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   有効化中 に類似しているローカライズされた文字列を検索します。
+        /// </summary>
+        public static string UI_Enabled {
+            get {
+                return ResourceManager.GetString("UI_Enabled", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   キーボードマッピング に類似しているローカライズされた文字列を検索します。
+        /// </summary>
+        public static string UI_Keyboard_Mapping {
+            get {
+                return ResourceManager.GetString("UI_Keyboard_Mapping", resourceCulture);
             }
         }
     }
