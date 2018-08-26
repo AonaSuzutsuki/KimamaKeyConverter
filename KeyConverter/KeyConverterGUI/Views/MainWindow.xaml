@@ -8,7 +8,7 @@
         xmlns:local="clr-namespace:KeyConverterGUI"
         mc:Ignorable="d"
         Icon="pack://application:,,,/CommonStyleLib;component/Resources/1.ico"
-        Title="MainWindow" Height="200" Width="400" ResizeMode="CanMinimize"
+        Title="MainWindow" Height="250" Width="400" ResizeMode="CanMinimize"
         TextOptions.TextFormattingMode="Display" TextOptions.TextRenderingMode="ClearType" UseLayoutRounding="True">
 
     <i:Interaction.Triggers>
@@ -85,11 +85,15 @@
                     <RowDefinition />
                     <RowDefinition Height="5" />
                     <RowDefinition Height="30" />
+                    <RowDefinition Height="5" />
+                    <RowDefinition Height="30" />
                 </Grid.RowDefinitions>
 
                 <Button Content="{Binding ButtonText.Value}" IsEnabled="{Binding EnabledBtEnabled.Value}" Command="{Binding EnabledBtClicked}" Style="{DynamicResource CustomFlatButton}" />
 
                 <Button Grid.Row="2" Content="Keyboard Mapping" IsEnabled="{Binding KeymappingBtEnabled.Value}" Style="{DynamicResource FlatButton}" Command="{Binding KeyboardMappingBtClicked}" />
+
+                <CheckBox Grid.Row="4" Content="Detect Mabinogi" IsChecked="{Binding IsDetectMabinogi.Value}" VerticalAlignment="Center" />
 
             </Grid>
         </Grid>

@@ -29,6 +29,7 @@ namespace KeyConverterGUI.Models
         private KeyboardWindow keymapping;
         private CtrlAltReverser interceptKeys;
         private bool isEnabled = false;
+        private bool isDetectMabinogi = true;
 
         private Dictionary<OriginalKey, OriginalKey> keyMap = new Dictionary<OriginalKey, OriginalKey>()
                 {
@@ -52,6 +53,11 @@ namespace KeyConverterGUI.Models
         {
             get => keymappingBtEnabled;
             set => SetProperty(ref keymappingBtEnabled, value);
+        }
+        public bool IsDetectMabinogi
+        {
+            get => isDetectMabinogi;
+            set => SetProperty(ref isDetectMabinogi, value);
         }
         #endregion
 
@@ -85,9 +91,13 @@ namespace KeyConverterGUI.Models
                 interceptKeys.KeyMap = keyMap;
                 interceptKeys.Initialize();
                 
-                var processes = Process.GetProcessesByName("Client");
-                if (processes.Length > 0)
-                    interceptKeys.SpecificProcessId = processes[0].Id;
+                if (IsDetectMabinogi)
+                {
+                    var processes = Process.GetProcessesByName("Client");
+                    if (processes.Length > 0)
+                        interceptKeys.SpecificProcessId = processes[0].Id;
+                }
+                
 
                 var resourceDictionary = new ResourceDictionary
                 {
