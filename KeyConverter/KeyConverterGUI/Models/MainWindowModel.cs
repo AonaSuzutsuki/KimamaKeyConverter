@@ -1,4 +1,5 @@
-﻿using CommonStyleLib.Models;
+﻿using CommonCoreLib.Ini;
+using CommonStyleLib.Models;
 using InterceptKeyboardLib.Input;
 using InterceptKeyboardLib.KeyMap;
 using KeyConverterGUI.Models.InterceptKey;
@@ -81,6 +82,8 @@ namespace KeyConverterGUI.Models
 
             if (!string.IsNullOrEmpty(json))
                 keyMap = JsonConvert.DeserializeObject<Dictionary<OriginalKey, OriginalKey>>(json);
+
+            LoadSetting();
         }
 
         public void EnabledOrDisabled()
@@ -143,9 +146,23 @@ namespace KeyConverterGUI.Models
         }
 
 
+        #region Setting
+        public void SaveSetting()
+        {
+            var iniLoader = new IniLoader(Constants.IniFileName);
+            iniLoader.SetValue("Main", "IsDetectMabinogi", IsDetectMabinogi);
+        }
+        public void LoadSetting()
+        {
+            var iniLoader = new IniLoader(Constants.IniFileName);
+            var IsDetectMabinogi = iniLoader.GetValue("Main", "IsDetectMabinogi", true);
+        }
+        #endregion
+
         #region IDisposable
         public void Dispose()
         {
+            SaveSetting();
             interceptKeys?.Dispose();
             keymapping?.Dispose();
         }
