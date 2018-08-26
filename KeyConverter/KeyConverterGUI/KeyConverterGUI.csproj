@@ -94,6 +94,10 @@
     <Compile Include="Constants.cs" />
     <Compile Include="Models\InterceptKey\CtrlAltReverser.cs" />
     <Compile Include="Views\ObservableDictionary.cs" />
+    <Page Include="Styles\Button.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
     <Page Include="Styles\Keyboard.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>

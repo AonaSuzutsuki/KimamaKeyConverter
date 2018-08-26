@@ -9,6 +9,7 @@ using System.Collections.Generic;
 using System.Diagnostics;
 using System.IO;
 using System.Text;
+using System.Windows.Media;
 
 namespace KeyConverterGUI.Models
 {
@@ -53,6 +54,10 @@ namespace KeyConverterGUI.Models
         }
         #endregion
 
+        #region Actions
+        public Action<SolidColorBrush> ChangeBaseBackground { get; set; } = null;
+        #endregion
+
         public MainWindowModel()
         {
             string json = null;
@@ -83,6 +88,7 @@ namespace KeyConverterGUI.Models
                 if (processes.Length > 0)
                     interceptKeys.SpecificProcessId = processes[0].Id;
 
+                ChangeBaseBackground?.Invoke(CommonStyleLib.ConstantValues.ActivatedBorderColor);
                 isEnabled = true;
                 ButtonText = ENABLED_TEXT;
             }
@@ -90,6 +96,12 @@ namespace KeyConverterGUI.Models
             {
                 interceptKeys.Dispose();
 
+                var myResourceDictionary = new System.Windows.ResourceDictionary
+                {
+                    Source = new Uri("/CommonStyleLib;component/Styles/Constants.xaml", UriKind.RelativeOrAbsolute)
+                };
+
+                ChangeBaseBackground?.Invoke(myResourceDictionary["MainColor"] as SolidColorBrush);
                 isEnabled = false;
                 ButtonText = DISABLED_TEXT;
             }

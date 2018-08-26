@@ -41,12 +41,14 @@
                 <ResourceDictionary Source="pack://application:,,,/CommonStyleLib;component/Styles/Icon.xaml" />
                 <ResourceDictionary Source="pack://application:,,,/CommonStyleLib;component/Styles/Main.xaml" />
                 <ResourceDictionary Source="pack://application:,,,/CommonStyleLib;component/Styles/ListBoxStyle.xaml" />
+                <ResourceDictionary Source="../Styles/Button.xaml" />
             </ResourceDictionary.MergedDictionaries>
         </ResourceDictionary>
     </Window.Resources>
 
-    <Grid Style="{DynamicResource ResourceKey=BackgroundGrid}">
-        <Border Name="AroundBorder" BorderBrush="{Binding AroundBorderColor.Value}" Opacity="{Binding AroundBorderOpacity.Value}" BorderThickness="1" />
+    <Grid Name="BaseGrid" Style="{DynamicResource ResourceKey=BackgroundGrid}">
+
+        <Border Name="AroundBorder" BorderBrush="{Binding AroundBorderColor.Value, TargetNullValue={StaticResource AroundBorderColor}, FallbackValue={StaticResource AroundBorderColor}}" Opacity="{Binding AroundBorderOpacity.Value}" BorderThickness="1" />
 
         <Grid Margin="{Binding MainWindowMargin}">
 
@@ -84,8 +86,8 @@
                     <RowDefinition Height="5" />
                     <RowDefinition Height="30" />
                 </Grid.RowDefinitions>
-                
-                <Button Content="{Binding ButtonText.Value}" IsEnabled="{Binding EnabledBtEnabled.Value}" Command="{Binding EnabledBtClicked}" Style="{DynamicResource FlatButton}" />
+
+                <Button Content="{Binding ButtonText.Value}" IsEnabled="{Binding EnabledBtEnabled.Value}" Command="{Binding EnabledBtClicked}" Style="{DynamicResource CustomFlatButton}" />
 
                 <Button Grid.Row="2" Content="Keyboard Mapping" IsEnabled="{Binding KeymappingBtEnabled.Value}" Style="{DynamicResource FlatButton}" Command="{Binding KeyboardMappingBtClicked}" />
 
