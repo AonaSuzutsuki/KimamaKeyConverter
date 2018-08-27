@@ -18,8 +18,8 @@ namespace InterceptKeyboardLib.Input
         private const int WM_KEYUP = 0x0101;
         private const int WM_SYSKEYDOWN = 0x0104;
         private const int WM_SYSKEYUP = 0x0105;
-        private LowLevelKeyboardProc proc;
-        private IntPtr hookID = IntPtr.Zero;
+        private LowLevelKeyboardProc keyboardProc;
+        private IntPtr keyboardHookID = IntPtr.Zero;
         #endregion
 
         #region Win32API Structures
@@ -104,20 +104,22 @@ namespace InterceptKeyboardLib.Input
         {
             if (!isIntercepted)
             {
-                proc = HookProcedure;
-                hookID = SetHook(proc);
+                keyboardProc = HookProcedure;
+                keyboardHookID = SetHook(keyboardProc, WH_KEYBOARD_LL);
                 inkeys = new Dictionary<OriginalKey, INPUT>();
                 isIntercepted = true;
             }
+            else
+                throw new AlreadyInterceptedException("Can hook only once.");
         }
 
-        private IntPtr SetHook(LowLevelKeyboardProc proc)
+        private IntPtr SetHook(LowLevelKeyboardProc proc, int mode)
         {
             using (Process curProcess = Process.GetCurrentProcess())
             {
                 using (ProcessModule curModule = curProcess.MainModule)
                 {
-                    return SetWindowsHookEx(WH_KEYBOARD_LL, proc, GetModuleHandle(curModule.ModuleName), 0);
+                    return SetWindowsHookEx(mode, proc, GetModuleHandle(curModule.ModuleName), 0);
                 }
             }
         }
@@ -137,7 +139,7 @@ namespace InterceptKeyboardLib.Input
                 return KeyboardProcedure(nCode, wParam, lParam);
             }
             
-            return CallNextHookEx(hookID, nCode, wParam, lParam);
+            return CallNextHookEx(keyboardHookID, nCode, wParam, lParam);
         }
 
         private IntPtr KeyboardProcedure(int nCode, IntPtr wParam, IntPtr lParam)
@@ -148,7 +150,7 @@ namespace InterceptKeyboardLib.Input
                 var vkCode = (int)kb.vkCode;
                 var key = KeyMapConverter.KeyCodeToKey(vkCode);
                 OnKeyDownEvent(vkCode, key);
-                Console.WriteLine(vkCode);
+                //Console.WriteLine(vkCode);
                 if (kb.dwExtraInfo.ToUInt32() != InterceptInput.MAGIC_NUMBER)
                 {
                     //IntPtr inputFunc(Key argKey)
@@ -164,7 +166,7 @@ namespace InterceptKeyboardLib.Input
                     //    return inputFunc(Key.LeftCtrl);
                     //else if (key.Equals(Key.LeftCtrl))
                     //    return inputFunc(Key.LeftAlt);
-                    return KeyDownAction(key, () => CallNextHookEx(hookID, nCode, wParam, lParam));
+                    return KeyDownAction(key, () => CallNextHookEx(keyboardHookID, nCode, wParam, lParam));
                 }
             }
             else if (nCode >= 0 && (wParam == (IntPtr)WM_KEYUP || wParam == (IntPtr)WM_SYSKEYUP))
@@ -180,7 +182,7 @@ namespace InterceptKeyboardLib.Input
                 }
             }
 
-            return CallNextHookEx(hookID, nCode, wParam, lParam);
+            return CallNextHookEx(keyboardHookID, nCode, wParam, lParam);
         }
 
         protected IntPtr InputFunc(OriginalKey pushedKey, OriginalKey destKey)
@@ -206,7 +208,7 @@ namespace InterceptKeyboardLib.Input
         public void Dispose()
         {
             AllKeyUp();
-            UnhookWindowsHookEx(hookID);
+            UnhookWindowsHookEx(keyboardHookID);
             isIntercepted = false;
         }
         public void AllKeyUp()
