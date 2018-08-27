@@ -150,24 +150,8 @@ namespace InterceptKeyboardLib.Input
                 var vkCode = (int)kb.vkCode;
                 var key = KeyMapConverter.KeyCodeToKey(vkCode);
                 OnKeyDownEvent(vkCode, key);
-                //Console.WriteLine(vkCode);
                 if (kb.dwExtraInfo.ToUInt32() != InterceptInput.MAGIC_NUMBER)
-                {
-                    //IntPtr inputFunc(Key argKey)
-                    //{
-                    //    var inputKey = KeyMapConverter.KeyToCode(argKey);
-                    //    var inkey = input.KeyDown(inputKey);
-                    //    if (!inkeys.ContainsKey(key))
-                    //        inkeys.Add(key, inkey);
-                    //    return new IntPtr(1);
-                    //}
-
-                    //if (key.Equals(Key.LeftAlt))
-                    //    return inputFunc(Key.LeftCtrl);
-                    //else if (key.Equals(Key.LeftCtrl))
-                    //    return inputFunc(Key.LeftAlt);
                     return KeyDownAction(key, () => CallNextHookEx(keyboardHookID, nCode, wParam, lParam));
-                }
             }
             else if (nCode >= 0 && (wParam == (IntPtr)WM_KEYUP || wParam == (IntPtr)WM_SYSKEYUP))
             {
@@ -177,9 +161,7 @@ namespace InterceptKeyboardLib.Input
                 KeyUpAction(key);
 
                 foreach (var k in inkeys.Keys)
-                {
                     Console.WriteLine(k);
-                }
             }
 
             return CallNextHookEx(keyboardHookID, nCode, wParam, lParam);
