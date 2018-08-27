@@ -1,6 +1,6 @@
 # Mabinogi Ctrl & Alt Reverser
 マビノギ向けのキー転換器です。  
-現段階では汎用性を意識して作ってないのでCtrlとAltだけを転換します。  
+マビノギを起動していない場合や検知を使用していない場合はWindows全体のキー置き換えソフトとして利用できます。  
 
 # 使い方
 [MabinogiKeyConverter - Wiki](https://github.com/AonaSuzutsuki/MabinogiKeyConverter/wiki)に移動しました。  
