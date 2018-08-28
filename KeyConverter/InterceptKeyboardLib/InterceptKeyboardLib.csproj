@@ -40,6 +40,7 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Input\AlreadyInterceptedException.cs" />
     <Compile Include="Input\InterceptInput.cs" />
     <Compile Include="Input\InterceptKeys.cs" />
     <Compile Include="KeyMap\KeyMap.cs" />
