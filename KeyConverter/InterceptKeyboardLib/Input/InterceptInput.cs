@@ -72,6 +72,12 @@ namespace InterceptKeyboardLib.Input
         public const int MAGIC_NUMBER = 0x10209;
         #endregion
 
+        /// <summary>
+        /// Execute to keydown the key.
+        /// </summary>
+        /// <param name="key">Key to keydown</param>
+        /// <param name="isExtend">Is extend key</param>
+        /// <returns></returns>
         public INPUT KeyDown(int key, bool isExtend = false)
         {
             INPUT input = new INPUT
@@ -91,6 +97,11 @@ namespace InterceptKeyboardLib.Input
             return input;
         }
 
+        /// <summary>
+        /// Execute to keyup the key.
+        /// </summary>
+        /// <param name="input">Key to keyup</param>
+        /// <param name="isExtend">Is extend key</param>
         public void KeyUp(INPUT input, bool isExtend = false)
         {
             input.ki.dwFlags = ((isExtend) ? (KEYEVENTF_EXTENDEDKEY) : 0x0) | KEYEVENTF_KEYUP;

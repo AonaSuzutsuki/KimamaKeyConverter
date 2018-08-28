@@ -100,6 +100,9 @@ namespace InterceptKeyboardLib.Input
         }
         #endregion
 
+        /// <summary>
+        /// Initialize WindowsHook and start to intercept.
+        /// </summary>
         public void Initialize()
         {
             if (!isIntercepted)
@@ -167,7 +170,13 @@ namespace InterceptKeyboardLib.Input
             return CallNextHookEx(keyboardHookID, nCode, wParam, lParam);
         }
 
-        protected IntPtr InputFunc(OriginalKey pushedKey, OriginalKey destKey)
+        /// <summary>
+        /// Input the Key.
+        /// </summary>
+        /// <param name="pushedKey">Actually pushed key</param>
+        /// <param name="destKey">Converted key</param>
+        /// <returns></returns>
+        protected IntPtr InputKey(OriginalKey pushedKey, OriginalKey destKey)
         {
             var inputKey = KeyMapConverter.KeyToCode(destKey);
             var inkey = input.KeyDown(inputKey);
@@ -176,23 +185,40 @@ namespace InterceptKeyboardLib.Input
             return new IntPtr(1);
         }
 
+        /// <summary>
+        /// KeyDown method. It is a method for override.
+        /// </summary>
+        /// <param name="pushedKey">Actually pushed key</param>
+        /// <param name="defaultReturnFunc">Default return func.</param>
+        /// <returns></returns>
         protected virtual IntPtr KeyDownAction(OriginalKey pushedKey, Func<IntPtr> defaultReturnFunc)
         {
             return defaultReturnFunc();
         }
 
+        /// <summary>
+        /// KeyUp method. It is a method for override.
+        /// </summary>
+        /// <param name="upKey">Converted key</param>
         protected virtual void KeyUpAction(OriginalKey upKey)
         {
             return;
         }
 
         #region IDisposable
+        /// <summary>
+        /// Unhook WindowsHook and Execute to up all pushed key.
+        /// </summary>
         public void Dispose()
         {
             AllKeyUp();
             UnhookWindowsHookEx(keyboardHookID);
             isIntercepted = false;
         }
+
+        /// <summary>
+        /// Execute to up all pushed key.
+        /// </summary>
         public void AllKeyUp()
         {
             var keys = inkeys.Values;

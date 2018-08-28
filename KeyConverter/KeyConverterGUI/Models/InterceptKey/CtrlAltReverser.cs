@@ -24,7 +24,7 @@ namespace KeyConverterGUI.Models.InterceptKey
             if (KeyMap.ContainsKey(pushedKey))
             {
                 var input = KeyMap[pushedKey];
-                return InputFunc(pushedKey, input);
+                return InputKey(pushedKey, input);
             }
 
             return defaultReturnFunc();
