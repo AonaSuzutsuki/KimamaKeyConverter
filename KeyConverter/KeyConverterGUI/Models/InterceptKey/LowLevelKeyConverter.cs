@@ -9,11 +9,11 @@ using System.Threading.Tasks;
 
 namespace KeyConverterGUI.Models.InterceptKey
 {
-    public class CtrlAltReverser : LowLevelKeyDetector
+    public class LowLevelKeyConverter : LowLevelKeyDetector
     {
         #region Singleton
-        public static CtrlAltReverser Instance { get; } = new CtrlAltReverser();
-        private CtrlAltReverser()
+        public static LowLevelKeyConverter Instance { get; } = new LowLevelKeyConverter();
+        private LowLevelKeyConverter()
         {
         }
         #endregion

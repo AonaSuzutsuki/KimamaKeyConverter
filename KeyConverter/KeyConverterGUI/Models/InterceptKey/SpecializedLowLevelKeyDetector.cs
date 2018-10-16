@@ -8,7 +8,7 @@ using System.Threading.Tasks;
 
 namespace KeyConverterGUI.Models.InterceptKey
 {
-    public class LowLevelKeyGetter : LowLevelKeyDetector
+    public class SpecializedLowLevelKeyDetector : LowLevelKeyDetector
     {
         #region Win32API Methods
         [DllImport("user32.dll")]

@@ -24,7 +24,7 @@ namespace KeyConverterGUI.Models
             Default = " "
         };
 
-        private LowLevelKeyGetter interceptKeys;
+        private SpecializedLowLevelKeyDetector interceptKeys;
 
         private bool keyboardIsEnabled = true;
         private Visibility settingWindowVisibility = Visibility.Collapsed;
@@ -88,7 +88,7 @@ namespace KeyConverterGUI.Models
             DestKeyText = "";
             destKey = OriginalKey.Unknown;
 
-            interceptKeys = new LowLevelKeyGetter();
+            interceptKeys = new SpecializedLowLevelKeyDetector();
             using (var process = Process.GetCurrentProcess())
             {
                 interceptKeys.SpecificProcessId = process.Id;

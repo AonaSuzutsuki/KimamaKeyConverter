@@ -108,8 +108,8 @@
       <DesignTime>True</DesignTime>
       <DependentUpon>ResourcesKeyboard.resx</DependentUpon>
     </Compile>
-    <Compile Include="Models\InterceptKey\CtrlAltReverser.cs" />
-    <Compile Include="Models\InterceptKey\LowLevelKeyGetter.cs" />
+    <Compile Include="Models\InterceptKey\LowLevelKeyConverter.cs" />
+    <Compile Include="Models\InterceptKey\SpecializedLowLevelKeyDetector.cs" />
     <Compile Include="Views\ObservableDictionary.cs" />
     <Page Include="Styles\Button.xaml">
       <SubType>Designer</SubType>

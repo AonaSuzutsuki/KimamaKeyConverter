@@ -26,7 +26,7 @@ namespace KeyConverterGUI.Models
         private bool keymappingBtEnabled = true;
 
         private KeyboardWindow keymapping;
-        private CtrlAltReverser interceptKeys;
+        private LowLevelKeyConverter interceptKeys;
         private bool isEnabled = false;
         private bool isDetectMabinogi = true;
 
@@ -88,7 +88,7 @@ namespace KeyConverterGUI.Models
         {
             if (!isEnabled)
             {
-                interceptKeys = CtrlAltReverser.Instance;
+                interceptKeys = LowLevelKeyConverter.Instance;
                 interceptKeys.KeyMap = keyMap;
                 interceptKeys.Initialize();
                 
