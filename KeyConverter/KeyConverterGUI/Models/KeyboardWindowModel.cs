@@ -1,6 +1,7 @@
 ﻿using CommonStyleLib.Models;
 using InterceptKeyboardLib.Input;
 using InterceptKeyboardLib.KeyMap;
+using KeyConverterGUI.Models.InterceptKey;
 using KeyConverterGUI.Views;
 using System;
 using System.Collections.Concurrent;
@@ -23,7 +24,7 @@ namespace KeyConverterGUI.Models
             Default = " "
         };
 
-        private InterceptKeys interceptKeys;
+        private LowLevelKeyGetter interceptKeys;
 
         private bool keyboardIsEnabled = true;
         private Visibility settingWindowVisibility = Visibility.Collapsed;
@@ -87,7 +88,7 @@ namespace KeyConverterGUI.Models
             DestKeyText = "";
             destKey = OriginalKey.Unknown;
 
-            interceptKeys = new InterceptKeys();
+            interceptKeys = new LowLevelKeyGetter();
             using (var process = Process.GetCurrentProcess())
             {
                 interceptKeys.SpecificProcessId = process.Id;
@@ -99,8 +100,9 @@ namespace KeyConverterGUI.Models
             SettingWindowVisibility = Visibility.Visible;
         }
 
-        private void Keyinput_KeyDownEvent(object sender, InterceptKeys.OriginalKeyEventArg e)
+        private void Keyinput_KeyDownEvent(object sender, LowLevelKeyDetector.OriginalKeyEventArg e)
         {
+            Console.WriteLine("Down {0}", e.Key.ToString());
             DestKeyText = e.Key.ToString();
             destKey = e.Key;
         }

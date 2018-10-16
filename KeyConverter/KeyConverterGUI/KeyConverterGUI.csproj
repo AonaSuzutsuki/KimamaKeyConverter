@@ -109,6 +109,7 @@
       <DependentUpon>ResourcesKeyboard.resx</DependentUpon>
     </Compile>
     <Compile Include="Models\InterceptKey\CtrlAltReverser.cs" />
+    <Compile Include="Models\InterceptKey\LowLevelKeyGetter.cs" />
     <Compile Include="Views\ObservableDictionary.cs" />
     <Page Include="Styles\Button.xaml">
       <SubType>Designer</SubType>
@@ -176,7 +177,9 @@
       <Generator>PublicResXFileCodeGenerator</Generator>
       <LastGenOutput>ResourcesKeyboard.Designer.cs</LastGenOutput>
     </EmbeddedResource>
-    <None Include="app.manifest" />
+    <None Include="app.manifest">
+      <SubType>Designer</SubType>
+    </None>
     <None Include="packages.config" />
     <None Include="Properties\Settings.settings">
       <Generator>SettingsSingleFileGenerator</Generator>

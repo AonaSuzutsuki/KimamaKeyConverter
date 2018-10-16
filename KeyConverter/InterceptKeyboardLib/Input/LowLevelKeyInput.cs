@@ -8,7 +8,7 @@ using System.Windows.Input;
 
 namespace InterceptKeyboardLib.Input
 {
-    public class InterceptInput
+    public class LowLevelKeyInput
     {
         #region Win32API Structures
         [StructLayout(LayoutKind.Sequential)]
