@@ -1,7 +1,7 @@
 ﻿using System;
 using System.Runtime.Serialization;
 
-namespace InterceptKeyboardLib.Input
+namespace LowLevelKeyboardLib.Input
 {
     [Serializable]
     internal class AlreadyInterceptedException : Exception

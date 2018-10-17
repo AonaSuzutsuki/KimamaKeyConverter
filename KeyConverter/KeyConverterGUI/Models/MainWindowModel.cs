@@ -1,7 +1,7 @@
 ﻿using CommonCoreLib.Ini;
 using CommonStyleLib.Models;
-using InterceptKeyboardLib.Input;
-using InterceptKeyboardLib.KeyMap;
+using LowLevelKeyboardLib.Input;
+using LowLevelKeyboardLib.KeyMap;
 using KeyConverterGUI.Models.InterceptKey;
 using KeyConverterGUI.Views;
 using Newtonsoft.Json;

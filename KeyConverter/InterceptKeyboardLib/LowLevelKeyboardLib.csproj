@@ -7,8 +7,8 @@
     <ProjectGuid>{3640A051-4C23-412D-9461-921A17F72D5C}</ProjectGuid>
     <OutputType>Library</OutputType>
     <AppDesignerFolder>Properties</AppDesignerFolder>
-    <RootNamespace>InterceptKeyboardLib</RootNamespace>
-    <AssemblyName>InterceptKeyboardLib</AssemblyName>
+    <RootNamespace>LowLevelKeyboardLib</RootNamespace>
+    <AssemblyName>LowLevelKeyboardLib</AssemblyName>
     <TargetFrameworkVersion>v4.7.1</TargetFrameworkVersion>
     <FileAlignment>512</FileAlignment>
   </PropertyGroup>

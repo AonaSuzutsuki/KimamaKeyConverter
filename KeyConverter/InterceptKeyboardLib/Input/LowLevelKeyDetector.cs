@@ -5,10 +5,10 @@ using System.Text;
 using System.Threading.Tasks;
 using System.Diagnostics;
 using System.Runtime.InteropServices;
-using static InterceptKeyboardLib.Input.LowLevelKeyInput;
-using InterceptKeyboardLib.KeyMap;
+using static LowLevelKeyboardLib.Input.LowLevelKeyInput;
+using LowLevelKeyboardLib.KeyMap;
 
-namespace InterceptKeyboardLib.Input
+namespace LowLevelKeyboardLib.Input
 {
     public class LowLevelKeyDetector : AbstractLowLevelKeyDetector, IDisposable
     {

@@ -190,9 +190,9 @@
     <None Include="App.config" />
   </ItemGroup>
   <ItemGroup>
-    <ProjectReference Include="..\InterceptKeyboardLib\InterceptKeyboardLib.csproj">
+    <ProjectReference Include="..\InterceptKeyboardLib\LowLevelKeyboardLib.csproj">
       <Project>{3640a051-4c23-412d-9461-921a17f72d5c}</Project>
-      <Name>InterceptKeyboardLib</Name>
+      <Name>LowLevelKeyboardLib</Name>
     </ProjectReference>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />

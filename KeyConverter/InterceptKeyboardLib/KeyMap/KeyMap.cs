@@ -4,7 +4,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace InterceptKeyboardLib.KeyMap
+namespace LowLevelKeyboardLib.KeyMap
 {
     public enum OriginalKey
     {

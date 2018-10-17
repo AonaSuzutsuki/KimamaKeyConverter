@@ -5,7 +5,7 @@ using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Input;
 
-namespace InterceptKeyboardLib.KeyMap
+namespace LowLevelKeyboardLib.KeyMap
 {
     public class KeyMapConverter
     {

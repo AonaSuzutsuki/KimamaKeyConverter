@@ -1,5 +1,5 @@
-﻿using InterceptKeyboardLib.Input;
-using InterceptKeyboardLib.KeyMap;
+﻿using LowLevelKeyboardLib.Input;
+using LowLevelKeyboardLib.KeyMap;
 using System;
 using System.Collections.Generic;
 using System.Linq;
