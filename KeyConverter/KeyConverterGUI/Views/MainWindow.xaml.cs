@@ -25,8 +25,10 @@ namespace KeyConverterGUI.Views
         {
             InitializeComponent();
 
-            var model = new Models.MainWindowModel();
-            model.ChangeBaseBackground = ChangeBaseBackground;
+            var model = new Models.MainWindowModel
+            {
+                ChangeBaseBackground = ChangeBaseBackground
+            };
             var vm = new ViewModels.MainWindowViewModel(this, model);
             DataContext = vm;
         }
