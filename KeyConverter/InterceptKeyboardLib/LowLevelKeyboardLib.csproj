@@ -7,8 +7,8 @@
     <ProjectGuid>{3640A051-4C23-412D-9461-921A17F72D5C}</ProjectGuid>
     <OutputType>Library</OutputType>
     <AppDesignerFolder>Properties</AppDesignerFolder>
-    <RootNamespace>InterceptKeyboardLib</RootNamespace>
-    <AssemblyName>InterceptKeyboardLib</AssemblyName>
+    <RootNamespace>LowLevelKeyboardLib</RootNamespace>
+    <AssemblyName>LowLevelKeyboardLib</AssemblyName>
     <TargetFrameworkVersion>v4.7.1</TargetFrameworkVersion>
     <FileAlignment>512</FileAlignment>
   </PropertyGroup>
@@ -40,9 +40,10 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Input\AbstractLowLevelKeyDetector.cs" />
     <Compile Include="Input\AlreadyInterceptedException.cs" />
-    <Compile Include="Input\InterceptInput.cs" />
-    <Compile Include="Input\InterceptKeys.cs" />
+    <Compile Include="Input\LowLevelKeyInput.cs" />
+    <Compile Include="Input\LowLevelKeyDetector.cs" />
     <Compile Include="KeyMap\KeyMap.cs" />
     <Compile Include="KeyMap\KeyMapConverter.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />

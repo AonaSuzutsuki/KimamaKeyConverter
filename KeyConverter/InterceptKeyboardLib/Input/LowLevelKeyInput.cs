@@ -6,9 +6,9 @@ using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Input;
 
-namespace InterceptKeyboardLib.Input
+namespace LowLevelKeyboardLib.Input
 {
-    public class InterceptInput
+    public class LowLevelKeyInput
     {
         #region Win32API Structures
         [StructLayout(LayoutKind.Sequential)]
