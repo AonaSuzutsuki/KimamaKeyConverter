@@ -5,7 +5,7 @@ VisualStudioVersion = 15.0.27703.2042
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "KeyConverterGUI", "KeyConverterGUI\KeyConverterGUI.csproj", "{881FAD4B-9DF4-466D-90BB-7BA704894AE5}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "InterceptKeyboardLib", "InterceptKeyboardLib\InterceptKeyboardLib.csproj", "{3640A051-4C23-412D-9461-921A17F72D5C}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "LowLevelKeyboardLib", "InterceptKeyboardLib\LowLevelKeyboardLib.csproj", "{3640A051-4C23-412D-9461-921A17F72D5C}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution

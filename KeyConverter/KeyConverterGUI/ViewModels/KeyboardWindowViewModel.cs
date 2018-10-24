@@ -7,7 +7,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows;
-using InterceptKeyboardLib.KeyMap;
+using LowLevelKeyboardLib.KeyMap;
 using System.Windows.Input;
 using System.Collections.Concurrent;
 using Reactive.Bindings;
@@ -32,7 +32,7 @@ namespace KeyConverterGUI.ViewModels
             #endregion
 
             #region Initialize Events
-            KeyboardBtClicked = new DelegateCommand<InterceptKeyboardLib.KeyMap.OriginalKey?>(KeyboardBt_Clicked);
+            KeyboardBtClicked = new DelegateCommand<LowLevelKeyboardLib.KeyMap.OriginalKey?>(KeyboardBt_Clicked);
             OkPopupBtClicked = new DelegateCommand(OkPopupBt_Clicked);
             ClosePopupBtClicked = new DelegateCommand(ClosePopupBt_Clicked);
             #endregion
@@ -57,7 +57,7 @@ namespace KeyConverterGUI.ViewModels
         #endregion
 
         #region Events Methods
-        public void KeyboardBt_Clicked(InterceptKeyboardLib.KeyMap.OriginalKey? key)
+        public void KeyboardBt_Clicked(LowLevelKeyboardLib.KeyMap.OriginalKey? key)
         {
             if (key != null)
                 model.OpenPopup(key.Value);
@@ -78,7 +78,7 @@ namespace KeyConverterGUI.ViewModels
         #endregion
 
         #region Label Properties
-        public ReactiveProperty<ObservableDictionary<InterceptKeyboardLib.KeyMap.OriginalKey, string>> Label
+        public ReactiveProperty<ObservableDictionary<LowLevelKeyboardLib.KeyMap.OriginalKey, string>> Label
         {
             get;
             set;
