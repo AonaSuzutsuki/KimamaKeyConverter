@@ -50,29 +50,6 @@ namespace KeyConverterGUI.Models.InterceptKey
             base.Initialize();
         }
 
-        protected override IntPtr HookProcedure(int nCode, IntPtr wParam, IntPtr lParam)
-        {
-            if (!string.IsNullOrEmpty(ProcessName))
-            {
-                var handle = GetForegroundWindow();
-                var threadId = GetWindowThreadProcessId(handle, out var _processID);
-                var processId = Convert.ToInt32(_processID);
-
-                var hnd = OpenProcess(0x0400 | 0x0010 , false, (uint)processId);
-
-                var buffer = new StringBuilder(255);
-                GetModuleBaseName(hnd, IntPtr.Zero, buffer, (uint)buffer.Capacity);
-
-                CloseHandle(hnd);
-
-                var processName = buffer.ToString();
-                if (processName == ProcessName)
-                    return base.HookProcedure(nCode, wParam, lParam);
-            }
-
-            return base.HookProcedure(nCode, wParam, lParam);
-        }
-
         private bool IsProcessName()
         {
             if (!string.IsNullOrEmpty(ProcessName))
