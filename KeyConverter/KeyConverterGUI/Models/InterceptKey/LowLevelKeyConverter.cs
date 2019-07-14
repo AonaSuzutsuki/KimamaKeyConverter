@@ -46,7 +46,7 @@ namespace KeyConverterGUI.Models.InterceptKey
             return base.HookProcedure(nCode, wParam, lParam);
         }
 
-        protected override IntPtr KeyDownAction(OriginalKey pushedKey, bool isVirtualInput, Func<IntPtr> defaultReturnFunc)
+        protected override IntPtr KeyDownFunction(OriginalKey pushedKey, bool isVirtualInput, Func<IntPtr> defaultReturnFunc)
         {
             if (!isVirtualInput)
             {
@@ -57,10 +57,10 @@ namespace KeyConverterGUI.Models.InterceptKey
                 }
             }
             
-            return base.KeyDownAction(pushedKey, isVirtualInput, defaultReturnFunc);
+            return base.KeyDownFunction(pushedKey, isVirtualInput, defaultReturnFunc);
         }
 
-        protected override IntPtr KeyUpAction(OriginalKey upKey, bool isVirtualInput, Func<IntPtr> defaultReturnFunc)
+        protected override IntPtr KeyUpFunction(OriginalKey upKey, bool isVirtualInput, Func<IntPtr> defaultReturnFunc)
         {
             if (inkeys.ContainsKey(upKey))
             {
@@ -69,7 +69,7 @@ namespace KeyConverterGUI.Models.InterceptKey
                 input.KeyUp(inkey);
             }
 
-            return base.KeyUpAction(upKey, isVirtualInput, defaultReturnFunc);
+            return base.KeyUpFunction(upKey, isVirtualInput, defaultReturnFunc);
         }
     }
 }
