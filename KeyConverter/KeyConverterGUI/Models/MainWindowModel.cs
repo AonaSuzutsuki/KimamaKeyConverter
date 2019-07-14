@@ -162,7 +162,7 @@ namespace KeyConverterGUI.Models
         public void LoadSetting()
         {
             var iniLoader = new IniLoader(Constants.IniFileName);
-            var IsDetectMabinogi = iniLoader.GetValue("Main", "IsDetectMabinogi", true);
+            IsDetectMabinogi = iniLoader.GetValue("Main", "IsDetectMabinogi", true);
         }
         #endregion
 
