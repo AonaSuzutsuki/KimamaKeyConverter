@@ -2,6 +2,7 @@
 using LowLevelKeyboardLib.KeyMap;
 using System;
 using System.Collections.Generic;
+using System.Diagnostics;
 using System.Linq;
 using System.Runtime.InteropServices;
 using System.Text;
@@ -24,31 +25,81 @@ namespace KeyConverterGUI.Models.InterceptKey
 
         [DllImport("user32.dll", SetLastError = true)]
         private static extern uint GetWindowThreadProcessId(IntPtr hWnd, out uint lpdwProcessId);
+        
+        [DllImport("kernel32.dll")]
+        private static extern IntPtr OpenProcess(uint dwDesiredAccess, bool bInheritHandle, uint dwProcessId);
+
+        [DllImport("kernel32.dll")]
+        private static extern bool CloseHandle(IntPtr handle);
+
+        [DllImport("psapi.dll", CharSet = CharSet.Ansi)]
+        private static extern uint GetModuleBaseName(IntPtr hWnd, IntPtr hModule, [MarshalAs(UnmanagedType.LPStr), Out] StringBuilder lpBaseName, uint nSize);
         #endregion
 
         #region Properties
         public int SpecificProcessId { get; set; } = 0;
+        public string ProcessName { get; set; }
         #endregion
 
         public Dictionary<OriginalKey, OriginalKey> KeyMap { get; set; } = new Dictionary<OriginalKey, OriginalKey>();
 
+        public override void Initialize()
+        {
+            ProcessName = string.Empty;
+
+            base.Initialize();
+        }
+
         protected override IntPtr HookProcedure(int nCode, IntPtr wParam, IntPtr lParam)
         {
-            if (SpecificProcessId > 0)
+            if (!string.IsNullOrEmpty(ProcessName))
             {
-                IntPtr handle = GetForegroundWindow();
-                uint threadID = GetWindowThreadProcessId(handle, out var _processID);
-                int processId = Convert.ToInt32(_processID);
-                if (processId == SpecificProcessId)
+                var handle = GetForegroundWindow();
+                var threadId = GetWindowThreadProcessId(handle, out var _processID);
+                var processId = Convert.ToInt32(_processID);
+
+                var hnd = OpenProcess(0x0400 | 0x0010 , false, (uint)processId);
+
+                var buffer = new StringBuilder(255);
+                GetModuleBaseName(hnd, IntPtr.Zero, buffer, (uint)buffer.Capacity);
+
+                CloseHandle(hnd);
+
+                var processName = buffer.ToString();
+                if (processName == ProcessName)
                     return base.HookProcedure(nCode, wParam, lParam);
             }
 
             return base.HookProcedure(nCode, wParam, lParam);
         }
 
+        private bool IsProcessName()
+        {
+            if (!string.IsNullOrEmpty(ProcessName))
+            {
+                var handle = GetForegroundWindow();
+                var threadId = GetWindowThreadProcessId(handle, out var _processID);
+                var processId = Convert.ToInt32(_processID);
+
+                var hnd = OpenProcess(0x0400 | 0x0010 , false, (uint)processId);
+
+                var buffer = new StringBuilder(255);
+                GetModuleBaseName(hnd, IntPtr.Zero, buffer, (uint)buffer.Capacity);
+
+                CloseHandle(hnd);
+
+                var processName = buffer.ToString().ToLower();
+                Console.WriteLine(processName);
+
+                return processName == ProcessName;
+            }
+
+            return true;
+        }
+
         protected override IntPtr KeyDownFunction(OriginalKey pushedKey, bool isVirtualInput, Func<IntPtr> defaultReturnFunc)
         {
-            if (!isVirtualInput)
+            if (!isVirtualInput && IsProcessName())
             {
                 if (KeyMap.ContainsKey(pushedKey))
                 {

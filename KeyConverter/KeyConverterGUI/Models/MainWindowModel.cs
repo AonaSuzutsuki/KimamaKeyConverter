@@ -100,11 +100,7 @@ namespace KeyConverterGUI.Models
                 interceptKeys.Initialize();
                 
                 if (IsDetectMabinogi)
-                {
-                    var processes = Process.GetProcessesByName("Client");
-                    if (processes.Length > 0)
-                        interceptKeys.SpecificProcessId = processes[0].Id;
-                }
+                    interceptKeys.ProcessName = "client.exe";
                 
 
                 var resourceDictionary = new ResourceDictionary
