@@ -1,6 +1,12 @@
 # Mabinogi Key Converter
-マビノギ向けのキー変換器です。  
-マビノギを起動していない場合や検知を使用していない場合はWindows全体のキー置き換えソフトとして利用できます。  
+マビノギ向けに開発されたキー変換器です。  
+キーボードの種類によってはCtrlやAltなどのキーが遠く、指が攣ることが多々あります。  
+そんな時にこのソフトではそういったシステムキーを異なるキーに割り当てることができます。  
+例えば、CtrlキーをAltキーに、AltキーをCtrlキーに転換することも可能です。  
+これにより不快感の無いマビノギライフが実現できるでしょう。  
+
+なお、マビノギ向けとしていますが、マビノギ検知を使用していない場合はWindows全体のキー置き換えソフトとして利用できます。  
+レジストリの変換を利用しないので再起動も不要ですので起動後すぐにお使いいただけます。  
 
 # 使い方
 [MabinogiKeyConverter - Wiki](https://github.com/AonaSuzutsuki/MabinogiKeyConverter/wiki)に移動しました。  
@@ -21,7 +27,7 @@
 |Windows 7 x64 | 不明 | - |
 |Windows 8.x | 不明 | - |
 |Windows 10 x86 | 不明 | - |
-|Windows 10 x64 1803 | 正常動作 | - |
+|Windows 10 x64 1903 | 正常動作 | - |
 
 # Copyright
 Copyright © Aona Suzutsuki 2018  

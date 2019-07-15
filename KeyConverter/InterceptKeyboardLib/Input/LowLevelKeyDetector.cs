@@ -54,7 +54,7 @@ namespace LowLevelKeyboardLib.Input
         /// <summary>
         /// Initialize WindowsHook and start to intercept.
         /// </summary>
-        public void Initialize()
+        public virtual void Initialize()
         {
             this.Hook();
         }
@@ -80,7 +80,7 @@ namespace LowLevelKeyboardLib.Input
                 var key = KeyMapConverter.KeyCodeToKey(vkCode);
                 var isVirtualInput = kb.dwExtraInfo.ToUInt32() == MAGIC_NUMBER;
                 OnKeyDownEvent(vkCode, key, isVirtualInput);
-                return KeyDownAction(key, isVirtualInput, () => base.HookProcedure(nCode, wParam, lParam));
+                return KeyDownFunction(key, isVirtualInput, () => base.HookProcedure(nCode, wParam, lParam));
             }
             else if (nCode >= 0 && (wParam == (IntPtr)WM_KEYUP || wParam == (IntPtr)WM_SYSKEYUP))
             {
@@ -89,7 +89,7 @@ namespace LowLevelKeyboardLib.Input
                 var key = KeyMapConverter.KeyCodeToKey(vkCode);
                 var isVirtualInput = kb.dwExtraInfo.ToUInt32() == MAGIC_NUMBER;
                 OnKeyUpEvent(vkCode, key, isVirtualInput);
-                return KeyUpAction(key, isVirtualInput, () => base.HookProcedure(nCode, wParam, lParam));
+                return KeyUpFunction(key, isVirtualInput, () => base.HookProcedure(nCode, wParam, lParam));
             }
 
             return base.HookProcedure(nCode, wParam, lParam);
@@ -116,7 +116,7 @@ namespace LowLevelKeyboardLib.Input
         /// <param name="pushedKey">Actually pushed key</param>
         /// <param name="defaultReturnFunc">Default return func.</param>
         /// <returns></returns>
-        protected virtual IntPtr KeyDownAction(OriginalKey pushedKey, bool isVirtualInput, Func<IntPtr> defaultReturnFunc)
+        protected virtual IntPtr KeyDownFunction(OriginalKey pushedKey, bool isVirtualInput, Func<IntPtr> defaultReturnFunc)
         {
             return defaultReturnFunc();
         }
@@ -125,7 +125,7 @@ namespace LowLevelKeyboardLib.Input
         /// KeyUp method. It is a method for override.
         /// </summary>
         /// <param name="upKey">Converted key</param>
-        protected virtual IntPtr KeyUpAction(OriginalKey upKey, bool isVirtualInput, Func<IntPtr> defaultReturnFunc)
+        protected virtual IntPtr KeyUpFunction(OriginalKey upKey, bool isVirtualInput, Func<IntPtr> defaultReturnFunc)
         {
             return defaultReturnFunc();
         }
