@@ -29,6 +29,7 @@ namespace KeyConverterGUI.Models
         private LowLevelKeyConverter interceptKeys;
         private bool isEnabled = false;
         private bool isDetectMabinogi = true;
+        private bool isDetectMabinogiEnabled = true;
 
         private Dictionary<OriginalKey, OriginalKey> keyMap = new Dictionary<OriginalKey, OriginalKey>()
                 {
@@ -57,6 +58,12 @@ namespace KeyConverterGUI.Models
         {
             get => isDetectMabinogi;
             set => SetProperty(ref isDetectMabinogi, value);
+        }
+
+        public bool IsDetectMabinogiEnabled
+        {
+            get => isDetectMabinogiEnabled;
+            set => SetProperty(ref isDetectMabinogiEnabled, value);
         }
         #endregion
 
@@ -93,11 +100,7 @@ namespace KeyConverterGUI.Models
                 interceptKeys.Initialize();
                 
                 if (IsDetectMabinogi)
-                {
-                    var processes = Process.GetProcessesByName("Client");
-                    if (processes.Length > 0)
-                        interceptKeys.SpecificProcessId = processes[0].Id;
-                }
+                    interceptKeys.ProcessName = "client.exe";
                 
 
                 var resourceDictionary = new ResourceDictionary
@@ -107,6 +110,7 @@ namespace KeyConverterGUI.Models
                 ChangeBaseBackground?.Invoke(resourceDictionary["EnabledColor"] as SolidColorBrush);
 
                 isEnabled = true;
+                IsDetectMabinogiEnabled = false;
                 ButtonText = LangResource.Resources.Resources.UI_Enabled;
             }
             else
@@ -120,6 +124,7 @@ namespace KeyConverterGUI.Models
                 ChangeBaseBackground?.Invoke(resourceDictionary["MainColor"] as SolidColorBrush);
 
                 isEnabled = false;
+                IsDetectMabinogiEnabled = true;
                 ButtonText = LangResource.Resources.Resources.UI_Disabled;
             }
             KeymappingBtEnabled = !isEnabled;
@@ -153,7 +158,7 @@ namespace KeyConverterGUI.Models
         public void LoadSetting()
         {
             var iniLoader = new IniLoader(Constants.IniFileName);
-            var IsDetectMabinogi = iniLoader.GetValue("Main", "IsDetectMabinogi", true);
+            IsDetectMabinogi = iniLoader.GetValue("Main", "IsDetectMabinogi", true);
         }
         #endregion
 
