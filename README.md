@@ -30,7 +30,7 @@
 |Windows 10 x64 1903 | 正常動作 | - |
 
 # Copyright
-Copyright © Aona Suzutsuki 2018  
+Copyright © Aona Suzutsuki 2018-2019  
 
 # Special thanks
 1. [C#でSendInputを使う](https://gist.github.com/romichi/4971512)  
