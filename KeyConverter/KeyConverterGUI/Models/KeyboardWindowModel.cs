@@ -107,6 +107,12 @@ namespace KeyConverterGUI.Models
             destKey = e.Key;
         }
 
+        public void DestroyInput()
+        {
+            DestKeyText = OriginalKey.None.ToString();
+            destKey = OriginalKey.None;
+        }
+
         public void ApplyPopup()
         {
             if (destKey.Equals(OriginalKey.Unknown))

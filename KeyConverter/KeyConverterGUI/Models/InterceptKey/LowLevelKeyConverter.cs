@@ -78,6 +78,9 @@ namespace KeyConverterGUI.Models.InterceptKey
         {
             if (!isVirtualInput && IsProcessName())
             {
+                if (pushedKey == OriginalKey.None)
+                    return new IntPtr(1);
+
                 if (KeyMap.ContainsKey(pushedKey))
                 {
                     var input = KeyMap[pushedKey];

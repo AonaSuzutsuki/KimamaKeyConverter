@@ -32,7 +32,8 @@ namespace KeyConverterGUI.ViewModels
             #endregion
 
             #region Initialize Events
-            KeyboardBtClicked = new DelegateCommand<LowLevelKeyboardLib.KeyMap.OriginalKey?>(KeyboardBt_Clicked);
+            KeyboardBtClicked = new DelegateCommand<OriginalKey?>(KeyboardBt_Clicked);
+            DestroyInputButtonClicked = new DelegateCommand(DestroyInputButton_Clicked);
             OkPopupBtClicked = new DelegateCommand(OkPopupBt_Clicked);
             ClosePopupBtClicked = new DelegateCommand(ClosePopupBt_Clicked);
             #endregion
@@ -51,16 +52,22 @@ namespace KeyConverterGUI.ViewModels
 
         #region Events Properties
         public ICommand KeyboardBtClicked { get; set; }
+        public ICommand DestroyInputButtonClicked { get; set; }
         
         public ICommand OkPopupBtClicked { get; set; }
         public ICommand ClosePopupBtClicked { get; set; }
         #endregion
 
         #region Events Methods
-        public void KeyboardBt_Clicked(LowLevelKeyboardLib.KeyMap.OriginalKey? key)
+        public void KeyboardBt_Clicked(OriginalKey? key)
         {
             if (key != null)
                 model.OpenPopup(key.Value);
+        }
+
+        public void DestroyInputButton_Clicked()
+        {
+            model.DestroyInput();
         }
 
         public void OkPopupBt_Clicked()
