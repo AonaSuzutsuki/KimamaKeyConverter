@@ -14,12 +14,13 @@ using Reactive.Bindings;
 using Reactive.Bindings.Extensions;
 using KeyConverterGUI.Views;
 using System.Windows.Controls.Primitives;
+using CommonStyleLib.Views;
 
 namespace KeyConverterGUI.ViewModels
 {
     public class KeyboardWindowViewModel : ViewModelBase
     {
-        public KeyboardWindowViewModel(Window window, KeyboardWindowModel model) : base(window, model)
+        public KeyboardWindowViewModel(WindowService windowService, KeyboardWindowModel model) : base(windowService, model)
         {
             this.model = model;
 

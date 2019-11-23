@@ -12,6 +12,8 @@ using System.Windows.Documents;
 using System.Windows.Media;
 using System.Windows.Media.Imaging;
 using System.Windows.Shapes;
+using CommonStyleLib.ExMessageBox.Views;
+using CommonStyleLib.Views;
 
 namespace KeyConverterGUI.Views
 {
@@ -21,21 +23,42 @@ namespace KeyConverterGUI.Views
     public partial class KeyboardWindow : Window, IDisposable
     {
 
-        private KeyboardWindowModel model;
+        private readonly KeyboardWindowModel model;
 
         public KeyboardWindow(Dictionary<OriginalKey, OriginalKey> keyMap)
         {
             InitializeComponent();
 
             model = new KeyboardWindowModel(keyMap);
-            var vm = new ViewModels.KeyboardWindowViewModel(this, model);
+            var vm = new ViewModels.KeyboardWindowViewModel(new WindowService(this), model);
             DataContext = vm;
         }
 
-        
+
+        #region IDisposable
+        // Flag: Has Dispose already been called?
+        private bool disposed = false;
+
+        // Public implementation of Dispose pattern callable by consumers.
         public void Dispose()
         {
-            model?.Dispose();
+            Dispose(true);
+            GC.SuppressFinalize(this);
         }
+
+        // Protected implementation of Dispose pattern.
+        protected virtual void Dispose(bool disposing)
+        {
+            if (disposed)
+                return;
+
+            if (disposing)
+            {
+                model?.Dispose();
+            }
+
+            disposed = true;
+        }
+        #endregion
     }
 }
