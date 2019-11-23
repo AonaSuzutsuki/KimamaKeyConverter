@@ -13,6 +13,7 @@ using System.Windows.Media.Animation;
 using System.Windows.Media.Imaging;
 using System.Windows.Navigation;
 using System.Windows.Shapes;
+using CommonStyleLib.Views;
 
 namespace KeyConverterGUI.Views
 {
@@ -29,7 +30,7 @@ namespace KeyConverterGUI.Views
             {
                 ChangeBaseBackground = ChangeBaseBackground
             };
-            var vm = new ViewModels.MainWindowViewModel(this, model);
+            var vm = new ViewModels.MainWindowViewModel(new WindowService(this), model);
             DataContext = vm;
         }
 

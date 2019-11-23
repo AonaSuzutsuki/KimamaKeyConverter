@@ -3,7 +3,7 @@
         xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
         xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
-        xmlns:i="http://schemas.microsoft.com/expression/2010/interactivity"
+        xmlns:i="http://schemas.microsoft.com/xaml/behaviors"
         xmlns:key="clr-namespace:LowLevelKeyboardLib.KeyMap;assembly=LowLevelKeyboardLib"
         xmlns:CommonViews="clr-namespace:CommonStyleLib.Views;assembly=CommonStyleLib"
         xmlns:lang="clr-namespace:LangResource"
@@ -439,6 +439,7 @@
                                 <Label Content="{Binding Source={x:Static lang:ResourceService.Current}, Path=ResourcesKeyboard.UI_DestKey, Mode=OneWay}" Height="25" />
                                 <Label Content=":" Height="25" />
                                 <TextBox Text="{Binding DestKeyText.Value}" Width="100" Height="25" IsReadOnly="True" />
+                                <Button Content="入力を破棄" Width="70" Margin="5,0,5,0" Style="{DynamicResource FlatButton}" Command="{Binding DestroyInputButtonClicked}" />
                                 <Label Content="{Binding Source={x:Static lang:ResourceService.Current}, Path=ResourcesKeyboard.UI_PushKeyDescript, Mode=OneWay}" Height="25" />
                             </StackPanel>
                         </StackPanel>

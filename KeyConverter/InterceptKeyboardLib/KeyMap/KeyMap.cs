@@ -8,6 +8,7 @@ namespace LowLevelKeyboardLib.KeyMap
 {
     public enum OriginalKey
     {
+        None = -1,
         Unknown = 0,
 
         Back = 8,

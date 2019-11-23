@@ -10,12 +10,13 @@ using System.Text;
 using System.Threading.Tasks;
 using System.Windows;
 using System.Windows.Input;
+using CommonStyleLib.Views;
 
 namespace KeyConverterGUI.ViewModels
 {
     public class MainWindowViewModel : ViewModelBase
     {
-        public MainWindowViewModel(Window window, MainWindowModel model) : base(window, model)
+        public MainWindowViewModel(WindowService windowService, MainWindowModel model) : base(windowService, model)
         {
             this.model = model;
 
