@@ -102,7 +102,7 @@ namespace KeyConverterGUI.Models
                 if (IsDetectMabinogi)
                     interceptKeys.ProcessName = "client.exe";
                 
-
+                
                 var resourceDictionary = new ResourceDictionary
                 {
                     Source = new Uri("../Styles/Constants.xaml", UriKind.Relative)
@@ -115,7 +115,7 @@ namespace KeyConverterGUI.Models
             }
             else
             {
-                interceptKeys.Dispose();
+                interceptKeys.UnHook();
 
                 var resourceDictionary = new ResourceDictionary
                 {
@@ -163,11 +163,30 @@ namespace KeyConverterGUI.Models
         #endregion
 
         #region IDisposable
+        // Flag: Has Dispose already been called?
+        private bool disposed = false;
+
+        // Public implementation of Dispose pattern callable by consumers.
         public void Dispose()
         {
-            SaveSetting();
-            interceptKeys?.Dispose();
-            keymapping?.Dispose();
+            Dispose(true);
+            GC.SuppressFinalize(this);
+        }
+
+        // Protected implementation of Dispose pattern.
+        protected virtual void Dispose(bool disposing)
+        {
+            if (disposed)
+                return;
+            
+            if (disposing)
+            {
+                SaveSetting();
+                interceptKeys?.UnHook();
+                keymapping?.Dispose();
+            }
+
+            disposed = true;
         }
         #endregion
     }

@@ -10,7 +10,7 @@ using LowLevelKeyboardLib.KeyMap;
 
 namespace LowLevelKeyboardLib.Input
 {
-    public class LowLevelKeyDetector : AbstractLowLevelKeyDetector, IDisposable
+    public class LowLevelKeyDetector : AbstractLowLevelKeyDetector
     {
         #region Fields
         private bool isIntercepted = false;
@@ -131,10 +131,11 @@ namespace LowLevelKeyboardLib.Input
         }
 
         #region IDisposable
+
         /// <summary>
         /// Unhook WindowsHook and Execute to up all pushed key.
         /// </summary>
-        public void Dispose()
+        public override void UnHook()
         {
             AllKeyUp();
             base.UnHook();
