@@ -55,10 +55,9 @@ namespace KeyConverterGUI.Models.InterceptKey
             if (!string.IsNullOrEmpty(ProcessName))
             {
                 var handle = GetForegroundWindow();
-                var threadId = GetWindowThreadProcessId(handle, out var _processID);
-                var processId = Convert.ToInt32(_processID);
+                var threadId = GetWindowThreadProcessId(handle, out var processId);
 
-                var hnd = OpenProcess(0x0400 | 0x0010 , false, (uint)processId);
+                var hnd = OpenProcess(0x0400 | 0x0010 , false, processId);
 
                 var buffer = new StringBuilder(255);
                 GetModuleBaseName(hnd, IntPtr.Zero, buffer, (uint)buffer.Capacity);
