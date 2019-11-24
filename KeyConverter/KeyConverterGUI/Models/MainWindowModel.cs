@@ -130,14 +130,10 @@ namespace KeyConverterGUI.Models
             KeymappingBtEnabled = !isEnabled;
         }
 
-        public void OpenKeyMapping()
-        {
-            EnabledBtEnabled = false;
-            keymapping = new KeyboardWindow(keyMap);
-            keymapping.ShowDialog();
-            keymapping.Dispose();
-            EnabledBtEnabled = true;
+        public KeyboardWindowModel CreaKeyboardWindowModel() => new KeyboardWindowModel(keyMap);
 
+        public void SaveKeyMap()
+        {
             var json = JsonConvert.SerializeObject(keyMap);
             using (var fs = new FileStream(Constants.KeyMapFileName, FileMode.Create, FileAccess.Write, FileShare.None))
             {
@@ -147,7 +143,6 @@ namespace KeyConverterGUI.Models
                 }
             }
         }
-
 
         #region Setting
         public void SaveSetting()
@@ -183,7 +178,6 @@ namespace KeyConverterGUI.Models
             {
                 SaveSetting();
                 interceptKeys?.UnHook();
-                keymapping?.Dispose();
             }
 
             disposed = true;
