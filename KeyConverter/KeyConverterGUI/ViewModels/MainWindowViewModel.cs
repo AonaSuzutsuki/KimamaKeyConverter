@@ -11,6 +11,7 @@ using System.Threading.Tasks;
 using System.Windows;
 using System.Windows.Input;
 using CommonStyleLib.Views;
+using KeyConverterGUI.Views;
 
 namespace KeyConverterGUI.ViewModels
 {
@@ -64,7 +65,14 @@ namespace KeyConverterGUI.ViewModels
 
         public void KeyboardMappingBt_Clicked()
         {
-            model.OpenKeyMapping();
+            model.EnabledBtEnabled = false;
+            var keyboardModel = model.CreaKeyboardWindowModel();
+            var vm = new KeyboardWindowViewModel(new WindowService(), keyboardModel);
+            WindowManageService.ShowDialog<KeyboardWindow>(vm);
+            keyboardModel.Dispose();
+            model.EnabledBtEnabled = true;
+            
+            model.SaveKeyMap();
         }
         #endregion
     }

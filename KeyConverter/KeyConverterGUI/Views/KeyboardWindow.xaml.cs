@@ -20,45 +20,11 @@ namespace KeyConverterGUI.Views
     /// <summary>
     /// KeyboardWindow.xaml の相互作用ロジック
     /// </summary>
-    public partial class KeyboardWindow : Window, IDisposable
+    public partial class KeyboardWindow : Window
     {
-
-        private readonly KeyboardWindowModel model;
-
-        public KeyboardWindow(Dictionary<OriginalKey, OriginalKey> keyMap)
+        public KeyboardWindow()
         {
             InitializeComponent();
-
-            model = new KeyboardWindowModel(keyMap);
-            var vm = new ViewModels.KeyboardWindowViewModel(new WindowService(this), model);
-            DataContext = vm;
         }
-
-
-        #region IDisposable
-        // Flag: Has Dispose already been called?
-        private bool disposed = false;
-
-        // Public implementation of Dispose pattern callable by consumers.
-        public void Dispose()
-        {
-            Dispose(true);
-            GC.SuppressFinalize(this);
-        }
-
-        // Protected implementation of Dispose pattern.
-        protected virtual void Dispose(bool disposing)
-        {
-            if (disposed)
-                return;
-
-            if (disposing)
-            {
-                model?.Dispose();
-            }
-
-            disposed = true;
-        }
-        #endregion
     }
 }
