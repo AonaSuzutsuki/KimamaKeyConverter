@@ -38,5 +38,11 @@ Copyright © Aona Suzutsuki 2018-2019
 3. [Windows：SendInputで指定した"dwExtraInfo"をグローバルフック内で取得する](http://d.hatena.ne.jp/ken_2501jp/20130406/1365235955)  
 4. [An ObservableDictionary<TKey, TValue>](https://gist.github.com/kzu/cfe3cb6e4fe3efea6d24)  
 
-ReactiveProperty:   Copyright (c) 2018 neuecc, xin9le, okazuki  
-Prism.Core:         Copyright (c) .NET Foundation
+ReactiveProperty:               Copyright (c) 2018 neuecc, xin9le, okazuki  
+Prism.Core:                     Copyright (c) .NET Foundation  
+Microsoft.Xaml.Behaviors.Wpf:   Copyright (c) 2015 Microsoft  
+NUnit:                          Copyright (c) 2019 Charlie Poole, Rob Prouse  
+Newtonsoft.Json:                Copyright (c) 2007 James Newton-King  
+
+
+This software includes the work that is distributed in the Apache License 2.0
