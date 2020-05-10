@@ -1,33 +1,33 @@
 # Mabinogi Key Converter
-マビノギ向けに開発されたキー変換器です。  
-キーボードの種類によってはCtrlやAltなどのキーが遠く、指が攣ることが多々あります。  
-そんな時にこのソフトではそういったシステムキーを異なるキーに割り当てることができます。  
-例えば、CtrlキーをAltキーに、AltキーをCtrlキーに転換することも可能です。  
-これにより不快感の無いマビノギライフが実現できるでしょう。  
+This is key converter for Mabinogi.  
+Depending on the type of keyboard, keys such as Ctrl and Alt are far away, and your finger hang.  
+At that time, this software can assign system keys to different keys.  
+For example, you can convert the Ctrl key to the Alt key and the Alt key to the Ctrl key.  
+This will make your mabinogi life without any discomfort.  
 
-なお、マビノギ向けとしていますが、マビノギ検知を使用していない場合はWindows全体のキー置き換えソフトとして利用できます。  
-レジストリの変換を利用しないので再起動も不要ですので起動後すぐにお使いいただけます。  
+Although it is intended for mabinogi, it can be used as key replacement software for the entire Windows if mabinogi detection is not used.  
+Since it does not use registry, restarting is unnecessary, so you can use it immediately after startup.  
 
-# 使い方
-[MabinogiKeyConverter - Wiki](https://github.com/AonaSuzutsuki/MabinogiKeyConverter/wiki)に移動しました。  
+# How to use
+Moved to [MabinogiKeyConverter - Wiki](https://github.com/AonaSuzutsuki/MabinogiKeyConverter/wiki).  
 
-# 注意
-グローバルフックを用いてキーを操作するので予期せぬクラッシュなどによりキー操作が一切行えなくなる可能性があります。  
-一応そういった致命的な不具合は無いように作っていますが、もしかすると起きる可能性が潰せていないのでもし発生しましたらご一報ください。  
-また、BlackCipherに関しては入力されたキーを補足し、ソフト的にキーを押し直しているだけなので現段階では引っかかりませんが、将来的に禁止される可能性もあります。  
-なお、**そういった事などによる損害に関しては一切責任を負いません**のでご容赦ください。  
+# Notice
+Because keys are operated using global hooks, there is a possibility that key operations cannot be performed at all due to unexpected crashes.  
+I made it so that there is no such fatal bug, but if it happens, please let me know.  
+In addition, this application capture the input key and only presses the key with software, so it will not get caught at this stage by BlackCipher, but it may be prohibited in the future.  
+Please forgive because I do not take any responsibility for damage caused by such things.  
 
-# 必須項目
+# Requirements
 1. .Net Framework 4.7.1
 
-# 動作確認
+# Check environment
 | OS | 動作状況 | 備考 |
 |:---|:---|:---|
-|Windows 7 x86 | 一応動作確認済み | 英語版で確認 |
-|Windows 7 x64 | 不明 | - |
-|Windows 8.x | 不明 | - |
-|Windows 10 x86 | 不明 | - |
-|Windows 10 x64 1903 | 正常動作 | - |
+|Windows 7 x86 | OK | Checked on English version |
+|Windows 7 x64 | - | - |
+|Windows 8.x | - | - |
+|Windows 10 x86 | - | - |
+|Windows 10 x64 1903 | OK | - |
 
 # Copyright
 Copyright © Aona Suzutsuki 2018-2019  
@@ -38,5 +38,10 @@ Copyright © Aona Suzutsuki 2018-2019
 3. [Windows：SendInputで指定した"dwExtraInfo"をグローバルフック内で取得する](http://d.hatena.ne.jp/ken_2501jp/20130406/1365235955)  
 4. [An ObservableDictionary<TKey, TValue>](https://gist.github.com/kzu/cfe3cb6e4fe3efea6d24)  
 
-ReactiveProperty:   Copyright (c) 2018 neuecc, xin9le, okazuki  
-Prism.Core:         Copyright (c) .NET Foundation
+ReactiveProperty:               Copyright (c) 2018 neuecc, xin9le, okazuki  
+Prism.Core:                     Copyright (c) .NET Foundation  
+Microsoft.Xaml.Behaviors.Wpf:   Copyright (c) 2015 Microsoft  
+Newtonsoft.Json:                Copyright (c) 2007 James Newton-King  
+
+
+This software includes the work that is distributed in the Apache License 2.0
