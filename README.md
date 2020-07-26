@@ -21,7 +21,7 @@ Please forgive because I do not take any responsibility for damage caused by suc
 1. .Net Framework 4.7.1
 
 # Check environment
-| OS | 動作状況 | 備考 |
+| OS | Status | Remarks |
 |:---|:---|:---|
 |Windows 7 x86 | OK | Checked on English version |
 |Windows 7 x64 | - | - |

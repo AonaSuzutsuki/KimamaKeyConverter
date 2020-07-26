@@ -48,6 +48,7 @@
     <Compile Include="Input\LowLevelKeyDetector.cs" />
     <Compile Include="KeyMap\KeyMap.cs" />
     <Compile Include="KeyMap\KeyMapConverter.cs" />
+    <Compile Include="ProcessFunctions\ForegroundProcess.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup />
