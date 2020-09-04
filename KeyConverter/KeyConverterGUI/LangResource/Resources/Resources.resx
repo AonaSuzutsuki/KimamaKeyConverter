@@ -130,6 +130,6 @@
     <value>キーボードマッピング</value>
   </data>
   <data name="UI_Process_Setting" xml:space="preserve">
-    <value>除外プロセスの登録</value>
+    <value>検出するプロセスの登録</value>
   </data>
 </root>

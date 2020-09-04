@@ -68,7 +68,7 @@ namespace KeyConverterGUI.ViewModels
         public void KeyboardMappingBtClick()
         {
             model.EnabledBtEnabled = false;
-            var keyboardModel = model.CreaKeyboardWindowModel();
+            var keyboardModel = model.CreateKeyboardWindowModel();
             var vm = new KeyboardWindowViewModel(new WindowService(), keyboardModel);
             WindowManageService.ShowDialog<KeyboardWindow>(vm);
             keyboardModel.Dispose();
@@ -80,10 +80,10 @@ namespace KeyConverterGUI.ViewModels
         public void ProcessSettingBtClick()
         {
             model.EnabledBtEnabled = false;
-            var processModel = new ProcessSettingModel(Constants.IgnoreProcessesFileName);
+            var processModel = new ProcessSettingModel(Constants.DetectProcessesFileName);
             var vm = new ProcessSettingViewModel(new WindowService(), processModel);
             WindowManageService.ShowDialog<ProcessSetting>(vm);
-            model.IgnoreProcesses = model.ConvertLowerHashSet(processModel.Save());
+            model.SetLowerHashSet(processModel.Save());
             model.EnabledBtEnabled = true;
         }
         #endregion

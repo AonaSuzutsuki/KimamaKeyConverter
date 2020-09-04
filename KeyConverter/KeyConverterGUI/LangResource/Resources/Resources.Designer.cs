@@ -97,7 +97,7 @@ namespace KeyConverterGUI.LangResource.Resources {
         }
         
         /// <summary>
-        ///   除外プロセスの登録 に類似しているローカライズされた文字列を検索します。
+        ///   検出するプロセスの登録 に類似しているローカライズされた文字列を検索します。
         /// </summary>
         public static string UI_Process_Setting {
             get {

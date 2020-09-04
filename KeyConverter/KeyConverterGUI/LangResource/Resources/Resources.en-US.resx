@@ -130,6 +130,6 @@
     <value>Keyboard Mapping</value>
   </data>
   <data name="UI_Process_Setting" xml:space="preserve">
-    <value>Register Ignore Process</value>
+    <value>Register any processes</value>
   </data>
 </root>

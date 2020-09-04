@@ -66,7 +66,7 @@ namespace KeyConverterGUI.Models
             set => SetProperty(ref isDetectMabinogiEnabled, value);
         }
 
-        public HashSet<string> IgnoreProcesses { get; set; }
+        public HashSet<string> DetectProcesses { get; set; } = new HashSet<string>();
         #endregion
 
         #region Actions
@@ -82,25 +82,27 @@ namespace KeyConverterGUI.Models
                     keyMap = JsonConvert.DeserializeObject<Dictionary<OriginalKey, OriginalKey>>(json);
             }
 
-            LoadIgnoreProcesses();
+            LoadDetectProcesses();
 
             LoadSetting();
         }
 
-        public void LoadIgnoreProcesses()
+        public void LoadDetectProcesses()
         {
-            if (File.Exists(Constants.IgnoreProcessesFileName))
+            if (File.Exists(Constants.DetectProcessesFileName))
             {
-                var json = File.ReadAllText(Constants.IgnoreProcessesFileName);
+                var json = File.ReadAllText(Constants.DetectProcessesFileName);
                 if (!string.IsNullOrEmpty(json))
-                    IgnoreProcesses = ConvertLowerHashSet(JsonConvert.DeserializeObject<HashSet<string>>(json));
+                    SetLowerHashSet(JsonConvert.DeserializeObject<HashSet<string>>(json));
             }
         }
 
-        public HashSet<string> ConvertLowerHashSet(IEnumerable<string> enumerable)
+        private static HashSet<string> ConvertLowerHashSet(IEnumerable<string> enumerable) =>
+            new HashSet<string>(from x in enumerable select x.ToLower());
+
+        public void SetLowerHashSet(HashSet<string> hashSet)
         {
-            var converted = from x in enumerable select x.ToLower();
-            return new HashSet<string>(converted);
+            DetectProcesses = ConvertLowerHashSet(hashSet);
         }
 
         public void EnabledOrDisabled()
@@ -112,7 +114,7 @@ namespace KeyConverterGUI.Models
                 interceptKeys.Initialize();
 
                 if (IsDetectMabinogi)
-                    interceptKeys.ProcessNames = IgnoreProcesses;
+                    interceptKeys.ProcessNames = DetectProcesses;
                 
                 
                 var resourceDictionary = new ResourceDictionary
@@ -142,18 +144,14 @@ namespace KeyConverterGUI.Models
             KeymappingBtEnabled = !isEnabled;
         }
 
-        public KeyboardWindowModel CreaKeyboardWindowModel() => new KeyboardWindowModel(keyMap);
+        public KeyboardWindowModel CreateKeyboardWindowModel() => new KeyboardWindowModel(keyMap);
 
         public void SaveKeyMap()
         {
             var json = JsonConvert.SerializeObject(keyMap);
-            using (var fs = new FileStream(Constants.KeyMapFileName, FileMode.Create, FileAccess.Write, FileShare.None))
-            {
-                using (var sw = new StreamWriter(fs, Encoding.UTF8))
-                {
-                    sw.Write(json);
-                }
-            }
+            using var fs = new FileStream(Constants.KeyMapFileName, FileMode.Create, FileAccess.Write, FileShare.None);
+            using var sw = new StreamWriter(fs, Encoding.UTF8);
+            sw.Write(json);
         }
 
         #region Setting
