@@ -9,7 +9,7 @@
         xmlns:lang="clr-namespace:LangResource"
         mc:Ignorable="d"
         Icon="pack://application:,,,/CommonStyleLib;component/Resources/1.ico"
-        Title="Register Ignore Process" Height="250" Width="400" ResizeMode="CanMinimize"
+        Title="Register Ignore Process" Height="300" Width="600" ResizeMode="CanResize"
         TextOptions.TextFormattingMode="Display" TextOptions.TextRenderingMode="ClearType" UseLayoutRounding="True">
 
     <i:Interaction.Triggers>
@@ -73,7 +73,107 @@
             </StackPanel>
 
             <Grid Margin="5,25,5,5">
-                <TextBox Text="{Binding ProcessesText.Value, UpdateSourceTrigger=PropertyChanged}" />
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="30" />
+                    <ColumnDefinition Width="5" />
+                    <ColumnDefinition />
+                </Grid.ColumnDefinitions>
+
+                <Grid>
+
+                    <Grid.RowDefinitions>
+                        <RowDefinition Height="30" />
+                        <RowDefinition Height="5" />
+                        <RowDefinition Height="30" />
+                        <RowDefinition Height="5" />
+                    </Grid.RowDefinitions>
+
+                    <Button Content="+" Style="{StaticResource FlatButton}" />
+                    <Button Grid.Row="2" Content="-" Style="{StaticResource FlatButton}" />
+                </Grid>
+
+                <ListBox Grid.Column="2" Background="Transparent" ItemsSource="{Binding ProcessItems}" ScrollViewer.HorizontalScrollBarVisibility="Disabled">
+
+                    <ListBox.ItemContainerStyle>
+                        <Style TargetType="ListBoxItem">
+                            <Setter Property="BorderThickness" Value="10,0,0,0" />
+                            <Setter Property="BorderBrush" Value="Transparent" />
+                            <Setter Property="HorizontalContentAlignment" Value="Stretch" />
+                            <Setter Property="VerticalContentAlignment" Value="Center" />
+                            <Setter Property="Template">
+                                <Setter.Value>
+                                    <ControlTemplate TargetType="{x:Type ListBoxItem}">
+                                        <Grid>
+                                            <Border
+                                                BorderBrush="{TemplateBinding BorderBrush}"
+                                                BorderThickness="{TemplateBinding BorderThickness}"
+                                                Background="{TemplateBinding Background}">
+                                                <ContentPresenter Margin="0" HorizontalAlignment="Stretch" VerticalAlignment="Top" />
+                                            </Border>
+                                        </Grid>
+                                    </ControlTemplate>
+                                </Setter.Value>
+                            </Setter>
+                            <Style.Triggers>
+                                <MultiTrigger>
+                                    <MultiTrigger.Conditions>
+                                        <Condition Property="IsSelected" Value="true" />
+                                    </MultiTrigger.Conditions>
+                                    <Setter Property="Background" Value="#4090ff" />
+                                    <Setter Property="BorderBrush" Value="#FF2B4A76" />
+                                </MultiTrigger>
+                                <Trigger Property="IsMouseOver" Value="True">
+                                    <Setter Property="Background" Value="#444"/>
+                                    <Setter Property="BorderBrush" Value="#444" />
+                                </Trigger>
+                            </Style.Triggers>
+                        </Style>
+                    </ListBox.ItemContainerStyle>
+
+                    <ListBox.ItemTemplate>
+                        <DataTemplate>
+                            <Grid Margin="5" >
+
+                                <Grid.ColumnDefinitions>
+                                    <ColumnDefinition />
+                                    <ColumnDefinition Width="30" />
+                                </Grid.ColumnDefinitions>
+
+                                <TextBox Text="{Binding FullPath}">
+                                    <TextBox.Resources>
+                                        <Style TargetType="TextBox">
+                                            <Setter Property="Foreground" Value="white" />
+                                            <Setter Property="VerticalAlignment" Value="Center" />
+                                            <Setter Property="Template">
+                                                <Setter.Value>
+                                                    <ControlTemplate TargetType="{x:Type TextBoxBase}">
+                                                        <Border Name="TextBoxBorder" Height="{TemplateBinding Height}" Width="{TemplateBinding Width}" BorderThickness="1" BorderBrush="Transparent">
+                                                            <ScrollViewer Margin="0" x:Name="PART_ContentHost" />
+                                                        </Border>
+                                                        <ControlTemplate.Triggers>
+                                                            <Trigger Property="IsKeyboardFocusWithin" Value="True">
+                                                                <Setter TargetName="TextBoxBorder" Property="BorderBrush" Value="LightGray" />
+                                                            </Trigger>
+                                                        </ControlTemplate.Triggers>
+                                                    </ControlTemplate>
+                                                </Setter.Value>
+                                            </Setter>
+                                        </Style>
+                                    </TextBox.Resources>
+                                </TextBox>
+
+                                <Button Grid.Column="1" Name="PlusBT" Content="..." Width="25" Height="25" Command="{Binding SetFullPathCommand}" />
+                            </Grid>
+                            <DataTemplate.Triggers>
+                                <Trigger Property="IsMouseOver" Value="false">
+                                    <Setter Property="Opacity" Value="0" TargetName="PlusBT" />
+                                </Trigger>
+                            </DataTemplate.Triggers>
+                        </DataTemplate>
+                    </ListBox.ItemTemplate>
+                </ListBox>
+
+                <!--<TextBox Text="{Binding ProcessesText.Value, UpdateSourceTrigger=PropertyChanged}" />-->
             </Grid>
         </Grid>
     </Grid>

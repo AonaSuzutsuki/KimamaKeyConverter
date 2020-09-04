@@ -16,11 +16,13 @@ namespace KeyConverterGUI.ViewModels
     {
         public ProcessSettingViewModel(WindowService windowService, ProcessSettingModel model) : base(windowService, model)
         {
+            ProcessItems = model.ProcessItems.ToReadOnlyReactiveCollection(m => m);
             ProcessesText = model.ToReactivePropertyAsSynchronized(m => m.ProcessesText);
         }
 
         #region Properties
 
+        public ReadOnlyReactiveCollection<ProcessItemInfo> ProcessItems { get; set; }
         public ReactiveProperty<string> ProcessesText { get; set; }
 
         #endregion
