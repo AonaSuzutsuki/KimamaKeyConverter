@@ -3,7 +3,6 @@ using CommonStyleLib.Models;
 using LowLevelKeyboardLib.Input;
 using LowLevelKeyboardLib.KeyMap;
 using KeyConverterGUI.Models.InterceptKey;
-using KeyConverterGUI.Views;
 using Newtonsoft.Json;
 using System;
 using System.Collections.Generic;
@@ -25,13 +24,12 @@ namespace KeyConverterGUI.Models
         private bool enabledBtEnabled = true;
         private bool keymappingBtEnabled = true;
 
-        private KeyboardWindow keymapping;
         private LowLevelKeyConverter interceptKeys;
         private bool isEnabled = false;
         private bool isDetectMabinogi = true;
         private bool isDetectMabinogiEnabled = true;
 
-        private Dictionary<OriginalKey, OriginalKey> keyMap = new Dictionary<OriginalKey, OriginalKey>()
+        private readonly Dictionary<OriginalKey, OriginalKey> keyMap = new Dictionary<OriginalKey, OriginalKey>()
                 {
                     { OriginalKey.LeftCtrl, OriginalKey.LeftAlt },
                     { OriginalKey.LeftAlt, OriginalKey.LeftCtrl },

@@ -129,4 +129,7 @@
   <data name="UI_Keyboard_Mapping" xml:space="preserve">
     <value>キーボードマッピング</value>
   </data>
+  <data name="UI_Process_Setting" xml:space="preserve">
+    <value>除外プロセスの登録</value>
+  </data>
 </root>
