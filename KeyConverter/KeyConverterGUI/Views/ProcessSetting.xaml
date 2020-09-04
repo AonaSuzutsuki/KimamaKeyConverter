@@ -7,6 +7,7 @@
         xmlns:i="http://schemas.microsoft.com/xaml/behaviors"
         xmlns:CommonViews="clr-namespace:CommonStyleLib.Views;assembly=CommonStyleLib"
         xmlns:views="clr-namespace:KeyConverterGUI.Views"
+        xmlns:models="clr-namespace:KeyConverterGUI.Models"
         xmlns:lang="clr-namespace:LangResource"
         mc:Ignorable="d"
         Icon="pack://application:,,,/CommonStyleLib;component/Resources/1.ico"
@@ -119,7 +120,7 @@
                     </ListBox.ItemContainerStyle>
 
                     <ListBox.ItemTemplate>
-                        <DataTemplate>
+                        <DataTemplate DataType="models:ProcessItemInfo">
                             <Grid Margin="5" >
 
                                 <Grid.ColumnDefinitions>
@@ -165,6 +166,12 @@
                             </DataTemplate.Triggers>
                         </DataTemplate>
                     </ListBox.ItemTemplate>
+
+                    <ListBox.ContextMenu>
+                        <ContextMenu>
+                            <MenuItem Header="Remove" Command="{Binding RemoveCurrentItemCommand}" />
+                        </ContextMenu>
+                    </ListBox.ContextMenu>
                 </ListBox>
 
                 <!--<TextBox Text="{Binding ProcessesText.Value, UpdateSourceTrigger=PropertyChanged}" />-->

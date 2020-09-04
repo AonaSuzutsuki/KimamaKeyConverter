@@ -21,9 +21,10 @@ namespace KeyConverterGUI.ViewModels
             this.model = model;
 
             ProcessItems = model.ProcessItems.ToReadOnlyReactiveCollection(m => m);
-            ProcessSelectedItem = model.ObserveProperty(m => m.ProcessSelectedItem).ToReactiveProperty();
+            ProcessSelectedItem = model.ToReactivePropertyAsSynchronized(m => m.ProcessSelectedItem);
 
             ProcessItemsMouseDownCommand = new DelegateCommand<ProcessItemInfo>(ProcessItemsMouseDown);
+            RemoveCurrentItemCommand = new DelegateCommand(RemoveCurrentItem);
         }
 
         #region Fields
@@ -43,11 +44,18 @@ namespace KeyConverterGUI.ViewModels
 
         public ICommand ProcessItemsMouseDownCommand { get; set; }
 
+        public ICommand RemoveCurrentItemCommand { get; set; }
+
         #endregion
 
         public void ProcessItemsMouseDown(ProcessItemInfo item)
         {
             model.MouseDownOutside(item);
+        }
+
+        public void RemoveCurrentItem()
+        {
+            model.RemoveCurrentItem();
         }
     }
 }

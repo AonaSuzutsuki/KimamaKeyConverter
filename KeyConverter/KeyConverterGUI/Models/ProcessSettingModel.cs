@@ -123,10 +123,6 @@ namespace KeyConverterGUI.Models
             {
                 if (tuple.prevType == ProcessItemType.Dummy)
                     ProcessItems.Add(CreateDummyProcessItemInfo());
-                if (string.IsNullOrEmpty(tuple.fullPath))
-                {
-                    ProcessItems.Remove(tuple.sender);
-                }
             });
 
             processItemInfo.FullPathGotFocus.Subscribe(item =>
@@ -150,7 +146,23 @@ namespace KeyConverterGUI.Models
             if (item == null)
                 return;
 
+            //if (item.Type != ProcessItemType.Dummy && string.IsNullOrEmpty(item.FullPath))
+            //{
+            //    ProcessItems.Remove(item);
+            //}
+
             Keyboard.ClearFocus();
+        }
+
+
+        public void RemoveCurrentItem()
+        {
+            var item = ProcessSelectedItem;
+            if (item == null)
+                return;
+
+            if (item.Type != ProcessItemType.Dummy)
+                ProcessItems.Remove(item);
         }
 
         public HashSet<string> Save()
