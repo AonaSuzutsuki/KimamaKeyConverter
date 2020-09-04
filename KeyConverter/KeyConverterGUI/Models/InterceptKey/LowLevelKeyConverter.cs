@@ -34,40 +34,43 @@ namespace KeyConverterGUI.Models.InterceptKey
 
         [DllImport("psapi.dll", CharSet = CharSet.Ansi)]
         private static extern uint GetModuleBaseName(IntPtr hWnd, IntPtr hModule, [MarshalAs(UnmanagedType.LPStr), Out] StringBuilder lpBaseName, uint nSize);
+
+        [DllImport("psapi.dll", CharSet = CharSet.Ansi)]
+        private static extern uint GetModuleFileNameEx(IntPtr hWnd, IntPtr hModule, [MarshalAs(UnmanagedType.LPStr), Out] StringBuilder lpBaseName, uint nSize);
+
         #endregion
 
         #region Properties
         public int SpecificProcessId { get; set; } = 0;
-        public string ProcessName { get; set; }
+        public HashSet<string> ProcessNames { get; set; }
         #endregion
 
         public Dictionary<OriginalKey, OriginalKey> KeyMap { get; set; } = new Dictionary<OriginalKey, OriginalKey>();
 
         public override void Initialize()
         {
-            ProcessName = string.Empty;
+            ProcessNames = new HashSet<string>();
 
             base.Initialize();
         }
 
         private bool IsProcessName()
         {
-            if (!string.IsNullOrEmpty(ProcessName))
+            if (ProcessNames != null && ProcessNames.Count > 0)
             {
                 var handle = GetForegroundWindow();
                 var threadId = GetWindowThreadProcessId(handle, out var processId);
 
                 var hnd = OpenProcess(0x0400 | 0x0010 , false, processId);
 
-                var buffer = new StringBuilder(255);
-                GetModuleBaseName(hnd, IntPtr.Zero, buffer, (uint)buffer.Capacity);
+                var buffer2 = new StringBuilder(255);
+                GetModuleFileNameEx(hnd, IntPtr.Zero, buffer2, (uint) buffer2.Capacity);
 
                 CloseHandle(hnd);
+                ;
+                var fullPath = buffer2.ToString().ToLower();
 
-                var processName = buffer.ToString().ToLower();
-                Console.WriteLine(processName);
-
-                return processName == ProcessName;
+                return ProcessNames.Contains(fullPath);
             }
 
             return true;

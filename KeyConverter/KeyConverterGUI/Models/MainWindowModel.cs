@@ -8,6 +8,8 @@ using System;
 using System.Collections.Generic;
 using System.Diagnostics;
 using System.IO;
+using System.Linq;
+using System.Security.Policy;
 using System.Text;
 using System.Windows;
 using System.Windows.Media;
@@ -63,6 +65,8 @@ namespace KeyConverterGUI.Models
             get => isDetectMabinogiEnabled;
             set => SetProperty(ref isDetectMabinogiEnabled, value);
         }
+
+        public HashSet<string> IgnoreProcesses { get; set; }
         #endregion
 
         #region Actions
@@ -71,22 +75,32 @@ namespace KeyConverterGUI.Models
 
         public MainWindowModel()
         {
-            string json = null;
             if (File.Exists(Constants.KeyMapFileName))
             {
-                using (var fs = new FileStream(Constants.KeyMapFileName, FileMode.Open, FileAccess.Read, FileShare.None))
-                {
-                    using (var sr = new StreamReader(fs, Encoding.UTF8))
-                    {
-                        json = sr.ReadToEnd();
-                    }
-                }
+                var json = File.ReadAllText(Constants.KeyMapFileName);
+                if (!string.IsNullOrEmpty(json))
+                    keyMap = JsonConvert.DeserializeObject<Dictionary<OriginalKey, OriginalKey>>(json);
             }
 
-            if (!string.IsNullOrEmpty(json))
-                keyMap = JsonConvert.DeserializeObject<Dictionary<OriginalKey, OriginalKey>>(json);
+            LoadIgnoreProcesses();
 
             LoadSetting();
+        }
+
+        public void LoadIgnoreProcesses()
+        {
+            if (File.Exists(Constants.IgnoreProcessesFileName))
+            {
+                var json = File.ReadAllText(Constants.IgnoreProcessesFileName);
+                if (!string.IsNullOrEmpty(json))
+                    IgnoreProcesses = ConvertLowerHashSet(JsonConvert.DeserializeObject<HashSet<string>>(json));
+            }
+        }
+
+        public HashSet<string> ConvertLowerHashSet(IEnumerable<string> enumerable)
+        {
+            var converted = from x in enumerable select x.ToLower();
+            return new HashSet<string>(converted);
         }
 
         public void EnabledOrDisabled()
@@ -96,9 +110,9 @@ namespace KeyConverterGUI.Models
                 interceptKeys = LowLevelKeyConverter.Instance;
                 interceptKeys.KeyMap = keyMap;
                 interceptKeys.Initialize();
-                
+
                 if (IsDetectMabinogi)
-                    interceptKeys.ProcessName = "client.exe";
+                    interceptKeys.ProcessNames = IgnoreProcesses;
                 
                 
                 var resourceDictionary = new ResourceDictionary

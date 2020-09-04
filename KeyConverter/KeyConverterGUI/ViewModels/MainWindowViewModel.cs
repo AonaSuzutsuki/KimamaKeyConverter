@@ -80,10 +80,10 @@ namespace KeyConverterGUI.ViewModels
         public void ProcessSettingBtClick()
         {
             model.EnabledBtEnabled = false;
-            var processModel = new ProcessSettingModel("processes.json");
+            var processModel = new ProcessSettingModel(Constants.IgnoreProcessesFileName);
             var vm = new ProcessSettingViewModel(new WindowService(), processModel);
             WindowManageService.ShowDialog<ProcessSetting>(vm);
-            var processesSet = processModel.Save();
+            model.IgnoreProcesses = model.ConvertLowerHashSet(processModel.Save());
             model.EnabledBtEnabled = true;
         }
         #endregion
