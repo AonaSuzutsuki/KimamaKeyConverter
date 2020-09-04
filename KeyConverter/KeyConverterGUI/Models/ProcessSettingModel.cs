@@ -24,7 +24,6 @@ namespace KeyConverterGUI.Models
     public class ProcessItemInfo : BindableBase
     {
         private string fullPath = string.Empty;
-        private bool isTextBoxFocus;
 
 
         public ProcessItemType Type { get; set; } = ProcessItemType.Item;
@@ -38,12 +37,6 @@ namespace KeyConverterGUI.Models
                 fullPathChangedSubject.OnNext((this, value, Type));
                 Type = ProcessItemType.Item;
             }
-        }
-
-        public bool IsTextBoxFocus
-        {
-            get => isTextBoxFocus;
-            set => SetProperty(ref isTextBoxFocus, value);
         }
 
         public ICommand SetFullPathCommand { get; set; }

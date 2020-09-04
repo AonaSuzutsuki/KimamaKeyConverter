@@ -127,7 +127,7 @@
                                     <ColumnDefinition Width="30" />
                                 </Grid.ColumnDefinitions>
 
-                                <TextBox Text="{Binding FullPath}" views:FocusExtension.IsFocused="{Binding IsTextBoxFocus}">
+                                <TextBox Text="{Binding FullPath, UpdateSourceTrigger=PropertyChanged}">
 
                                     <i:Interaction.Triggers>
                                         <i:EventTrigger EventName="GotFocus">
