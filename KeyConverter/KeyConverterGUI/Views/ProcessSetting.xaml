@@ -6,10 +6,11 @@
         xmlns:local="clr-namespace:KeyConverterGUI.Views"
         xmlns:i="http://schemas.microsoft.com/xaml/behaviors"
         xmlns:CommonViews="clr-namespace:CommonStyleLib.Views;assembly=CommonStyleLib"
+        xmlns:views="clr-namespace:KeyConverterGUI.Views"
         xmlns:lang="clr-namespace:LangResource"
         mc:Ignorable="d"
         Icon="pack://application:,,,/CommonStyleLib;component/Resources/1.ico"
-        Title="Register Ignore Process" Height="300" Width="600" ResizeMode="CanResize"
+        Title="Register Processes" Height="300" Width="600" ResizeMode="CanResize"
         TextOptions.TextFormattingMode="Display" TextOptions.TextRenderingMode="ClearType" UseLayoutRounding="True">
 
     <i:Interaction.Triggers>
@@ -47,7 +48,7 @@
         </ResourceDictionary>
     </Window.Resources>
 
-    <Grid Name="BaseGrid" Style="{DynamicResource ResourceKey=BackgroundGrid}">
+    <Grid Style="{DynamicResource ResourceKey=BackgroundGrid}">
 
         <Border Name="AroundBorder" BorderBrush="{Binding AroundBorderColor.Value, TargetNullValue={StaticResource AroundBorderColor}, FallbackValue={StaticResource AroundBorderColor}}" Opacity="{Binding AroundBorderOpacity.Value}" BorderThickness="1" />
 
@@ -63,7 +64,7 @@
                         </i:EventTrigger>
                     </i:Interaction.Triggers>
                 </Image>
-                <Label Content="Register Ignore Process" Style="{DynamicResource ResourceKey=StatTitle}" />
+                <Label Content="Register Processes" Style="{DynamicResource ResourceKey=StatTitle}" />
             </StackPanel>
             <StackPanel Orientation="Horizontal" Margin="5"
                         HorizontalAlignment="Right"
@@ -73,26 +74,13 @@
             </StackPanel>
 
             <Grid Margin="5,25,5,5">
-                <Grid.ColumnDefinitions>
-                    <ColumnDefinition Width="30" />
-                    <ColumnDefinition Width="5" />
-                    <ColumnDefinition />
-                </Grid.ColumnDefinitions>
+                <ListBox Background="Transparent" SelectedItem="{Binding ProcessSelectedItem.Value}" ItemsSource="{Binding ProcessItems}" ScrollViewer.HorizontalScrollBarVisibility="Disabled">
 
-                <Grid>
-
-                    <Grid.RowDefinitions>
-                        <RowDefinition Height="30" />
-                        <RowDefinition Height="5" />
-                        <RowDefinition Height="30" />
-                        <RowDefinition Height="5" />
-                    </Grid.RowDefinitions>
-
-                    <Button Content="+" Style="{StaticResource FlatButton}" />
-                    <Button Grid.Row="2" Content="-" Style="{StaticResource FlatButton}" />
-                </Grid>
-
-                <ListBox Grid.Column="2" Background="Transparent" ItemsSource="{Binding ProcessItems}" ScrollViewer.HorizontalScrollBarVisibility="Disabled">
+                    <i:Interaction.Triggers>
+                        <i:EventTrigger EventName="MouseDown">
+                            <i:InvokeCommandAction Command="{Binding ProcessItemsMouseDownCommand}" CommandParameter="{Binding Path=SelectedItem, RelativeSource={RelativeSource Mode=FindAncestor,  AncestorType={x:Type ListBox}}}" />
+                        </i:EventTrigger>
+                    </i:Interaction.Triggers>
 
                     <ListBox.ItemContainerStyle>
                         <Style TargetType="ListBoxItem">
@@ -139,11 +127,17 @@
                                     <ColumnDefinition Width="30" />
                                 </Grid.ColumnDefinitions>
 
-                                <TextBox Text="{Binding FullPath}">
+                                <TextBox Text="{Binding FullPath}" views:FocusExtension.IsFocused="{Binding IsTextBoxFocus}">
+
+                                    <i:Interaction.Triggers>
+                                        <i:EventTrigger EventName="GotFocus">
+                                            <i:InvokeCommandAction Command="{Binding FullPathGotFocusCommand}" />
+                                        </i:EventTrigger>
+                                    </i:Interaction.Triggers>
+
                                     <TextBox.Resources>
-                                        <Style TargetType="TextBox">
+                                        <Style x:Key="{x:Type TextBox}" TargetType="TextBox">
                                             <Setter Property="Foreground" Value="white" />
-                                            <Setter Property="VerticalAlignment" Value="Center" />
                                             <Setter Property="Template">
                                                 <Setter.Value>
                                                     <ControlTemplate TargetType="{x:Type TextBoxBase}">
@@ -162,7 +156,7 @@
                                     </TextBox.Resources>
                                 </TextBox>
 
-                                <Button Grid.Column="1" Name="PlusBT" Content="..." Width="25" Height="25" Command="{Binding SetFullPathCommand}" />
+                                <Button Grid.Column="1" Name="PlusBT" Content="..." Width="25" Height="25" Style="{StaticResource FlatButton}" Command="{Binding SetFullPathCommand}" />
                             </Grid>
                             <DataTemplate.Triggers>
                                 <Trigger Property="IsMouseOver" Value="false">
