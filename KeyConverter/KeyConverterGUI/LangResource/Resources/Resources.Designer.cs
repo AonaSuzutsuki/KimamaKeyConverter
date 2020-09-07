@@ -61,7 +61,7 @@ namespace KeyConverterGUI.LangResource.Resources {
         }
         
         /// <summary>
-        ///   マビノギを検出 に類似しているローカライズされた文字列を検索します。
+        ///   任意のプロセスのみ適用する に類似しているローカライズされた文字列を検索します。
         /// </summary>
         public static string UI_Detect_Mabinogi {
             get {
