@@ -169,7 +169,13 @@
 
                     <ListBox.ContextMenu>
                         <ContextMenu>
-                            <MenuItem Header="Remove" Command="{Binding RemoveCurrentItemCommand}" />
+                            <MenuItem Header="Remove" IsEnabled="{Binding RemoveCurrentItemIsEnabled.Value}" Command="{Binding RemoveCurrentItemCommand}" />
+
+                            <i:Interaction.Triggers>
+                                <i:EventTrigger EventName="Opened">
+                                    <i:InvokeCommandAction Command="{Binding ContextMenuOpenedCommand}" />
+                                </i:EventTrigger>
+                            </i:Interaction.Triggers>
                         </ContextMenu>
                     </ListBox.ContextMenu>
                 </ListBox>

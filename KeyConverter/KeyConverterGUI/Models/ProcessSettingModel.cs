@@ -80,6 +80,8 @@ namespace KeyConverterGUI.Models
 
         private ProcessItemInfo processSelectedItem;
 
+        private bool canRemove;
+
         #endregion
 
         #region Properties
@@ -90,6 +92,12 @@ namespace KeyConverterGUI.Models
         {
             get => processSelectedItem;
             set => SetProperty(ref processSelectedItem, value);
+        }
+
+        public bool CanRemove
+        {
+            get => canRemove;
+            set => SetProperty(ref canRemove, value);
         }
 
         #endregion
