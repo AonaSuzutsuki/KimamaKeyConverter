@@ -83,7 +83,7 @@
             </StackPanel>-->
 
             <Grid Margin="10,25,10,10">
-                <Grid VerticalAlignment="Center" HorizontalAlignment="Center">
+                <Grid IsEnabled="{Binding KeyboardIsEnabled.Value}" VerticalAlignment="Center" HorizontalAlignment="Center">
 
                     <Grid.ColumnDefinitions>
                         <ColumnDefinition Width="Auto" />
@@ -93,7 +93,7 @@
                         <ColumnDefinition Width="*" />
                     </Grid.ColumnDefinitions>
 
-                    <StackPanel Height="Auto" HorizontalAlignment="Center" IsEnabled="{Binding KeyboardIsEnabled.Value}">
+                    <StackPanel Height="Auto" HorizontalAlignment="Center">
                         <StackPanel Orientation="Horizontal" VerticalAlignment="Top">
                             <StackPanel Style="{DynamicResource StandardButtonStackPanel}">
                                 <Button Content="ESC" Width="40" Height="30" Style="{DynamicResource CustomFlatButton}" Command="{Binding KeyboardBtClicked}" CommandParameter="{x:Static key:OriginalKey.ESC}" />
