@@ -18,7 +18,7 @@ namespace KeyConverterGUI.Models
     {
 
         #region Fields
-        private Dictionary<OriginalKey, OriginalKey> keyMap;
+        private readonly Dictionary<OriginalKey, OriginalKey> keyMap;
         private ObservableDictionary<OriginalKey, string> label = new ObservableDictionary<OriginalKey, string>()
         {
             Default = " "
