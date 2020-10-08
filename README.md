@@ -1,20 +1,15 @@
-# Mabinogi Key Converter
-This is key converter for Mabinogi.  
-Depending on the type of keyboard, keys such as Ctrl and Alt are far away, and your finger hang.  
-At that time, this software can assign system keys to different keys.  
-For example, you can convert the Ctrl key to the Alt key and the Alt key to the Ctrl key.  
-This will make your mabinogi life without any discomfort.  
-
-Although it is intended for mabinogi, it can be used as key replacement software for the entire Windows if mabinogi detection is not used.  
-Since it does not use registry, restarting is unnecessary, so you can use it immediately after startup.  
+# Kimama Key Converter
+This application converts the entire Windows system key to any key.  
+It uses the Win32API key conversion technology, so you don't need to reboot your system.  
+It also does not rewrite the registry, so you won't have any registry-related problems.  
 
 # How to use
-Moved to [MabinogiKeyConverter - Wiki](https://github.com/AonaSuzutsuki/MabinogiKeyConverter/wiki).  
+Moved to [KimamaKeyConverter - Wiki](https://github.com/AonaSuzutsuki/KimamaKeyConverter/wiki).  
 
 # Notice
 Because keys are operated using global hooks, there is a possibility that key operations cannot be performed at all due to unexpected crashes.  
 I made it so that there is no such fatal bug, but if it happens, please let me know.  
-In addition, this application capture the input key and only presses the key with software, so it will not get caught at this stage by BlackCipher, but it may be prohibited in the future.  
+In addition, this application capture the input key and only presses the key with software, so it will not get caught at this stage by anticheat tool, but it may be prohibited in the future.  
 Please forgive because I do not take any responsibility for damage caused by such things.  
 
 # Requirements
@@ -30,7 +25,7 @@ Please forgive because I do not take any responsibility for damage caused by suc
 |Windows 10 x64 1903 | OK | - |
 
 # Copyright
-Copyright © Aona Suzutsuki 2018-2019  
+Copyright © Aona Suzutsuki 2018-2020  
 
 # Special thanks
 1. [C#でSendInputを使う](https://gist.github.com/romichi/4971512)  

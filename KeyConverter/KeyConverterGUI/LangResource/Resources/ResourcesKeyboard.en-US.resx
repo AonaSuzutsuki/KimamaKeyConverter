@@ -120,6 +120,9 @@
   <data name="UI_DestKey" xml:space="preserve">
     <value>Dest Key</value>
   </data>
+  <data name="UI_Discard" xml:space="preserve">
+    <value>Discard Input</value>
+  </data>
   <data name="UI_PushKeyDescript" xml:space="preserve">
     <value>Please push converted key.</value>
   </data>

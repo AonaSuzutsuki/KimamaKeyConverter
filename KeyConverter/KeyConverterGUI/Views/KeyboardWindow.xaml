@@ -83,7 +83,7 @@
             </StackPanel>-->
 
             <Grid Margin="10,25,10,10">
-                <Grid VerticalAlignment="Center" HorizontalAlignment="Center">
+                <Grid IsEnabled="{Binding KeyboardIsEnabled.Value}" VerticalAlignment="Center" HorizontalAlignment="Center">
 
                     <Grid.ColumnDefinitions>
                         <ColumnDefinition Width="Auto" />
@@ -93,7 +93,7 @@
                         <ColumnDefinition Width="*" />
                     </Grid.ColumnDefinitions>
 
-                    <StackPanel Height="Auto" HorizontalAlignment="Center" IsEnabled="{Binding KeyboardIsEnabled.Value}">
+                    <StackPanel Height="Auto" HorizontalAlignment="Center">
                         <StackPanel Orientation="Horizontal" VerticalAlignment="Top">
                             <StackPanel Style="{DynamicResource StandardButtonStackPanel}">
                                 <Button Content="ESC" Width="40" Height="30" Style="{DynamicResource CustomFlatButton}" Command="{Binding KeyboardBtClicked}" CommandParameter="{x:Static key:OriginalKey.ESC}" />
@@ -646,7 +646,7 @@
                                 <Label Content="{Binding Source={x:Static lang:ResourceService.Current}, Path=ResourcesKeyboard.UI_DestKey, Mode=OneWay}" Height="25" />
                                 <Label Content=":" Height="25" />
                                 <TextBox Text="{Binding DestKeyText.Value}" Width="100" Height="25" IsReadOnly="True" />
-                                <Button Content="入力を破棄" FontSize="12" Width="70" Margin="5,0,5,0" Style="{DynamicResource CustomFlatButton}" Command="{Binding DestroyInputButtonClicked}" />
+                                <Button Content="{Binding Source={x:Static lang:ResourceService.Current}, Path=ResourcesKeyboard.UI_Discard, Mode=OneWay}" FontSize="12" Width="80" Margin="5,0,5,0" Style="{DynamicResource CustomFlatButton}" Command="{Binding DestroyInputButtonClicked}" />
                                 <Label Content="{Binding Source={x:Static lang:ResourceService.Current}, Path=ResourcesKeyboard.UI_PushKeyDescript, Mode=OneWay}" Height="25" />
                             </StackPanel>
                         </StackPanel>

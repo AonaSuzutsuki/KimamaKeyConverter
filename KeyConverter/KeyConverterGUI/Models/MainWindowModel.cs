@@ -3,12 +3,13 @@ using CommonStyleLib.Models;
 using LowLevelKeyboardLib.Input;
 using LowLevelKeyboardLib.KeyMap;
 using KeyConverterGUI.Models.InterceptKey;
-using KeyConverterGUI.Views;
 using Newtonsoft.Json;
 using System;
 using System.Collections.Generic;
 using System.Diagnostics;
 using System.IO;
+using System.Linq;
+using System.Security.Policy;
 using System.Text;
 using System.Windows;
 using System.Windows.Media;
@@ -25,13 +26,12 @@ namespace KeyConverterGUI.Models
         private bool enabledBtEnabled = true;
         private bool keymappingBtEnabled = true;
 
-        private KeyboardWindow keymapping;
         private LowLevelKeyConverter interceptKeys;
         private bool isEnabled = false;
         private bool isDetectMabinogi = true;
         private bool isDetectMabinogiEnabled = true;
 
-        private Dictionary<OriginalKey, OriginalKey> keyMap = new Dictionary<OriginalKey, OriginalKey>()
+        private readonly Dictionary<OriginalKey, OriginalKey> keyMap = new Dictionary<OriginalKey, OriginalKey>()
                 {
                     { OriginalKey.LeftCtrl, OriginalKey.LeftAlt },
                     { OriginalKey.LeftAlt, OriginalKey.LeftCtrl },
@@ -65,6 +65,8 @@ namespace KeyConverterGUI.Models
             get => isDetectMabinogiEnabled;
             set => SetProperty(ref isDetectMabinogiEnabled, value);
         }
+
+        public HashSet<string> DetectProcesses { get; set; } = new HashSet<string>();
         #endregion
 
         #region Actions
@@ -73,22 +75,34 @@ namespace KeyConverterGUI.Models
 
         public MainWindowModel()
         {
-            string json = null;
             if (File.Exists(Constants.KeyMapFileName))
             {
-                using (var fs = new FileStream(Constants.KeyMapFileName, FileMode.Open, FileAccess.Read, FileShare.None))
-                {
-                    using (var sr = new StreamReader(fs, Encoding.UTF8))
-                    {
-                        json = sr.ReadToEnd();
-                    }
-                }
+                var json = File.ReadAllText(Constants.KeyMapFileName);
+                if (!string.IsNullOrEmpty(json))
+                    keyMap = JsonConvert.DeserializeObject<Dictionary<OriginalKey, OriginalKey>>(json);
             }
 
-            if (!string.IsNullOrEmpty(json))
-                keyMap = JsonConvert.DeserializeObject<Dictionary<OriginalKey, OriginalKey>>(json);
+            LoadDetectProcesses();
 
             LoadSetting();
+        }
+
+        public void LoadDetectProcesses()
+        {
+            if (File.Exists(Constants.DetectProcessesFileName))
+            {
+                var json = File.ReadAllText(Constants.DetectProcessesFileName);
+                if (!string.IsNullOrEmpty(json))
+                    SetLowerHashSet(JsonConvert.DeserializeObject<HashSet<string>>(json));
+            }
+        }
+
+        private static HashSet<string> ConvertLowerHashSet(IEnumerable<string> enumerable) =>
+            new HashSet<string>(from x in enumerable select x.ToLower());
+
+        public void SetLowerHashSet(HashSet<string> hashSet)
+        {
+            DetectProcesses = ConvertLowerHashSet(hashSet);
         }
 
         public void EnabledOrDisabled()
@@ -98,9 +112,9 @@ namespace KeyConverterGUI.Models
                 interceptKeys = LowLevelKeyConverter.Instance;
                 interceptKeys.KeyMap = keyMap;
                 interceptKeys.Initialize();
-                
+
                 if (IsDetectMabinogi)
-                    interceptKeys.ProcessName = "client.exe";
+                    interceptKeys.ProcessNames = DetectProcesses;
                 
                 
                 var resourceDictionary = new ResourceDictionary
@@ -130,18 +144,14 @@ namespace KeyConverterGUI.Models
             KeymappingBtEnabled = !isEnabled;
         }
 
-        public KeyboardWindowModel CreaKeyboardWindowModel() => new KeyboardWindowModel(keyMap);
+        public KeyboardWindowModel CreateKeyboardWindowModel() => new KeyboardWindowModel(keyMap);
 
         public void SaveKeyMap()
         {
             var json = JsonConvert.SerializeObject(keyMap);
-            using (var fs = new FileStream(Constants.KeyMapFileName, FileMode.Create, FileAccess.Write, FileShare.None))
-            {
-                using (var sw = new StreamWriter(fs, Encoding.UTF8))
-                {
-                    sw.Write(json);
-                }
-            }
+            using var fs = new FileStream(Constants.KeyMapFileName, FileMode.Create, FileAccess.Write, FileShare.None);
+            using var sw = new StreamWriter(fs, Encoding.UTF8);
+            sw.Write(json);
         }
 
         #region Setting

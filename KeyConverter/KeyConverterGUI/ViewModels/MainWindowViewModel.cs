@@ -27,11 +27,14 @@ namespace KeyConverterGUI.ViewModels
             KeymappingBtEnabled = model.ToReactivePropertyAsSynchronized(m => m.KeymappingBtEnabled);
             IsDetectMabinogi = model.ToReactivePropertyAsSynchronized(m => m.IsDetectMabinogi);
             IsDetectMabinogiEnabled = model.ToReactivePropertyAsSynchronized(m => m.IsDetectMabinogiEnabled);
+
+            VersionText = $"v{CommonCoreLib.CommonFile.Version.GetVersion()}";
             #endregion
 
             #region Initialize Events
-            EnabledBtClicked = new DelegateCommand(EnabledBt_Clicked);
-            KeyboardMappingBtClicked = new DelegateCommand(KeyboardMappingBt_Clicked);
+            EnabledBtClickCommand = new DelegateCommand(EnabledBtClick);
+            KeyboardMappingBtClickCommand = new DelegateCommand(KeyboardMappingBtClick);
+            ProcessSettingBtClickCommand = new DelegateCommand(ProcessSettingBtClick);
             #endregion
         }
 
@@ -45,11 +48,13 @@ namespace KeyConverterGUI.ViewModels
         public ReactiveProperty<bool> KeymappingBtEnabled { get; set; }
         public ReactiveProperty<bool> IsDetectMabinogi { get; set; }
         public ReactiveProperty<bool> IsDetectMabinogiEnabled { get; set; }
+        public string VersionText { get; set; }
         #endregion
 
         #region Event Properties
-        public ICommand EnabledBtClicked { get; set; }
-        public ICommand KeyboardMappingBtClicked { get; set; }
+        public ICommand EnabledBtClickCommand { get; set; }
+        public ICommand KeyboardMappingBtClickCommand { get; set; }
+        public ICommand ProcessSettingBtClickCommand { get; set; }
         #endregion
 
         #region Event Methods
@@ -58,21 +63,31 @@ namespace KeyConverterGUI.ViewModels
             model.Dispose();
         }
 
-        public void EnabledBt_Clicked()
+        public void EnabledBtClick()
         {
             model.EnabledOrDisabled();
         }
 
-        public void KeyboardMappingBt_Clicked()
+        public void KeyboardMappingBtClick()
         {
             model.EnabledBtEnabled = false;
-            var keyboardModel = model.CreaKeyboardWindowModel();
+            var keyboardModel = model.CreateKeyboardWindowModel();
             var vm = new KeyboardWindowViewModel(new WindowService(), keyboardModel);
             WindowManageService.ShowDialog<KeyboardWindow>(vm);
             keyboardModel.Dispose();
             model.EnabledBtEnabled = true;
             
             model.SaveKeyMap();
+        }
+
+        public void ProcessSettingBtClick()
+        {
+            model.EnabledBtEnabled = false;
+            var processModel = new ProcessSettingModel(Constants.DetectProcessesFileName);
+            var vm = new ProcessSettingViewModel(new WindowService(), processModel);
+            WindowManageService.ShowDialog<ProcessSetting>(vm);
+            model.SetLowerHashSet(processModel.Save());
+            model.EnabledBtEnabled = true;
         }
         #endregion
     }

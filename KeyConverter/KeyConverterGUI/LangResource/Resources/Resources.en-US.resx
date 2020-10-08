@@ -118,7 +118,7 @@
     <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </resheader>
   <data name="UI_Detect_Mabinogi" xml:space="preserve">
-    <value>Detect Mabinogi</value>
+    <value>Only apply to any process</value>
   </data>
   <data name="UI_Disabled" xml:space="preserve">
     <value>Now Disabled</value>
@@ -128,5 +128,8 @@
   </data>
   <data name="UI_Keyboard_Mapping" xml:space="preserve">
     <value>Keyboard Mapping</value>
+  </data>
+  <data name="UI_Process_Setting" xml:space="preserve">
+    <value>Register any processes</value>
   </data>
 </root>
