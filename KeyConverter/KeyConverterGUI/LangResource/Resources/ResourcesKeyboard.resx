@@ -120,6 +120,9 @@
   <data name="UI_DestKey" xml:space="preserve">
     <value>変換先キー</value>
   </data>
+  <data name="UI_Discard" xml:space="preserve">
+    <value>入力を破棄</value>
+  </data>
   <data name="UI_PushKeyDescript" xml:space="preserve">
     <value>変換したいキーを押してください。</value>
   </data>
