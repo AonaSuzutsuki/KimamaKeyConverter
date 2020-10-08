@@ -19,7 +19,7 @@ namespace KeyConverterGUI.LangResource.Resources {
     // または Visual Studio のようなツールを使用して自動生成されました。
     // メンバーを追加または削除するには、.ResX ファイルを編集して、/str オプションと共に
     // ResGen を実行し直すか、または VS プロジェクトをビルドし直します。
-    [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Resources.Tools.StronglyTypedResourceBuilder", "15.0.0.0")]
+    [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Resources.Tools.StronglyTypedResourceBuilder", "16.0.0.0")]
     [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
     [global::System.Runtime.CompilerServices.CompilerGeneratedAttribute()]
     public class Resources {
@@ -47,7 +47,7 @@ namespace KeyConverterGUI.LangResource.Resources {
         }
         
         /// <summary>
-        ///   厳密に型指定されたこのリソース クラスを使用して、すべての検索リソースに対し、
+        ///   すべてについて、現在のスレッドの CurrentUICulture プロパティをオーバーライドします
         ///   現在のスレッドの CurrentUICulture プロパティをオーバーライドします。
         /// </summary>
         [global::System.ComponentModel.EditorBrowsableAttribute(global::System.ComponentModel.EditorBrowsableState.Advanced)]
@@ -61,7 +61,7 @@ namespace KeyConverterGUI.LangResource.Resources {
         }
         
         /// <summary>
-        ///   マビノギを検出 に類似しているローカライズされた文字列を検索します。
+        ///   任意のプロセスのみ適用する に類似しているローカライズされた文字列を検索します。
         /// </summary>
         public static string UI_Detect_Mabinogi {
             get {
@@ -93,6 +93,15 @@ namespace KeyConverterGUI.LangResource.Resources {
         public static string UI_Keyboard_Mapping {
             get {
                 return ResourceManager.GetString("UI_Keyboard_Mapping", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   検出するプロセスの登録 に類似しているローカライズされた文字列を検索します。
+        /// </summary>
+        public static string UI_Process_Setting {
+            get {
+                return ResourceManager.GetString("UI_Process_Setting", resourceCulture);
             }
         }
     }

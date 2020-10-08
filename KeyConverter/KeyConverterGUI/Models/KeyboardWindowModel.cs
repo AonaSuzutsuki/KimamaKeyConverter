@@ -102,7 +102,6 @@ namespace KeyConverterGUI.Models
 
         private void Keyinput_KeyDownEvent(object sender, LowLevelKeyDetector.OriginalKeyEventArg e)
         {
-            Console.WriteLine("Down {0}", e.Key.ToString());
             DestKeyText = e.Key.ToString();
             destKey = e.Key;
         }

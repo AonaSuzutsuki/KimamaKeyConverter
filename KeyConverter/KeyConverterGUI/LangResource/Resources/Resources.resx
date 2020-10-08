@@ -118,7 +118,7 @@
     <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </resheader>
   <data name="UI_Detect_Mabinogi" xml:space="preserve">
-    <value>マビノギを検出</value>
+    <value>任意のプロセスのみ適用する</value>
   </data>
   <data name="UI_Disabled" xml:space="preserve">
     <value>無効化中</value>
@@ -128,5 +128,8 @@
   </data>
   <data name="UI_Keyboard_Mapping" xml:space="preserve">
     <value>キーボードマッピング</value>
+  </data>
+  <data name="UI_Process_Setting" xml:space="preserve">
+    <value>検出するプロセスの登録</value>
   </data>
 </root>

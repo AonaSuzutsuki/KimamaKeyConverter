@@ -90,9 +90,19 @@
                     <RowDefinition Height="30" />
                 </Grid.RowDefinitions>
 
-                <Button Content="{Binding ButtonText.Value}" IsEnabled="{Binding EnabledBtEnabled.Value}" Command="{Binding EnabledBtClicked}" Style="{DynamicResource CustomFlatButton}" />
+                <Button Content="{Binding ButtonText.Value}" IsEnabled="{Binding EnabledBtEnabled.Value}" Command="{Binding EnabledBtClickCommand}" Style="{DynamicResource CustomFlatButton}" />
 
-                <Button Grid.Row="2" Content="{Binding Source={x:Static lang:ResourceService.Current}, Path=Resources.UI_Keyboard_Mapping, Mode=OneWay}" IsEnabled="{Binding KeymappingBtEnabled.Value}" Style="{DynamicResource FlatButton}" Command="{Binding KeyboardMappingBtClicked}" />
+                <Grid Grid.Row="2">
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition />
+                        <ColumnDefinition Width="5" />
+                        <ColumnDefinition />
+                    </Grid.ColumnDefinitions>
+
+                    <Button Content="{Binding Source={x:Static lang:ResourceService.Current}, Path=Resources.UI_Keyboard_Mapping, Mode=OneWay}" IsEnabled="{Binding KeymappingBtEnabled.Value}" Style="{DynamicResource FlatButton}" Command="{Binding KeyboardMappingBtClickCommand}" />
+
+                    <Button Grid.Column="2" Content="{Binding Source={x:Static lang:ResourceService.Current}, Path=Resources.UI_Process_Setting, Mode=OneWay}" IsEnabled="{Binding KeymappingBtEnabled.Value}" Style="{DynamicResource FlatButton}" Command="{Binding ProcessSettingBtClickCommand}" />
+                </Grid>
 
                 <Grid Grid.Row="4">
                     <Grid.ColumnDefinitions>
