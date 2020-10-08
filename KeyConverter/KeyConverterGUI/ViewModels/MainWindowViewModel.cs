@@ -27,6 +27,8 @@ namespace KeyConverterGUI.ViewModels
             KeymappingBtEnabled = model.ToReactivePropertyAsSynchronized(m => m.KeymappingBtEnabled);
             IsDetectMabinogi = model.ToReactivePropertyAsSynchronized(m => m.IsDetectMabinogi);
             IsDetectMabinogiEnabled = model.ToReactivePropertyAsSynchronized(m => m.IsDetectMabinogiEnabled);
+
+            VersionText = $"v{CommonCoreLib.CommonFile.Version.GetVersion()}";
             #endregion
 
             #region Initialize Events
@@ -45,6 +47,7 @@ namespace KeyConverterGUI.ViewModels
         public ReactiveProperty<bool> KeymappingBtEnabled { get; set; }
         public ReactiveProperty<bool> IsDetectMabinogi { get; set; }
         public ReactiveProperty<bool> IsDetectMabinogiEnabled { get; set; }
+        public string VersionText { get; set; }
         #endregion
 
         #region Event Properties

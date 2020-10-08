@@ -94,7 +94,16 @@
 
                 <Button Grid.Row="2" Content="{Binding Source={x:Static lang:ResourceService.Current}, Path=Resources.UI_Keyboard_Mapping, Mode=OneWay}" IsEnabled="{Binding KeymappingBtEnabled.Value}" Style="{DynamicResource FlatButton}" Command="{Binding KeyboardMappingBtClicked}" />
 
-                <CheckBox Grid.Row="4" Content="{Binding Source={x:Static lang:ResourceService.Current}, Path=Resources.UI_Detect_Mabinogi, Mode=OneWay}" IsChecked="{Binding IsDetectMabinogi.Value}" IsEnabled="{Binding IsDetectMabinogiEnabled.Value}" VerticalAlignment="Center" />
+                <Grid Grid.Row="4">
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition Width="*" />
+                        <ColumnDefinition Width="100" />
+                    </Grid.ColumnDefinitions>
+
+                    <CheckBox Content="{Binding Source={x:Static lang:ResourceService.Current}, Path=Resources.UI_Detect_Mabinogi, Mode=OneWay}" IsChecked="{Binding IsDetectMabinogi.Value}" IsEnabled="{Binding IsDetectMabinogiEnabled.Value}" VerticalAlignment="Center" />
+
+                    <Label Grid.Column="1" Content="{Binding VersionText}" HorizontalAlignment="Right" />
+                </Grid>
 
             </Grid>
         </Grid>
