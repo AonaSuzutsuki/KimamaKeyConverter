@@ -9,7 +9,7 @@
         xmlns:local="clr-namespace:KeyConverterGUI"
         mc:Ignorable="d"
         Icon="pack://application:,,,/CommonStyleLib;component/Resources/1.ico"
-        Title="Mabinogi Key Converter" Height="250" Width="400" ResizeMode="CanMinimize"
+        Title="Kimama Key Converter" Height="250" Width="400" ResizeMode="CanMinimize"
         TextOptions.TextFormattingMode="Display" TextOptions.TextRenderingMode="ClearType" UseLayoutRounding="True">
 
     <i:Interaction.Triggers>
@@ -63,7 +63,7 @@
                         </i:EventTrigger>
                     </i:Interaction.Triggers>
                 </Image>
-                <Label Content="Mabinogi Key Converter" Style="{DynamicResource ResourceKey=StatTitle}" />
+                <Label Content="Kimama Key Converter" Style="{DynamicResource ResourceKey=StatTitle}" />
             </StackPanel>
             <StackPanel Orientation="Horizontal" Margin="5"
                         HorizontalAlignment="Right"
