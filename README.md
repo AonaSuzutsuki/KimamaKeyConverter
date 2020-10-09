@@ -13,7 +13,7 @@ In addition, this application capture the input key and only presses the key wit
 Please forgive because I do not take any responsibility for damage caused by such things.  
 
 # Requirements
-1. .Net Framework 4.7.1
+1. .Net Framework 4.8
 
 # Check environment
 | OS | Status | Remarks |
