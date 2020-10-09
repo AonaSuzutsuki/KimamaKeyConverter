@@ -14,19 +14,22 @@ using System.Windows.Media.Imaging;
 using System.Windows.Navigation;
 using System.Windows.Shapes;
 using CommonStyleLib.Views;
+using KeyConverterGUI.Models;
 
 namespace KeyConverterGUI.Views
 {
     /// <summary>
     /// MainWindow.xaml の相互作用ロジック
     /// </summary>
-    public partial class MainWindow : Window
+    public partial class MainWindow : Window, IDisposable
     {
+        private readonly MainWindowModel model;
+
         public MainWindow()
         {
             InitializeComponent();
 
-            var model = new Models.MainWindowModel
+            model = new MainWindowModel
             {
                 ChangeBaseBackground = ChangeBaseBackground
             };
@@ -49,6 +52,11 @@ namespace KeyConverterGUI.Views
             Storyboard.SetTargetProperty(a, new PropertyPath("(Grid.Background).(SolidColorBrush.Color)"));
             storyboard.Children.Add(a);
             storyboard.Begin();
+        }
+
+        public void Dispose()
+        {
+            model?.Dispose();
         }
     }
 }
