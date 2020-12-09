@@ -75,7 +75,7 @@
             </StackPanel>
 
             <Grid Margin="5,25,5,5">
-                <ListBox Background="Transparent" SelectedItem="{Binding ProcessSelectedItem.Value}" ItemsSource="{Binding ProcessItems}" ScrollViewer.HorizontalScrollBarVisibility="Disabled">
+                <ListBox Name="ProcessItems" Background="Transparent" SelectedItem="{Binding ProcessSelectedItem.Value}" ItemsSource="{Binding ProcessItems}" ScrollViewer.HorizontalScrollBarVisibility="Disabled">
 
                     <i:Interaction.Triggers>
                         <i:EventTrigger EventName="MouseDown">
@@ -133,6 +133,9 @@
                                     <i:Interaction.Triggers>
                                         <i:EventTrigger EventName="GotFocus">
                                             <i:InvokeCommandAction Command="{Binding FullPathGotFocusCommand}" />
+                                        </i:EventTrigger>
+                                        <i:EventTrigger EventName="LostFocus">
+                                            <i:InvokeCommandAction Command="{Binding LostFocusCommand}" />
                                         </i:EventTrigger>
                                     </i:Interaction.Triggers>
 

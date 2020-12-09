@@ -132,7 +132,9 @@
     <Compile Include="Models\InterceptKey\SpecializedLowLevelKeyDetector.cs" />
     <Compile Include="Models\ProcessSettingModel.cs" />
     <Compile Include="ViewModels\ProcessSettingViewModel.cs" />
+    <Compile Include="Views\ClearFocusWindowService.cs" />
     <Compile Include="Views\FocusExtension.cs" />
+    <Compile Include="Views\IClearFocus.cs" />
     <Compile Include="Views\ObservableDictionary.cs" />
     <Compile Include="Views\ProcessSetting.xaml.cs">
       <DependentUpon>ProcessSetting.xaml</DependentUpon>

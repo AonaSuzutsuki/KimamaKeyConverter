@@ -9,6 +9,7 @@ using CommonStyleLib.Models;
 using CommonStyleLib.ViewModels;
 using CommonStyleLib.Views;
 using KeyConverterGUI.Models;
+using KeyConverterGUI.Views;
 using Prism.Commands;
 using Reactive.Bindings;
 using Reactive.Bindings.Extensions;
@@ -17,9 +18,10 @@ namespace KeyConverterGUI.ViewModels
 {
     public class ProcessSettingViewModel : ViewModelBase
     {
-        public ProcessSettingViewModel(WindowService windowService, ProcessSettingModel model) : base(windowService, model)
+        public ProcessSettingViewModel(ClearFocusWindowService windowService, ProcessSettingModel model) : base(windowService, model)
         {
             this.model = model;
+            _clearFocusWindowService = windowService;
 
             ProcessItems = model.ProcessItems.ToReadOnlyReactiveCollection(m => m);
             ProcessSelectedItem = model.ToReactivePropertyAsSynchronized(m => m.ProcessSelectedItem);
@@ -33,6 +35,7 @@ namespace KeyConverterGUI.ViewModels
         #region Fields
 
         private readonly ProcessSettingModel model;
+        private readonly ClearFocusWindowService _clearFocusWindowService;
 
         #endregion
 
@@ -56,7 +59,8 @@ namespace KeyConverterGUI.ViewModels
 
         public void ProcessItemsMouseDown(ProcessItemInfo item)
         {
-            model.MouseDownOutside(item);
+            _clearFocusWindowService.ClearFocus();
+            model.ProcessSelectedItem = null;
         }
 
         public void RemoveCurrentItem()
