@@ -160,20 +160,6 @@ namespace KeyConverterGUI.Models
             });
         }
 
-        public void MouseDownOutside(ProcessItemInfo item)
-        {
-            if (item == null)
-                return;
-
-            //if (item.Type != ProcessItemType.Dummy && string.IsNullOrEmpty(item.FullPath))
-            //{
-            //    ProcessItems.Remove(item);
-            //}
-
-            Keyboard.ClearFocus();
-        }
-
-
         public void RemoveCurrentItem()
         {
             var item = ProcessSelectedItem;
