@@ -149,7 +149,8 @@ namespace KeyConverterGUI.Models
 
             processItemInfo.RemovoeItemAction = (info) =>
             {
-                ProcessItems.Remove(info);
+                if (info.Type == ProcessItemType.Item)
+                    ProcessItems.Remove(info);
             };
 
             return processItemInfo;
