@@ -11,6 +11,7 @@ using System.Windows;
 using LowLevelKeyboardLib.KeyMap;
 using System.Windows.Input;
 using System.Collections.Concurrent;
+using System.Reactive.Disposables;
 using System.Reactive.Linq;
 using Reactive.Bindings;
 using Reactive.Bindings.Extensions;
@@ -20,7 +21,7 @@ using CommonStyleLib.Views;
 
 namespace KeyConverterGUI.ViewModels
 {
-    public class KeyboardWindowViewModel : ViewModelBase
+    public class KeyboardWindowViewModel : ViewModelBase, IDisposable
     {
         public KeyboardWindowViewModel(WindowService windowService, KeyboardWindowModel model) : base(windowService, model)
         {
@@ -64,10 +65,10 @@ namespace KeyConverterGUI.ViewModels
                 Value = new ObservableDictionary<string, string>(
                     model.Label.ToDictionary(key => key.Key.ToString(), pair => pair.Value))
             };
-            KeyboardIsEnabled = model.ToReactivePropertyAsSynchronized(m => m.KeyboardIsEnabled);
-            SettingWindowVisibility = model.ToReactivePropertyAsSynchronized(m => m.SettingWindowVisibility);
-            SourceKeyText = model.ToReactivePropertyAsSynchronized(m => m.SourceKeyText);
-            DestKeyText = model.ToReactivePropertyAsSynchronized(m => m.DestKeyText);
+            KeyboardIsEnabled = model.ToReactivePropertyAsSynchronized(m => m.KeyboardIsEnabled).AddTo(compositeDisposable);
+            SettingWindowVisibility = model.ToReactivePropertyAsSynchronized(m => m.SettingWindowVisibility).AddTo(compositeDisposable);
+            SourceKeyText = model.ToReactivePropertyAsSynchronized(m => m.SourceKeyText).AddTo(compositeDisposable);
+            DestKeyText = model.ToReactivePropertyAsSynchronized(m => m.DestKeyText).AddTo(compositeDisposable);
             #endregion
 
             #region Initialize Events
@@ -79,6 +80,8 @@ namespace KeyConverterGUI.ViewModels
         }
 
         #region Fields
+
+        private readonly CompositeDisposable compositeDisposable = new CompositeDisposable();
         private readonly KeyboardWindowModel model;
         #endregion
 
@@ -130,5 +133,10 @@ namespace KeyConverterGUI.ViewModels
             set;
         }
         #endregion
+
+        public void Dispose()
+        {
+            compositeDisposable?.Dispose();
+        }
     }
 }

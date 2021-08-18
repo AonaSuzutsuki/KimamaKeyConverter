@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Reactive.Disposables;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Input;
@@ -16,16 +17,16 @@ using Reactive.Bindings.Extensions;
 
 namespace KeyConverterGUI.ViewModels
 {
-    public class ProcessSettingViewModel : ViewModelBase
+    public class ProcessSettingViewModel : ViewModelBase, IDisposable
     {
         public ProcessSettingViewModel(ClearFocusWindowService windowService, ProcessSettingModel model) : base(windowService, model)
         {
             this.model = model;
             _clearFocusWindowService = windowService;
 
-            ProcessItems = model.ProcessItems.ToReadOnlyReactiveCollection(m => m);
-            ProcessSelectedItem = model.ToReactivePropertyAsSynchronized(m => m.ProcessSelectedItem);
-            RemoveCurrentItemIsEnabled = model.ObserveProperty(m => m.CanRemove).ToReactiveProperty();
+            ProcessItems = model.ProcessItems.ToReadOnlyReactiveCollection(m => m).AddTo(compositeDisposable);
+            ProcessSelectedItem = model.ToReactivePropertyAsSynchronized(m => m.ProcessSelectedItem).AddTo(compositeDisposable);
+            RemoveCurrentItemIsEnabled = model.ObserveProperty(m => m.CanRemove).ToReactiveProperty().AddTo(compositeDisposable);
 
             ProcessItemsMouseDownCommand = new DelegateCommand<ProcessItemInfo>(ProcessItemsMouseDown);
             RemoveCurrentItemCommand = new DelegateCommand(RemoveCurrentItem);
@@ -34,6 +35,7 @@ namespace KeyConverterGUI.ViewModels
 
         #region Fields
 
+        private readonly CompositeDisposable compositeDisposable = new CompositeDisposable();
         private readonly ProcessSettingModel model;
         private readonly ClearFocusWindowService _clearFocusWindowService;
 
@@ -74,6 +76,11 @@ namespace KeyConverterGUI.ViewModels
                 model.CanRemove = false;
             else
                 model.CanRemove = model.ProcessSelectedItem.Type != ProcessItemType.Dummy;
+        }
+
+        public void Dispose()
+        {
+            compositeDisposable?.Dispose();
         }
     }
 }

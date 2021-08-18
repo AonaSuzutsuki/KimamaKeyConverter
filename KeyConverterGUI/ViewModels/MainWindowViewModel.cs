@@ -6,6 +6,7 @@ using Reactive.Bindings.Extensions;
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Reactive.Disposables;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows;
@@ -15,18 +16,18 @@ using KeyConverterGUI.Views;
 
 namespace KeyConverterGUI.ViewModels
 {
-    public class MainWindowViewModel : ViewModelBase
+    public class MainWindowViewModel : ViewModelBase, IDisposable
     {
         public MainWindowViewModel(WindowService windowService, MainWindowModel model) : base(windowService, model)
         {
             this.model = model;
 
             #region Initialize Properties
-            ButtonText = model.ToReactivePropertyAsSynchronized(m => m.ButtonText);
-            EnabledBtEnabled = model.ToReactivePropertyAsSynchronized(m => m.EnabledBtEnabled);
-            KeymappingBtEnabled = model.ToReactivePropertyAsSynchronized(m => m.KeymappingBtEnabled);
-            IsDetectMabinogi = model.ToReactivePropertyAsSynchronized(m => m.IsDetectMabinogi);
-            IsDetectMabinogiEnabled = model.ToReactivePropertyAsSynchronized(m => m.IsDetectMabinogiEnabled);
+            ButtonText = model.ToReactivePropertyAsSynchronized(m => m.ButtonText).AddTo(compositeDisposable);
+            EnabledBtEnabled = model.ToReactivePropertyAsSynchronized(m => m.EnabledBtEnabled).AddTo(compositeDisposable);
+            KeymappingBtEnabled = model.ToReactivePropertyAsSynchronized(m => m.KeymappingBtEnabled).AddTo(compositeDisposable);
+            IsDetectMabinogi = model.ToReactivePropertyAsSynchronized(m => m.IsDetectMabinogi).AddTo(compositeDisposable);
+            IsDetectMabinogiEnabled = model.ToReactivePropertyAsSynchronized(m => m.IsDetectMabinogiEnabled).AddTo(compositeDisposable);
 
             VersionText = $"v{CommonCoreLib.File.Version.GetVersion()}";
             #endregion
@@ -39,6 +40,8 @@ namespace KeyConverterGUI.ViewModels
         }
 
         #region Fields
+
+        private readonly CompositeDisposable compositeDisposable = new CompositeDisposable();
         private readonly MainWindowModel model;
         #endregion
 
@@ -71,10 +74,11 @@ namespace KeyConverterGUI.ViewModels
         public void KeyboardMappingBtClick()
         {
             model.EnabledBtEnabled = false;
-            var keyboardModel = model.CreateKeyboardWindowModel();
-            var vm = new KeyboardWindowViewModel(new WindowService(), keyboardModel);
-            WindowManageService.ShowDialog<KeyboardWindow>(vm);
-            keyboardModel.Dispose();
+            using (var keyboardModel = model.CreateKeyboardWindowModel())
+            {
+                using var vm = new KeyboardWindowViewModel(new WindowService(), keyboardModel);
+                WindowManageService.ShowDialog<KeyboardWindow>(vm);
+            }
             model.EnabledBtEnabled = true;
             
             model.SaveKeyMap();
@@ -84,11 +88,16 @@ namespace KeyConverterGUI.ViewModels
         {
             model.EnabledBtEnabled = false;
             var processModel = new ProcessSettingModel(Constants.DetectProcessesFileName);
-            var vm = new ProcessSettingViewModel(new ClearFocusWindowService(), processModel);
+            using var vm = new ProcessSettingViewModel(new ClearFocusWindowService(), processModel);
             WindowManageService.ShowDialog<ProcessSetting>(vm);
             model.SetLowerHashSet(processModel.Save());
             model.EnabledBtEnabled = true;
         }
         #endregion
+
+        public void Dispose()
+        {
+            compositeDisposable?.Dispose();
+        }
     }
 }
