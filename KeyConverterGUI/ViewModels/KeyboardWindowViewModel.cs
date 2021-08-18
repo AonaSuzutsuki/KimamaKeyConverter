@@ -28,28 +28,28 @@ namespace KeyConverterGUI.ViewModels
 
             #region Initialize Properties
 
-            void ChangeValue(IList objectList, string value = null)
-            {
-                if (objectList.Count <= 0)
-                    return;
-
-                var newItem = objectList[0];
-                if (!(newItem is KeyValuePair<OriginalKey, string> pair))
-                    return;
-
-                var name = pair.Key.ToString();
-                if (Label.Value.ContainsKey(name))
-                {
-                    Label.Value[name] = value ?? pair.Value;
-                }
-                else
-                {
-                    Label.Value.Add(name, value ?? pair.Value);
-                }
-            }
-
             model.Label.CollectionChanged += (sender, args) =>
             {
+                void ChangeValue(IList objectList, string value = null)
+                {
+                    if (objectList.Count <= 0)
+                        return;
+
+                    var newItem = objectList[0];
+                    if (!(newItem is KeyValuePair<OriginalKey, string> pair))
+                        return;
+
+                    var name = pair.Key.ToString();
+                    if (Label.Value.ContainsKey(name))
+                    {
+                        Label.Value[name] = value ?? pair.Value;
+                    }
+                    else
+                    {
+                        Label.Value.Add(name, value ?? pair.Value);
+                    }
+                }
+
                 if (args.NewItems == null)
                 {
                     ChangeValue(args.OldItems, "");
