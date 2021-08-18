@@ -25,6 +25,7 @@ namespace KeyConverterGUI.Models
     {
         private string fullPath = string.Empty;
 
+        public Action<ProcessItemInfo> RemovoeItemAction { get; set; }
 
         public ProcessItemType Type { get; set; } = ProcessItemType.Item;
 
@@ -41,6 +42,7 @@ namespace KeyConverterGUI.Models
 
         public ICommand SetFullPathCommand { get; set; }
         public ICommand FullPathGotFocusCommand { get; set; }
+        public ICommand LostFocusCommand { get; set; }
 
         #region Event
 
@@ -57,6 +59,7 @@ namespace KeyConverterGUI.Models
         {
             SetFullPathCommand = new DelegateCommand(SetFullPath);
             FullPathGotFocusCommand = new DelegateCommand(FullPathFocus);
+            LostFocusCommand = new DelegateCommand(LostFocus);
         }
 
         public void SetFullPath()
@@ -69,6 +72,12 @@ namespace KeyConverterGUI.Models
         public void FullPathFocus()
         {
             fullPathGotFocuSubject.OnNext(this);
+        }
+
+        public void LostFocus()
+        {
+            if (string.IsNullOrEmpty(FullPath))
+                RemovoeItemAction?.Invoke(this);
         }
     }
 
@@ -138,6 +147,12 @@ namespace KeyConverterGUI.Models
                 ProcessSelectedItem = item;
             });
 
+            processItemInfo.RemovoeItemAction = (info) =>
+            {
+                if (info.Type == ProcessItemType.Item)
+                    ProcessItems.Remove(info);
+            };
+
             return processItemInfo;
         }
 
@@ -145,23 +160,9 @@ namespace KeyConverterGUI.Models
         {
             return CreateProcessItemInfo(new ProcessItemInfo
             {
-                Type = ProcessItemType.Dummy
+                Type = ProcessItemType.Dummy,
             });
         }
-
-        public void MouseDownOutside(ProcessItemInfo item)
-        {
-            if (item == null)
-                return;
-
-            //if (item.Type != ProcessItemType.Dummy && string.IsNullOrEmpty(item.FullPath))
-            //{
-            //    ProcessItems.Remove(item);
-            //}
-
-            Keyboard.ClearFocus();
-        }
-
 
         public void RemoveCurrentItem()
         {

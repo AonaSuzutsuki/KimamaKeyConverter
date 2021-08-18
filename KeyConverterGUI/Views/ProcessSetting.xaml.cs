@@ -17,11 +17,16 @@ namespace KeyConverterGUI.Views
     /// <summary>
     /// ProcessSetting.xaml の相互作用ロジック
     /// </summary>
-    public partial class ProcessSetting : Window
+    public partial class ProcessSetting : Window, IClearFocus
     {
         public ProcessSetting()
         {
             InitializeComponent();
+        }
+
+        public void ClearFocus()
+        {
+            ProcessItems.Focus();
         }
     }
 }

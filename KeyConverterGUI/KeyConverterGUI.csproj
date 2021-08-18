@@ -132,7 +132,9 @@
     <Compile Include="Models\InterceptKey\SpecializedLowLevelKeyDetector.cs" />
     <Compile Include="Models\ProcessSettingModel.cs" />
     <Compile Include="ViewModels\ProcessSettingViewModel.cs" />
+    <Compile Include="Views\ClearFocusWindowService.cs" />
     <Compile Include="Views\FocusExtension.cs" />
+    <Compile Include="Views\IClearFocus.cs" />
     <Compile Include="Views\ObservableDictionary.cs" />
     <Compile Include="Views\ProcessSetting.xaml.cs">
       <DependentUpon>ProcessSetting.xaml</DependentUpon>
@@ -220,8 +222,8 @@
     <None Include="App.config" />
   </ItemGroup>
   <ItemGroup>
-    <ProjectReference Include="..\InterceptKeyboardLib\LowLevelKeyboardLib.csproj">
-      <Project>{3640a051-4c23-412d-9461-921a17f72d5c}</Project>
+    <ProjectReference Include="..\LowLevelKeyboardLib\LowLevelKeyboardLib.csproj">
+      <Project>{25b35be8-eaba-43f2-a631-30dfca717813}</Project>
       <Name>LowLevelKeyboardLib</Name>
     </ProjectReference>
   </ItemGroup>

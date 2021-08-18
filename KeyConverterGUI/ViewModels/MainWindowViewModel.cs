@@ -84,7 +84,7 @@ namespace KeyConverterGUI.ViewModels
         {
             model.EnabledBtEnabled = false;
             var processModel = new ProcessSettingModel(Constants.DetectProcessesFileName);
-            var vm = new ProcessSettingViewModel(new WindowService(), processModel);
+            var vm = new ProcessSettingViewModel(new ClearFocusWindowService(), processModel);
             WindowManageService.ShowDialog<ProcessSetting>(vm);
             model.SetLowerHashSet(processModel.Save());
             model.EnabledBtEnabled = true;
