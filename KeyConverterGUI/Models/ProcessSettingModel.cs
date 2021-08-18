@@ -23,7 +23,7 @@ namespace KeyConverterGUI.Models
 
     public class ProcessItemInfo : BindableBase
     {
-        private string fullPath = string.Empty;
+        private string _fullPath = string.Empty;
 
         public Action<ProcessItemInfo> RemovoeItemAction { get; set; }
 
@@ -31,11 +31,11 @@ namespace KeyConverterGUI.Models
 
         public string FullPath
         {
-            get => fullPath;
+            get => _fullPath;
             set
             {
-                SetProperty(ref fullPath, value);
-                fullPathChangedSubject.OnNext((this, value, Type));
+                SetProperty(ref _fullPath, value);
+                _fullPathChangedSubject.OnNext((this, value, Type));
                 Type = ProcessItemType.Item;
             }
         }
@@ -46,13 +46,13 @@ namespace KeyConverterGUI.Models
 
         #region Event
 
-        private readonly Subject<(ProcessItemInfo sender, string fullPath, ProcessItemType prevType)> fullPathChangedSubject
+        private readonly Subject<(ProcessItemInfo sender, string fullPath, ProcessItemType prevType)> _fullPathChangedSubject
             = new Subject<(ProcessItemInfo, string, ProcessItemType)>();
-        public IObservable<(ProcessItemInfo sender, string fullPath, ProcessItemType prevType)> FullPathChanged => fullPathChangedSubject;
+        public IObservable<(ProcessItemInfo sender, string fullPath, ProcessItemType prevType)> FullPathChanged => _fullPathChangedSubject;
 
 
-        private readonly Subject<ProcessItemInfo> fullPathGotFocuSubject = new Subject<ProcessItemInfo>();
-        public IObservable<ProcessItemInfo> FullPathGotFocus => fullPathGotFocuSubject;
+        private readonly Subject<ProcessItemInfo> _fullPathGotFocuSubject = new Subject<ProcessItemInfo>();
+        public IObservable<ProcessItemInfo> FullPathGotFocus => _fullPathGotFocuSubject;
         #endregion
 
         public ProcessItemInfo()
@@ -71,7 +71,7 @@ namespace KeyConverterGUI.Models
 
         public void FullPathFocus()
         {
-            fullPathGotFocuSubject.OnNext(this);
+            _fullPathGotFocuSubject.OnNext(this);
         }
 
         public void LostFocus()
@@ -85,11 +85,11 @@ namespace KeyConverterGUI.Models
     {
         #region Fields
 
-        private readonly string jsonPath;
+        private readonly string _jsonPath;
 
-        private ProcessItemInfo processSelectedItem;
+        private ProcessItemInfo _processSelectedItem;
 
-        private bool canRemove;
+        private bool _canRemove;
 
         #endregion
 
@@ -99,21 +99,21 @@ namespace KeyConverterGUI.Models
 
         public ProcessItemInfo ProcessSelectedItem
         {
-            get => processSelectedItem;
-            set => SetProperty(ref processSelectedItem, value);
+            get => _processSelectedItem;
+            set => SetProperty(ref _processSelectedItem, value);
         }
 
         public bool CanRemove
         {
-            get => canRemove;
-            set => SetProperty(ref canRemove, value);
+            get => _canRemove;
+            set => SetProperty(ref _canRemove, value);
         }
 
         #endregion
 
         public ProcessSettingModel(string jsonPath)
         {
-            this.jsonPath = jsonPath;
+            this._jsonPath = jsonPath;
 
             if (File.Exists(jsonPath))
             {
@@ -160,7 +160,7 @@ namespace KeyConverterGUI.Models
         {
             return CreateProcessItemInfo(new ProcessItemInfo
             {
-                Type = ProcessItemType.Dummy,
+                Type = ProcessItemType.Dummy
             });
         }
 
@@ -179,7 +179,7 @@ namespace KeyConverterGUI.Models
             var processesSet = new HashSet<string>(from x in ProcessItems where !string.IsNullOrEmpty(x.FullPath) select x.FullPath);
 
             var json = JsonConvert.SerializeObject(processesSet);
-            File.WriteAllText(jsonPath, json);
+            File.WriteAllText(_jsonPath, json);
 
             return processesSet;
         }

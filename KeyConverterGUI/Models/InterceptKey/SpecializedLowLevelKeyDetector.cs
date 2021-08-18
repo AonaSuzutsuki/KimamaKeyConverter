@@ -26,9 +26,9 @@ namespace KeyConverterGUI.Models.InterceptKey
         {
             if (SpecificProcessId > 0)
             {
-                IntPtr handle = GetForegroundWindow();
-                uint threadID = GetWindowThreadProcessId(handle, out var _processID);
-                int processId = Convert.ToInt32(_processID);
+                var handle = GetForegroundWindow();
+                var threadId = GetWindowThreadProcessId(handle, out var _processID);
+                var processId = Convert.ToInt32(_processID);
                 if (processId == SpecificProcessId)
                 {
                     base.HookProcedure(nCode, wParam, lParam);

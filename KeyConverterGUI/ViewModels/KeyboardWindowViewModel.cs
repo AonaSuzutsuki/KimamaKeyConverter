@@ -23,9 +23,9 @@ namespace KeyConverterGUI.ViewModels
 {
     public class KeyboardWindowViewModel : ViewModelBase, IDisposable
     {
-        public KeyboardWindowViewModel(WindowService windowService, KeyboardWindowModel model) : base(windowService, model)
+        public KeyboardWindowViewModel(IWindowService windowService, KeyboardWindowModel model) : base(windowService, model)
         {
-            this.model = model;
+            this._model = model;
 
             #region Initialize Properties
 
@@ -65,10 +65,10 @@ namespace KeyConverterGUI.ViewModels
                 Value = new ObservableDictionary<string, string>(
                     model.Label.ToDictionary(key => key.Key.ToString(), pair => pair.Value))
             };
-            KeyboardIsEnabled = model.ToReactivePropertyAsSynchronized(m => m.KeyboardIsEnabled).AddTo(compositeDisposable);
-            SettingWindowVisibility = model.ToReactivePropertyAsSynchronized(m => m.SettingWindowVisibility).AddTo(compositeDisposable);
-            SourceKeyText = model.ToReactivePropertyAsSynchronized(m => m.SourceKeyText).AddTo(compositeDisposable);
-            DestKeyText = model.ToReactivePropertyAsSynchronized(m => m.DestKeyText).AddTo(compositeDisposable);
+            KeyboardIsEnabled = model.ToReactivePropertyAsSynchronized(m => m.KeyboardIsEnabled).AddTo(_compositeDisposable);
+            SettingWindowVisibility = model.ToReactivePropertyAsSynchronized(m => m.SettingWindowVisibility).AddTo(_compositeDisposable);
+            SourceKeyText = model.ToReactivePropertyAsSynchronized(m => m.SourceKeyText).AddTo(_compositeDisposable);
+            DestKeyText = model.ToReactivePropertyAsSynchronized(m => m.DestKeyText).AddTo(_compositeDisposable);
             #endregion
 
             #region Initialize Events
@@ -81,8 +81,8 @@ namespace KeyConverterGUI.ViewModels
 
         #region Fields
 
-        private readonly CompositeDisposable compositeDisposable = new CompositeDisposable();
-        private readonly KeyboardWindowModel model;
+        private readonly CompositeDisposable _compositeDisposable = new CompositeDisposable();
+        private readonly KeyboardWindowModel _model;
         #endregion
 
         #region Properties
@@ -104,21 +104,21 @@ namespace KeyConverterGUI.ViewModels
         public void KeyboardBt_Clicked(OriginalKey? key)
         {
             if (key != null)
-                model.OpenPopup(key.Value);
+                _model.OpenPopup(key.Value);
         }
 
         public void DestroyInputButton_Clicked()
         {
-            model.DestroyInput();
+            _model.DestroyInput();
         }
 
         public void OkPopupBt_Clicked()
         {
-            model.ApplyPopup();
+            _model.ApplyPopup();
         }
         public void ClosePopupBt_Clicked()
         {
-            model.ClosePopup();
+            _model.ClosePopup();
         }
         #endregion
 
@@ -136,7 +136,7 @@ namespace KeyConverterGUI.ViewModels
 
         public void Dispose()
         {
-            compositeDisposable?.Dispose();
+            _compositeDisposable?.Dispose();
         }
     }
 }

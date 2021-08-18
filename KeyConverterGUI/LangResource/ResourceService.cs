@@ -16,11 +16,7 @@ namespace LangResource
 
         #region singleton members
 
-        private static readonly ResourceService current = new ResourceService();
-        public static ResourceService Current
-        {
-            get { return current; }
-        }
+        public static ResourceService Current { get; } = new ResourceService();
 
         #endregion
         
@@ -55,15 +51,6 @@ namespace LangResource
             RaisePropertyChanged("ResourcesKeyboard");
         }
 
-        public string Culture
-        {
-            get
-            {
-                if (Resources.Culture != null)
-                    return Resources.Culture.Name;
-                else
-                    return CultureInfo.CurrentCulture.Name;
-            }
-        }
+        public string Culture => Resources.Culture != null ? Resources.Culture.Name : CultureInfo.CurrentCulture.Name;
     }
 }

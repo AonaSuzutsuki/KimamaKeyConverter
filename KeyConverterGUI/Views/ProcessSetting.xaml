@@ -5,11 +5,13 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:KeyConverterGUI.Views"
         xmlns:i="http://schemas.microsoft.com/xaml/behaviors"
-        xmlns:CommonViews="clr-namespace:CommonStyleLib.Views;assembly=CommonStyleLib"
+        xmlns:commonViews="clr-namespace:CommonStyleLib.Views;assembly=CommonStyleLib"
         xmlns:views="clr-namespace:KeyConverterGUI.Views"
         xmlns:models="clr-namespace:KeyConverterGUI.Models"
         xmlns:lang="clr-namespace:LangResource"
+        xmlns:viewModels="clr-namespace:KeyConverterGUI.ViewModels"
         mc:Ignorable="d"
+        d:DataContext="{d:DesignInstance viewModels:ProcessSettingViewModel}"
         Icon="pack://application:,,,/CommonStyleLib;component/Resources/1.ico"
         Title="Register Processes" Height="300" Width="600" ResizeMode="CanResize"
         TextOptions.TextFormattingMode="Display" TextOptions.TextRenderingMode="ClearType" UseLayoutRounding="True">
@@ -28,7 +30,7 @@
             <i:InvokeCommandAction Command="{Binding StateChanged}" />
         </i:EventTrigger>
         <i:EventTrigger EventName="KeyDown">
-            <CommonViews:InvokeDelegateCommandAction Command="{Binding KeyDown}" CommandParameter="{Binding RelativeSource={RelativeSource Self}, Path=InvokeParameter}" />
+            <commonViews:InvokeDelegateCommandAction Command="{Binding KeyDown}" CommandParameter="{Binding RelativeSource={RelativeSource Self}, Path=InvokeParameter}" />
         </i:EventTrigger>
     </i:Interaction.Triggers>
 
@@ -61,7 +63,7 @@
                 <Image Source="{StaticResource Icon}" Width="15" Height="15" Stretch="Uniform" WindowChrome.IsHitTestVisibleInChrome="True">
                     <i:Interaction.Triggers>
                         <i:EventTrigger EventName="MouseDown">
-                            <CommonViews:InteractiveCommand Command="{Binding ImageMouseDown}" />
+                            <commonViews:InteractiveCommand Command="{Binding ImageMouseDown}" />
                         </i:EventTrigger>
                     </i:Interaction.Triggers>
                 </Image>
@@ -70,8 +72,8 @@
             <StackPanel Orientation="Horizontal" Margin="5"
                         HorizontalAlignment="Right"
                         VerticalAlignment="Top">
-                <Button Name="MainWindowMinimumBT" Content="{Binding MainWindowMinimumBtContent}" Style="{DynamicResource CaptionButtonStyleKey}" Command="{Binding MainWindowMinimumBtClick}" />
-                <Button Name="MainWindowCloseBT" Content="{Binding MainWindowCloseBtContent}" Style="{DynamicResource CaptionButtonStyleKey}" Command="{Binding MainWindowCloseBtClick}" />
+                <Button Name="MainWindowMinimumBt" Content="{Binding MainWindowMinimumBtContent}" Style="{DynamicResource CaptionButtonStyleKey}" Command="{Binding MainWindowMinimumBtClick}" />
+                <Button Name="MainWindowCloseBt" Content="{Binding MainWindowCloseBtContent}" Style="{DynamicResource CaptionButtonStyleKey}" Command="{Binding MainWindowCloseBtClick}" />
             </StackPanel>
 
             <Grid Margin="5,25,5,5">
