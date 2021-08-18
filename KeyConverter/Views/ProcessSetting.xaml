@@ -130,7 +130,7 @@
                                     <ColumnDefinition Width="30" />
                                 </Grid.ColumnDefinitions>
 
-                                <TextBox Text="{Binding FullPath, UpdateSourceTrigger=PropertyChanged}">
+                                <TextBox Text="{Binding FullPath, UpdateSourceTrigger=PropertyChanged}" VerticalContentAlignment="Center">
 
                                     <i:Interaction.Triggers>
                                         <i:EventTrigger EventName="GotFocus">
