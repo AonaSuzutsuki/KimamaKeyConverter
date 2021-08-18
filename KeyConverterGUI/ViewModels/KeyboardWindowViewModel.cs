@@ -2,6 +2,7 @@
 using KeyConverterGUI.Models;
 using Prism.Commands;
 using System;
+using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -10,6 +11,7 @@ using System.Windows;
 using LowLevelKeyboardLib.KeyMap;
 using System.Windows.Input;
 using System.Collections.Concurrent;
+using System.Reactive.Linq;
 using Reactive.Bindings;
 using Reactive.Bindings.Extensions;
 using KeyConverterGUI.Views;
@@ -25,7 +27,43 @@ namespace KeyConverterGUI.ViewModels
             this.model = model;
 
             #region Initialize Properties
-            Label = model.ToReactivePropertyAsSynchronized(m => m.Label);
+
+            void ChangeValue(IList objectList, string value = null)
+            {
+                if (objectList.Count <= 0)
+                    return;
+
+                var newItem = objectList[0];
+                if (!(newItem is KeyValuePair<OriginalKey, string> pair))
+                    return;
+
+                var name = pair.Key.ToString();
+                if (Label.Value.ContainsKey(name))
+                {
+                    Label.Value[name] = value ?? pair.Value;
+                }
+                else
+                {
+                    Label.Value.Add(name, value ?? pair.Value);
+                }
+            }
+
+            model.Label.CollectionChanged += (sender, args) =>
+            {
+                if (args.NewItems == null)
+                {
+                    ChangeValue(args.OldItems, "");
+                    return;
+                }
+
+                ChangeValue(args.NewItems);
+            };
+
+            Label = new ReactiveProperty<ObservableDictionary<string, string>>
+            {
+                Value = new ObservableDictionary<string, string>(
+                    model.Label.ToDictionary(key => key.Key.ToString(), pair => pair.Value))
+            };
             KeyboardIsEnabled = model.ToReactivePropertyAsSynchronized(m => m.KeyboardIsEnabled);
             SettingWindowVisibility = model.ToReactivePropertyAsSynchronized(m => m.SettingWindowVisibility);
             SourceKeyText = model.ToReactivePropertyAsSynchronized(m => m.SourceKeyText);
@@ -41,7 +79,7 @@ namespace KeyConverterGUI.ViewModels
         }
 
         #region Fields
-        private KeyboardWindowModel model;
+        private readonly KeyboardWindowModel model;
         #endregion
 
         #region Properties
@@ -86,7 +124,7 @@ namespace KeyConverterGUI.ViewModels
         #endregion
 
         #region Label Properties
-        public ReactiveProperty<ObservableDictionary<LowLevelKeyboardLib.KeyMap.OriginalKey, string>> Label
+        public ReactiveProperty<ObservableDictionary<string, string>> Label
         {
             get;
             set;
