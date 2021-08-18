@@ -1,0 +1,22 @@
+﻿<Project Sdk="Microsoft.NET.Sdk.WindowsDesktop">
+
+  <PropertyGroup>
+    <OutputType>WinExe</OutputType>
+    <TargetFrameworks>net48;netcoreapp3.1</TargetFrameworks>
+    <UseWPF>true</UseWPF>
+    <RootNamespace>KeyConverterGUI</RootNamespace>
+    <ApplicationManifest>app.manifest</ApplicationManifest>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <PackageReference Include="CommonCoreLib" Version="1.0.4" />
+    <PackageReference Include="CommonExtensionLib" Version="1.0.4" />
+    <PackageReference Include="CommonStyleLib" Version="1.0.5" />
+    <PackageReference Include="Newtonsoft.Json" Version="13.0.1" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <ProjectReference Include="..\LowLevelKeyboardLib\LowLevelKeyboardLib.csproj" />
+  </ItemGroup>
+
+</Project>
