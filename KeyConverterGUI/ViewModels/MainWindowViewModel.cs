@@ -28,7 +28,7 @@ namespace KeyConverterGUI.ViewModels
             IsDetectMabinogi = model.ToReactivePropertyAsSynchronized(m => m.IsDetectMabinogi);
             IsDetectMabinogiEnabled = model.ToReactivePropertyAsSynchronized(m => m.IsDetectMabinogiEnabled);
 
-            VersionText = $"v{CommonCoreLib.CommonFile.Version.GetVersion()}";
+            VersionText = $"v{CommonCoreLib.File.Version.GetVersion()}";
             #endregion
 
             #region Initialize Events
