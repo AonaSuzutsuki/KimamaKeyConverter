@@ -25,7 +25,7 @@ namespace KeyConverterGUI.Models
     {
         private string fullPath = string.Empty;
 
-        public Action RemovoeItemAction { get; set; }
+        public Action<ProcessItemInfo> RemovoeItemAction { get; set; }
 
         public ProcessItemType Type { get; set; } = ProcessItemType.Item;
 
@@ -77,7 +77,7 @@ namespace KeyConverterGUI.Models
         public void LostFocus()
         {
             if (string.IsNullOrEmpty(FullPath))
-                RemovoeItemAction?.Invoke();
+                RemovoeItemAction?.Invoke(this);
         }
     }
 
@@ -147,7 +147,10 @@ namespace KeyConverterGUI.Models
                 ProcessSelectedItem = item;
             });
 
-            processItemInfo.RemovoeItemAction = () => ProcessItems.Remove(processItemInfo);
+            processItemInfo.RemovoeItemAction = (info) =>
+            {
+                ProcessItems.Remove(info);
+            };
 
             return processItemInfo;
         }
