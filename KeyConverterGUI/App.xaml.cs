@@ -17,36 +17,36 @@ namespace KeyConverterGUI
     /// </summary>
     public partial class App : Application
     {
-        private IDisposable mainWindow;
+        private IDisposable _mainWindow;
         private void MyApp_Startup(object sender, StartupEventArgs e)
         {
             TaskScheduler.UnobservedTaskException += TaskSchedulerOnUnobservedTaskException;
             AppDomain.CurrentDomain.UnhandledException += CurrentDomainOnUnhandledException;
 
             var main = new MainWindow();
-            mainWindow = main;
+            _mainWindow = main;
             main.Show();
         }
 
         private void CurrentDomainOnUnhandledException(object sender, UnhandledExceptionEventArgs e)
         {
-            if (e.ExceptionObject is Exception exception)
-            {
-                ShowAndWriteException(exception);
-                mainWindow.Dispose();
-            }
+            if (!(e.ExceptionObject is Exception exception))
+                return;
+
+            ShowAndWriteException(exception);
+            _mainWindow.Dispose();
         }
 
         private void TaskSchedulerOnUnobservedTaskException(object sender, UnobservedTaskExceptionEventArgs e)
         {
             ShowAndWriteException(e.Exception);
-            mainWindow.Dispose();
+            _mainWindow.Dispose();
         }
 
         private void Application_DispatcherUnhandledException(object sender, DispatcherUnhandledExceptionEventArgs e)
         {
             ShowAndWriteException(e.Exception);
-            mainWindow.Dispose();
+            _mainWindow.Dispose();
 
             e.Handled = true;
             Shutdown();
@@ -71,7 +71,7 @@ namespace KeyConverterGUI
 
         private void App_OnExit(object sender, ExitEventArgs e)
         {
-            mainWindow?.Dispose();
+            _mainWindow?.Dispose();
         }
     }
 }

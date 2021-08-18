@@ -15,6 +15,7 @@ using System.Windows.Navigation;
 using System.Windows.Shapes;
 using CommonStyleLib.Views;
 using KeyConverterGUI.Models;
+using KeyConverterGUI.ViewModels;
 
 namespace KeyConverterGUI.Views
 {
@@ -23,18 +24,19 @@ namespace KeyConverterGUI.Views
     /// </summary>
     public partial class MainWindow : Window, IDisposable
     {
-        private readonly MainWindowModel model;
+        private readonly MainWindowViewModel _viewModel;
+        private readonly MainWindowModel _model;
 
         public MainWindow()
         {
             InitializeComponent();
 
-            model = new MainWindowModel
+            _model = new MainWindowModel
             {
                 ChangeBaseBackground = ChangeBaseBackground
             };
-            var vm = new ViewModels.MainWindowViewModel(new WindowService(this), model);
-            DataContext = vm;
+            _viewModel = new MainWindowViewModel(new WindowService(this), _model);
+            DataContext = _viewModel;
         }
 
         public void ChangeBaseBackground(SolidColorBrush color)
@@ -56,7 +58,8 @@ namespace KeyConverterGUI.Views
 
         public void Dispose()
         {
-            model?.Dispose();
+            _model?.Dispose();
+            _viewModel?.Dispose();
         }
     }
 }

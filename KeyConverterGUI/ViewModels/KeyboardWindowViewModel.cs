@@ -2,6 +2,7 @@
 using KeyConverterGUI.Models;
 using Prism.Commands;
 using System;
+using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -10,6 +11,8 @@ using System.Windows;
 using LowLevelKeyboardLib.KeyMap;
 using System.Windows.Input;
 using System.Collections.Concurrent;
+using System.Reactive.Disposables;
+using System.Reactive.Linq;
 using Reactive.Bindings;
 using Reactive.Bindings.Extensions;
 using KeyConverterGUI.Views;
@@ -18,18 +21,54 @@ using CommonStyleLib.Views;
 
 namespace KeyConverterGUI.ViewModels
 {
-    public class KeyboardWindowViewModel : ViewModelBase
+    public class KeyboardWindowViewModel : ViewModelBase, IDisposable
     {
-        public KeyboardWindowViewModel(WindowService windowService, KeyboardWindowModel model) : base(windowService, model)
+        public KeyboardWindowViewModel(IWindowService windowService, KeyboardWindowModel model) : base(windowService, model)
         {
-            this.model = model;
+            this._model = model;
 
             #region Initialize Properties
-            Label = model.ToReactivePropertyAsSynchronized(m => m.Label);
-            KeyboardIsEnabled = model.ToReactivePropertyAsSynchronized(m => m.KeyboardIsEnabled);
-            SettingWindowVisibility = model.ToReactivePropertyAsSynchronized(m => m.SettingWindowVisibility);
-            SourceKeyText = model.ToReactivePropertyAsSynchronized(m => m.SourceKeyText);
-            DestKeyText = model.ToReactivePropertyAsSynchronized(m => m.DestKeyText);
+
+            model.Label.CollectionChanged += (sender, args) =>
+            {
+                void ChangeValue(IList objectList, string value = null)
+                {
+                    if (objectList.Count <= 0)
+                        return;
+
+                    var newItem = objectList[0];
+                    if (!(newItem is KeyValuePair<OriginalKey, string> pair))
+                        return;
+
+                    var name = pair.Key.ToString();
+                    if (Label.Value.ContainsKey(name))
+                    {
+                        Label.Value[name] = value ?? pair.Value;
+                    }
+                    else
+                    {
+                        Label.Value.Add(name, value ?? pair.Value);
+                    }
+                }
+
+                if (args.NewItems == null)
+                {
+                    ChangeValue(args.OldItems, "");
+                    return;
+                }
+
+                ChangeValue(args.NewItems);
+            };
+
+            Label = new ReactiveProperty<ObservableDictionary<string, string>>
+            {
+                Value = new ObservableDictionary<string, string>(
+                    model.Label.ToDictionary(key => key.Key.ToString(), pair => pair.Value))
+            };
+            KeyboardIsEnabled = model.ToReactivePropertyAsSynchronized(m => m.KeyboardIsEnabled).AddTo(_compositeDisposable);
+            SettingWindowVisibility = model.ToReactivePropertyAsSynchronized(m => m.SettingWindowVisibility).AddTo(_compositeDisposable);
+            SourceKeyText = model.ToReactivePropertyAsSynchronized(m => m.SourceKeyText).AddTo(_compositeDisposable);
+            DestKeyText = model.ToReactivePropertyAsSynchronized(m => m.DestKeyText).AddTo(_compositeDisposable);
             #endregion
 
             #region Initialize Events
@@ -41,7 +80,9 @@ namespace KeyConverterGUI.ViewModels
         }
 
         #region Fields
-        private KeyboardWindowModel model;
+
+        private readonly CompositeDisposable _compositeDisposable = new CompositeDisposable();
+        private readonly KeyboardWindowModel _model;
         #endregion
 
         #region Properties
@@ -63,21 +104,21 @@ namespace KeyConverterGUI.ViewModels
         public void KeyboardBt_Clicked(OriginalKey? key)
         {
             if (key != null)
-                model.OpenPopup(key.Value);
+                _model.OpenPopup(key.Value);
         }
 
         public void DestroyInputButton_Clicked()
         {
-            model.DestroyInput();
+            _model.DestroyInput();
         }
 
         public void OkPopupBt_Clicked()
         {
-            model.ApplyPopup();
+            _model.ApplyPopup();
         }
         public void ClosePopupBt_Clicked()
         {
-            model.ClosePopup();
+            _model.ClosePopup();
         }
         #endregion
 
@@ -86,11 +127,16 @@ namespace KeyConverterGUI.ViewModels
         #endregion
 
         #region Label Properties
-        public ReactiveProperty<ObservableDictionary<LowLevelKeyboardLib.KeyMap.OriginalKey, string>> Label
+        public ReactiveProperty<ObservableDictionary<string, string>> Label
         {
             get;
             set;
         }
         #endregion
+
+        public void Dispose()
+        {
+            _compositeDisposable?.Dispose();
+        }
     }
 }

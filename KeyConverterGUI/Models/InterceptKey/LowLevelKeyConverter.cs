@@ -67,7 +67,7 @@ namespace KeyConverterGUI.Models.InterceptKey
                 GetModuleFileNameEx(hnd, IntPtr.Zero, buffer2, (uint) buffer2.Capacity);
 
                 CloseHandle(hnd);
-                ;
+                
                 var fullPath = buffer2.ToString().ToLower();
 
                 return ProcessNames.Contains(fullPath);

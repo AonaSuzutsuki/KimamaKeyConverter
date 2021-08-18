@@ -22,48 +22,48 @@ namespace KeyConverterGUI.Models
         #endregion
 
         #region Fields
-        private string buttonText = LangResource.Resources.Resources.UI_Disabled;
-        private bool enabledBtEnabled = true;
-        private bool keymappingBtEnabled = true;
+        private string _buttonText = LangResource.Resources.Resources.UI_Disabled;
+        private bool _enabledBtEnabled = true;
+        private bool _keymappingBtEnabled = true;
 
-        private LowLevelKeyConverter interceptKeys;
-        private bool isEnabled = false;
-        private bool isDetectMabinogi = true;
-        private bool isDetectMabinogiEnabled = true;
+        private LowLevelKeyConverter _interceptKeys;
+        private bool _isEnabled;
+        private bool _isDetectMabinogi = true;
+        private bool _isDetectMabinogiEnabled = true;
 
-        private readonly Dictionary<OriginalKey, OriginalKey> keyMap = new Dictionary<OriginalKey, OriginalKey>()
+        private readonly Dictionary<OriginalKey, OriginalKey> _keyMap = new Dictionary<OriginalKey, OriginalKey>()
                 {
                     { OriginalKey.LeftCtrl, OriginalKey.LeftAlt },
-                    { OriginalKey.LeftAlt, OriginalKey.LeftCtrl },
+                    { OriginalKey.LeftAlt, OriginalKey.LeftCtrl }
                 };
         #endregion
 
         #region Properties
         public string ButtonText
         {
-            get => buttonText;
-            set => SetProperty(ref buttonText, value);
+            get => _buttonText;
+            set => SetProperty(ref _buttonText, value);
         }
         public bool EnabledBtEnabled
         {
-            get => enabledBtEnabled;
-            set => SetProperty(ref enabledBtEnabled, value);
+            get => _enabledBtEnabled;
+            set => SetProperty(ref _enabledBtEnabled, value);
         }
         public bool KeymappingBtEnabled
         {
-            get => keymappingBtEnabled;
-            set => SetProperty(ref keymappingBtEnabled, value);
+            get => _keymappingBtEnabled;
+            set => SetProperty(ref _keymappingBtEnabled, value);
         }
         public bool IsDetectMabinogi
         {
-            get => isDetectMabinogi;
-            set => SetProperty(ref isDetectMabinogi, value);
+            get => _isDetectMabinogi;
+            set => SetProperty(ref _isDetectMabinogi, value);
         }
 
         public bool IsDetectMabinogiEnabled
         {
-            get => isDetectMabinogiEnabled;
-            set => SetProperty(ref isDetectMabinogiEnabled, value);
+            get => _isDetectMabinogiEnabled;
+            set => SetProperty(ref _isDetectMabinogiEnabled, value);
         }
 
         public HashSet<string> DetectProcesses { get; set; } = new HashSet<string>();
@@ -79,7 +79,7 @@ namespace KeyConverterGUI.Models
             {
                 var json = File.ReadAllText(Constants.KeyMapFileName);
                 if (!string.IsNullOrEmpty(json))
-                    keyMap = JsonConvert.DeserializeObject<Dictionary<OriginalKey, OriginalKey>>(json);
+                    _keyMap = JsonConvert.DeserializeObject<Dictionary<OriginalKey, OriginalKey>>(json);
             }
 
             LoadDetectProcesses();
@@ -107,14 +107,14 @@ namespace KeyConverterGUI.Models
 
         public void EnabledOrDisabled()
         {
-            if (!isEnabled)
+            if (!_isEnabled)
             {
-                interceptKeys = LowLevelKeyConverter.Instance;
-                interceptKeys.KeyMap = keyMap;
-                interceptKeys.Initialize();
+                _interceptKeys = LowLevelKeyConverter.Instance;
+                _interceptKeys.KeyMap = _keyMap;
+                _interceptKeys.Initialize();
 
                 if (IsDetectMabinogi)
-                    interceptKeys.ProcessNames = DetectProcesses;
+                    _interceptKeys.ProcessNames = DetectProcesses;
                 
                 
                 var resourceDictionary = new ResourceDictionary
@@ -123,13 +123,13 @@ namespace KeyConverterGUI.Models
                 };
                 ChangeBaseBackground?.Invoke(resourceDictionary["EnabledColor"] as SolidColorBrush);
 
-                isEnabled = true;
+                _isEnabled = true;
                 IsDetectMabinogiEnabled = false;
                 ButtonText = LangResource.Resources.Resources.UI_Enabled;
             }
             else
             {
-                interceptKeys.UnHook();
+                _interceptKeys.UnHook();
 
                 var resourceDictionary = new ResourceDictionary
                 {
@@ -137,18 +137,18 @@ namespace KeyConverterGUI.Models
                 };
                 ChangeBaseBackground?.Invoke(resourceDictionary["MainColor"] as SolidColorBrush);
 
-                isEnabled = false;
+                _isEnabled = false;
                 IsDetectMabinogiEnabled = true;
                 ButtonText = LangResource.Resources.Resources.UI_Disabled;
             }
-            KeymappingBtEnabled = !isEnabled;
+            KeymappingBtEnabled = !_isEnabled;
         }
 
-        public KeyboardWindowModel CreateKeyboardWindowModel() => new KeyboardWindowModel(keyMap);
+        public KeyboardWindowModel CreateKeyboardWindowModel() => new KeyboardWindowModel(_keyMap);
 
         public void SaveKeyMap()
         {
-            var json = JsonConvert.SerializeObject(keyMap);
+            var json = JsonConvert.SerializeObject(_keyMap);
             using var fs = new FileStream(Constants.KeyMapFileName, FileMode.Create, FileAccess.Write, FileShare.None);
             using var sw = new StreamWriter(fs, Encoding.UTF8);
             sw.Write(json);
@@ -169,7 +169,7 @@ namespace KeyConverterGUI.Models
 
         #region IDisposable
         // Flag: Has Dispose already been called?
-        private bool disposed = false;
+        private bool _disposed = false;
 
         // Public implementation of Dispose pattern callable by consumers.
         public void Dispose()
@@ -181,16 +181,16 @@ namespace KeyConverterGUI.Models
         // Protected implementation of Dispose pattern.
         protected virtual void Dispose(bool disposing)
         {
-            if (disposed)
+            if (_disposed)
                 return;
             
             if (disposing)
             {
                 SaveSetting();
-                interceptKeys?.UnHook();
+                _interceptKeys?.UnHook();
             }
 
-            disposed = true;
+            _disposed = true;
         }
         #endregion
     }

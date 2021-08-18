@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Reactive.Disposables;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Input;
@@ -16,16 +17,16 @@ using Reactive.Bindings.Extensions;
 
 namespace KeyConverterGUI.ViewModels
 {
-    public class ProcessSettingViewModel : ViewModelBase
+    public class ProcessSettingViewModel : ViewModelBase, IDisposable
     {
         public ProcessSettingViewModel(ClearFocusWindowService windowService, ProcessSettingModel model) : base(windowService, model)
         {
-            this.model = model;
+            this._model = model;
             _clearFocusWindowService = windowService;
 
-            ProcessItems = model.ProcessItems.ToReadOnlyReactiveCollection(m => m);
-            ProcessSelectedItem = model.ToReactivePropertyAsSynchronized(m => m.ProcessSelectedItem);
-            RemoveCurrentItemIsEnabled = model.ObserveProperty(m => m.CanRemove).ToReactiveProperty();
+            ProcessItems = model.ProcessItems.ToReadOnlyReactiveCollection(m => m).AddTo(_compositeDisposable);
+            ProcessSelectedItem = model.ToReactivePropertyAsSynchronized(m => m.ProcessSelectedItem).AddTo(_compositeDisposable);
+            RemoveCurrentItemIsEnabled = model.ObserveProperty(m => m.CanRemove).ToReactiveProperty().AddTo(_compositeDisposable);
 
             ProcessItemsMouseDownCommand = new DelegateCommand<ProcessItemInfo>(ProcessItemsMouseDown);
             RemoveCurrentItemCommand = new DelegateCommand(RemoveCurrentItem);
@@ -34,7 +35,8 @@ namespace KeyConverterGUI.ViewModels
 
         #region Fields
 
-        private readonly ProcessSettingModel model;
+        private readonly CompositeDisposable _compositeDisposable = new CompositeDisposable();
+        private readonly ProcessSettingModel _model;
         private readonly ClearFocusWindowService _clearFocusWindowService;
 
         #endregion
@@ -60,20 +62,25 @@ namespace KeyConverterGUI.ViewModels
         public void ProcessItemsMouseDown(ProcessItemInfo item)
         {
             _clearFocusWindowService.ClearFocus();
-            model.ProcessSelectedItem = null;
+            _model.ProcessSelectedItem = null;
         }
 
         public void RemoveCurrentItem()
         {
-            model.RemoveCurrentItem();
+            _model.RemoveCurrentItem();
         }
 
         public void ContextMenuOpened()
         {
-            if (model.ProcessSelectedItem == null)
-                model.CanRemove = false;
+            if (_model.ProcessSelectedItem == null)
+                _model.CanRemove = false;
             else
-                model.CanRemove = model.ProcessSelectedItem.Type != ProcessItemType.Dummy;
+                _model.CanRemove = _model.ProcessSelectedItem.Type != ProcessItemType.Dummy;
+        }
+
+        public void Dispose()
+        {
+            _compositeDisposable?.Dispose();
         }
     }
 }

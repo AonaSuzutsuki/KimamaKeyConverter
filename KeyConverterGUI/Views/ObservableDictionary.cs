@@ -21,7 +21,7 @@ namespace KeyConverterGUI.Views
         ICollection<KeyValuePair<TKey, TValue>>, IDictionary<TKey, TValue>,
         INotifyCollectionChanged, INotifyPropertyChanged
     {
-        readonly IDictionary<TKey, TValue> dictionary;
+        readonly IDictionary<TKey, TValue> _dictionary;
 
         /// <summary>Event raised when the collection changes.</summary>
         public event NotifyCollectionChangedEventHandler CollectionChanged = (sender, args) => { };
@@ -43,17 +43,17 @@ namespace KeyConverterGUI.Views
         /// </summary>
         public ObservableDictionary(IDictionary<TKey, TValue> dictionary)
         {
-            this.dictionary = dictionary;
+            this._dictionary = dictionary;
         }
 
-        void AddWithNotification(KeyValuePair<TKey, TValue> item)
+        private void AddWithNotification(KeyValuePair<TKey, TValue> item)
         {
             AddWithNotification(item.Key, item.Value);
         }
 
-        void AddWithNotification(TKey key, TValue value)
+        private void AddWithNotification(TKey key, TValue value)
         {
-            dictionary.Add(key, value);
+            _dictionary.Add(key, value);
 
             CollectionChanged(this, new NotifyCollectionChangedEventArgs(NotifyCollectionChangedAction.Add,
                 new KeyValuePair<TKey, TValue>(key, value)));
@@ -62,10 +62,10 @@ namespace KeyConverterGUI.Views
             PropertyChanged(this, new PropertyChangedEventArgs(Binding.IndexerName));
         }
 
-        bool RemoveWithNotification(TKey key)
+        private bool RemoveWithNotification(TKey key)
         {
             TValue value;
-            if (dictionary.TryGetValue(key, out value) && dictionary.Remove(key))
+            if (_dictionary.TryGetValue(key, out value) && _dictionary.Remove(key))
             {
                 CollectionChanged(this, new NotifyCollectionChangedEventArgs(NotifyCollectionChangedAction.Remove,
                     new KeyValuePair<TKey, TValue>(key, value)));
@@ -79,12 +79,12 @@ namespace KeyConverterGUI.Views
             return false;
         }
 
-        void UpdateWithNotification(TKey key, TValue value)
+        private void UpdateWithNotification(TKey key, TValue value)
         {
             TValue existing;
-            if (dictionary.TryGetValue(key, out existing))
+            if (_dictionary.TryGetValue(key, out existing))
             {
-                dictionary[key] = value;
+                _dictionary[key] = value;
 
                 CollectionChanged(this, new NotifyCollectionChangedEventArgs(NotifyCollectionChangedAction.Replace,
                     new KeyValuePair<TKey, TValue>(key, value),
@@ -126,17 +126,14 @@ namespace KeyConverterGUI.Views
         /// </returns>
         public bool ContainsKey(TKey key)
         {
-            return dictionary.ContainsKey(key);
+            return _dictionary.ContainsKey(key);
         }
 
         /// <summary>
         /// Gets an <see cref="T:System.Collections.Generic.ICollection`1" /> containing the keys of the <see cref="T:System.Collections.Generic.IDictionary`2" />.
         /// </summary>
         /// <returns>An <see cref="T:System.Collections.Generic.ICollection`1" /> containing the keys of the object that implements <see cref="T:System.Collections.Generic.IDictionary`2" />.</returns>
-        public ICollection<TKey> Keys
-        {
-            get { return dictionary.Keys; }
-        }
+        public ICollection<TKey> Keys => _dictionary.Keys;
 
         /// <summary>
         /// Removes the element with the specified key from the <see cref="T:System.Collections.Generic.IDictionary`2" />.
@@ -160,23 +157,16 @@ namespace KeyConverterGUI.Views
         /// </returns>
         public bool TryGetValue(TKey key, out TValue value)
         {
-            return dictionary.TryGetValue(key, out value);
+            return _dictionary.TryGetValue(key, out value);
         }
 
         /// <summary>
         /// Gets an <see cref="T:System.Collections.Generic.ICollection`1" /> containing the values in the <see cref="T:System.Collections.Generic.IDictionary`2" />.
         /// </summary>
         /// <returns>An <see cref="T:System.Collections.Generic.ICollection`1" /> containing the values in the object that implements <see cref="T:System.Collections.Generic.IDictionary`2" />.</returns>
-        public ICollection<TValue> Values
-        {
-            get { return dictionary.Values; }
-        }
+        public ICollection<TValue> Values => _dictionary.Values;
 
-        public TValue Default
-        {
-            get;
-            set;
-        } = default(TValue);
+        public TValue Default { get; set; } = default;
 
         /// <summary>
         /// Gets or sets the element with the specified key.
@@ -187,11 +177,11 @@ namespace KeyConverterGUI.Views
         {
             get
             {
-                if (dictionary.ContainsKey(key))
-                    return dictionary[key];
+                if (_dictionary.ContainsKey(key))
+                    return _dictionary[key];
                 return Default;
             }
-            set { UpdateWithNotification(key, value); }
+            set => UpdateWithNotification(key, value);
         }
 
         #endregion
@@ -205,7 +195,7 @@ namespace KeyConverterGUI.Views
 
         void ICollection<KeyValuePair<TKey, TValue>>.Clear()
         {
-            ((ICollection<KeyValuePair<TKey, TValue>>)dictionary).Clear();
+            ((ICollection<KeyValuePair<TKey, TValue>>)_dictionary).Clear();
 
             CollectionChanged(this, new NotifyCollectionChangedEventArgs(NotifyCollectionChangedAction.Reset));
             PropertyChanged(this, new PropertyChangedEventArgs("Count"));
@@ -215,23 +205,17 @@ namespace KeyConverterGUI.Views
 
         bool ICollection<KeyValuePair<TKey, TValue>>.Contains(KeyValuePair<TKey, TValue> item)
         {
-            return ((ICollection<KeyValuePair<TKey, TValue>>)dictionary).Contains(item);
+            return ((ICollection<KeyValuePair<TKey, TValue>>)_dictionary).Contains(item);
         }
 
         void ICollection<KeyValuePair<TKey, TValue>>.CopyTo(KeyValuePair<TKey, TValue>[] array, int arrayIndex)
         {
-            ((ICollection<KeyValuePair<TKey, TValue>>)dictionary).CopyTo(array, arrayIndex);
+            ((ICollection<KeyValuePair<TKey, TValue>>)_dictionary).CopyTo(array, arrayIndex);
         }
 
-        int ICollection<KeyValuePair<TKey, TValue>>.Count
-        {
-            get { return ((ICollection<KeyValuePair<TKey, TValue>>)dictionary).Count; }
-        }
+        int ICollection<KeyValuePair<TKey, TValue>>.Count => ((ICollection<KeyValuePair<TKey, TValue>>)_dictionary).Count;
 
-        bool ICollection<KeyValuePair<TKey, TValue>>.IsReadOnly
-        {
-            get { return ((ICollection<KeyValuePair<TKey, TValue>>)dictionary).IsReadOnly; }
-        }
+        bool ICollection<KeyValuePair<TKey, TValue>>.IsReadOnly => ((ICollection<KeyValuePair<TKey, TValue>>)_dictionary).IsReadOnly;
 
         bool ICollection<KeyValuePair<TKey, TValue>>.Remove(KeyValuePair<TKey, TValue> item)
         {
@@ -244,12 +228,12 @@ namespace KeyConverterGUI.Views
 
         IEnumerator<KeyValuePair<TKey, TValue>> IEnumerable<KeyValuePair<TKey, TValue>>.GetEnumerator()
         {
-            return ((ICollection<KeyValuePair<TKey, TValue>>)dictionary).GetEnumerator();
+            return ((ICollection<KeyValuePair<TKey, TValue>>)_dictionary).GetEnumerator();
         }
 
         IEnumerator IEnumerable.GetEnumerator()
         {
-            return ((ICollection<KeyValuePair<TKey, TValue>>)dictionary).GetEnumerator();
+            return ((ICollection<KeyValuePair<TKey, TValue>>)_dictionary).GetEnumerator();
         }
 
         #endregion

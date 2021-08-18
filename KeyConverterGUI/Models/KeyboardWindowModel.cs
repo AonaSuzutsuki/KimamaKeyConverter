@@ -18,83 +18,83 @@ namespace KeyConverterGUI.Models
     {
 
         #region Fields
-        private readonly Dictionary<OriginalKey, OriginalKey> keyMap;
-        private ObservableDictionary<OriginalKey, string> label = new ObservableDictionary<OriginalKey, string>()
+        private readonly Dictionary<OriginalKey, OriginalKey> _keyMap;
+        private ObservableDictionary<OriginalKey, string> _label = new ObservableDictionary<OriginalKey, string>()
         {
             Default = " "
         };
 
-        private SpecializedLowLevelKeyDetector interceptKeys;
+        private SpecializedLowLevelKeyDetector _interceptKeys;
 
-        private bool keyboardIsEnabled = true;
-        private Visibility settingWindowVisibility = Visibility.Collapsed;
-        private string sourceKeyText;
-        private string destKeyText;
-        private OriginalKey srcKey;
-        private OriginalKey destKey;
+        private bool _keyboardIsEnabled = true;
+        private Visibility _settingWindowVisibility = Visibility.Collapsed;
+        private string _sourceKeyText;
+        private string _destKeyText;
+        private OriginalKey _srcKey;
+        private OriginalKey _destKey;
         #endregion
 
         #region Properties
         public ObservableDictionary<OriginalKey, string> Label
         {
-            get => label;
-            set => SetProperty(ref label, value);
+            get => _label;
+            set => SetProperty(ref _label, value);
         }
 
         public bool KeyboardIsEnabled
         {
-            get => keyboardIsEnabled;
-            set => SetProperty(ref keyboardIsEnabled, value);
+            get => _keyboardIsEnabled;
+            set => SetProperty(ref _keyboardIsEnabled, value);
         }
 
         public Visibility SettingWindowVisibility
         {
-            get => settingWindowVisibility;
-            set => SetProperty(ref settingWindowVisibility, value);
+            get => _settingWindowVisibility;
+            set => SetProperty(ref _settingWindowVisibility, value);
         }
 
         public string SourceKeyText
         {
-            get => sourceKeyText;
-            set => SetProperty(ref sourceKeyText, value);
+            get => _sourceKeyText;
+            set => SetProperty(ref _sourceKeyText, value);
         }
 
         public string DestKeyText
         {
-            get => destKeyText;
-            set => SetProperty(ref destKeyText, value);
+            get => _destKeyText;
+            set => SetProperty(ref _destKeyText, value);
         }
         #endregion
 
         public KeyboardWindowModel(Dictionary<OriginalKey, OriginalKey> keyMap)
         {
             if (keyMap != null)
-                this.keyMap = keyMap;
+                this._keyMap = keyMap;
             else
-                this.keyMap = new Dictionary<OriginalKey, OriginalKey>();
+                this._keyMap = new Dictionary<OriginalKey, OriginalKey>();
             Initialize();
         }
 
         private void Initialize()
         {
-            foreach (var pair in keyMap)
+            foreach (var pair in _keyMap)
                 Label.Add(pair.Key, pair.Value.ToString());
         }
 
         public void OpenPopup(OriginalKey key)
         {
-            srcKey = key;
+            _srcKey = key;
             SourceKeyText = key.ToString();
             DestKeyText = "";
-            destKey = OriginalKey.Unknown;
+            _destKey = OriginalKey.Unknown;
 
-            interceptKeys = new SpecializedLowLevelKeyDetector();
+            _interceptKeys = new SpecializedLowLevelKeyDetector();
             using (var process = Process.GetCurrentProcess())
             {
-                interceptKeys.SpecificProcessId = process.Id;
+                _interceptKeys.SpecificProcessId = process.Id;
             }
-            interceptKeys.KeyDownEvent += Keyinput_KeyDownEvent;
-            interceptKeys.Initialize();
+            _interceptKeys.KeyDownEvent += Keyinput_KeyDownEvent;
+            _interceptKeys.Initialize();
 
             KeyboardIsEnabled = false;
             SettingWindowVisibility = Visibility.Visible;
@@ -103,35 +103,35 @@ namespace KeyConverterGUI.Models
         private void Keyinput_KeyDownEvent(object sender, LowLevelKeyDetector.OriginalKeyEventArg e)
         {
             DestKeyText = e.Key.ToString();
-            destKey = e.Key;
+            _destKey = e.Key;
         }
 
         public void DestroyInput()
         {
             DestKeyText = OriginalKey.None.ToString();
-            destKey = OriginalKey.None;
+            _destKey = OriginalKey.None;
         }
 
         public void ApplyPopup()
         {
-            if (destKey.Equals(OriginalKey.Unknown))
+            if (_destKey.Equals(OriginalKey.Unknown))
             {
-                if (Label.ContainsKey(srcKey))
-                    Label.Remove(srcKey);
-                if (keyMap.ContainsKey(srcKey))
-                    keyMap.Remove(srcKey);
+                if (Label.ContainsKey(_srcKey))
+                    Label.Remove(_srcKey);
+                if (_keyMap.ContainsKey(_srcKey))
+                    _keyMap.Remove(_srcKey);
             }
             else
             {
-                if (Label.ContainsKey(srcKey))
-                    Label[srcKey] = destKey.ToString();
+                if (Label.ContainsKey(_srcKey))
+                    Label[_srcKey] = _destKey.ToString();
                 else
-                    Label.Add(srcKey, destKey.ToString());
+                    Label.Add(_srcKey, _destKey.ToString());
 
-                if (keyMap.ContainsKey(srcKey))
-                    keyMap[srcKey] = destKey;
+                if (_keyMap.ContainsKey(_srcKey))
+                    _keyMap[_srcKey] = _destKey;
                 else
-                    keyMap.Add(srcKey, destKey);
+                    _keyMap.Add(_srcKey, _destKey);
             }
             
             ClosePopup();
@@ -139,8 +139,8 @@ namespace KeyConverterGUI.Models
 
         public void ClosePopup()
         {
-            interceptKeys.UnHook();
-            interceptKeys = null;
+            _interceptKeys.UnHook();
+            _interceptKeys = null;
 
             KeyboardIsEnabled = true;
             SettingWindowVisibility = Visibility.Collapsed;
@@ -150,7 +150,7 @@ namespace KeyConverterGUI.Models
 
         #region IDisposable
         // Flag: Has Dispose already been called?
-        private bool disposed = false;
+        private bool _disposed = false;
 
         // Public implementation of Dispose pattern callable by consumers.
         public void Dispose()
@@ -162,15 +162,15 @@ namespace KeyConverterGUI.Models
         // Protected implementation of Dispose pattern.
         protected virtual void Dispose(bool disposing)
         {
-            if (disposed)
+            if (_disposed)
                 return;
 
             if (disposing)
             {
-                interceptKeys?.UnHook();
+                _interceptKeys?.UnHook();
             }
 
-            disposed = true;
+            _disposed = true;
         }
         #endregion
     }
