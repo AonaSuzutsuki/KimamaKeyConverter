@@ -11,7 +11,7 @@
         xmlns:local="clr-namespace:KeyConverterGUI.Views"
         mc:Ignorable="d"
         d:DataContext="{d:DesignInstance viewModels:KeyboardWindowViewModel}"
-        Title="KeyboardWindow" Height="420" Width="1110" ResizeMode="CanMinimize">
+        Title="KeyboardWindow" Height="420" Width="1110" ResizeMode="CanMinimize" Style="{DynamicResource WindowStyle}">
 
     <i:Interaction.Triggers>
         <i:EventTrigger EventName="Closing">
@@ -31,12 +31,6 @@
         </i:EventTrigger>
     </i:Interaction.Triggers>
 
-    <WindowChrome.WindowChrome>
-        <WindowChrome CaptionHeight="{x:Static SystemParameters.CaptionHeight}"
-                      ResizeBorderThickness="{x:Static SystemParameters.WindowResizeBorderThickness}"
-                      UseAeroCaptionButtons="False" />
-    </WindowChrome.WindowChrome>
-
     <Window.Resources>
         <ResourceDictionary>
             <ResourceDictionary.MergedDictionaries>
@@ -44,6 +38,7 @@
                 <ResourceDictionary Source="pack://application:,,,/CommonStyleLib;component/Styles/Main.xaml" />
                 <ResourceDictionary Source="pack://application:,,,/CommonStyleLib;component/Styles/ListBoxStyle.xaml" />
                 <ResourceDictionary Source="../Styles/Keyboard.xaml" />
+                <ResourceDictionary Source="../Styles/Window.xaml" />
                 <ResourceDictionary>
                     <Style x:Key="CustomFlatButton" TargetType="{x:Type Button}" BasedOn="{StaticResource FlatButton}">
                         <Setter Property="FontSize" Value="10" />
@@ -53,9 +48,7 @@
         </ResourceDictionary>
     </Window.Resources>
 
-    <Grid Style="{DynamicResource ResourceKey=BackgroundGrid}">
-        <Border Name="AroundBorder" BorderBrush="{Binding AroundBorderColor.Value}" Opacity="{Binding AroundBorderOpacity.Value}" BorderThickness="1" />
-
+    <Grid>
         <Grid Margin="{Binding MainWindowMargin}">
 
             <StackPanel Orientation="Horizontal" Margin="5,0,0,0"
