@@ -7,6 +7,13 @@
     <RootNamespace>KeyConverterGUI</RootNamespace>
     <LangVersion>latest</LangVersion>
     <ApplicationManifest>app.manifest</ApplicationManifest>
+	  <Authors>Aona Suzutsuki</Authors>
+    <Company>Kimama Lab.</Company>
+    <Copyright>Copyright (C) Aona Suzutsuki 2014 - 2021</Copyright>
+    <AssemblyVersion>1.1.10.8</AssemblyVersion>
+    <FileVersion>1.1.10.8</FileVersion>
+    <AssemblyName>KimamaKeyConverter</AssemblyName>
+    <PlatformTarget>AnyCPU</PlatformTarget>
   </PropertyGroup>
 
   <ItemGroup>
