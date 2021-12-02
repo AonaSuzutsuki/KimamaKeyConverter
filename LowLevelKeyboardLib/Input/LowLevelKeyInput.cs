@@ -19,7 +19,7 @@ namespace LowLevelKeyboardLib.Input
             public int mouseData;
             public int dwFlags;
             public int time;
-            public int dwExtraInfo;
+            public UIntPtr dwExtraInfo;
         };
 
         [StructLayout(LayoutKind.Sequential)]
@@ -29,7 +29,7 @@ namespace LowLevelKeyboardLib.Input
             public short wScan;
             public int dwFlags;
             public int time;
-            public int dwExtraInfo;
+            public UIntPtr dwExtraInfo;
         };
 
         [StructLayout(LayoutKind.Sequential)]
@@ -40,18 +40,24 @@ namespace LowLevelKeyboardLib.Input
             public short wParamH;
         };
 
-        [StructLayout(LayoutKind.Explicit)]
+        [StructLayout(LayoutKind.Sequential)]
         public struct INPUT
         {
-            [FieldOffset(0)]
             public int type;
-            [FieldOffset(4)]
-            public MOUSEINPUT no;
-            [FieldOffset(4)]
-            public KEYBDINPUT ki;
-            [FieldOffset(4)]
-            public HARDWAREINPUT hi;
+            public UNION_INPUT input;
         };
+
+
+        [StructLayout(LayoutKind.Explicit)]
+        public struct UNION_INPUT
+        {
+            [FieldOffset(0)]
+            public MOUSEINPUT no;
+            [FieldOffset(0)]
+            public KEYBDINPUT ki;
+            [FieldOffset(0)]
+            public HARDWAREINPUT hi;
+        }
         #endregion
 
         #region Win32API Methods
@@ -69,7 +75,7 @@ namespace LowLevelKeyboardLib.Input
         #endregion
 
         #region Constants
-        public const int MAGIC_NUMBER = 0x10209;
+        public static readonly UIntPtr MAGIC_NUMBER = (UIntPtr)0x10209;
         #endregion
 
         /// <summary>
@@ -83,17 +89,21 @@ namespace LowLevelKeyboardLib.Input
             INPUT input = new INPUT
             {
                 type = INPUT_KEYBOARD,
-                ki = new KEYBDINPUT()
+                input = new UNION_INPUT
                 {
-                    wVk = (short)key,
-                    wScan = (short)MapVirtualKey((short)key, 0),
-                    dwFlags = ((isExtend) ? (KEYEVENTF_EXTENDEDKEY) : 0x0) | KEYEVENTF_KEYDOWN,
-                    time = 0,
-                    dwExtraInfo = MAGIC_NUMBER
+                    ki = new KEYBDINPUT()
+                    {
+                        wVk = (short)key,
+                        wScan = (short)MapVirtualKey((short)key, 0),
+                        dwFlags = ((isExtend) ? (KEYEVENTF_EXTENDEDKEY) : 0x0) | KEYEVENTF_KEYDOWN,
+                        time = 0,
+                        dwExtraInfo = MAGIC_NUMBER
+                    }
                 },
             };
 
-            SendInput(1, ref input, Marshal.SizeOf(input));
+            var size = Marshal.SizeOf(input);
+            SendInput(1, ref input, size);
             return input;
         }
 
@@ -104,7 +114,7 @@ namespace LowLevelKeyboardLib.Input
         /// <param name="isExtend">Is extend key</param>
         public void KeyUp(INPUT input, bool isExtend = false)
         {
-            input.ki.dwFlags = ((isExtend) ? (KEYEVENTF_EXTENDEDKEY) : 0x0) | KEYEVENTF_KEYUP;
+            input.input.ki.dwFlags = ((isExtend) ? (KEYEVENTF_EXTENDEDKEY) : 0x0) | KEYEVENTF_KEYUP;
             SendInput(1, ref input, Marshal.SizeOf(input));
         }
     }

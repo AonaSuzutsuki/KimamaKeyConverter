@@ -14,7 +14,7 @@
         d:DataContext="{d:DesignInstance viewModels:ProcessSettingViewModel}"
         Icon="pack://application:,,,/CommonStyleLib;component/Resources/1.ico"
         Title="Register Processes" Height="300" Width="600" ResizeMode="CanResize"
-        TextOptions.TextFormattingMode="Display" TextOptions.TextRenderingMode="ClearType" UseLayoutRounding="True">
+        TextOptions.TextFormattingMode="Display" TextOptions.TextRenderingMode="ClearType" Style="{DynamicResource WindowStyle}">
 
     <i:Interaction.Triggers>
         <i:EventTrigger EventName="Closing">
@@ -47,13 +47,12 @@
                 <ResourceDictionary Source="pack://application:,,,/CommonStyleLib;component/Styles/Main.xaml" />
                 <ResourceDictionary Source="pack://application:,,,/CommonStyleLib;component/Styles/ListBoxStyle.xaml" />
                 <ResourceDictionary Source="../Styles/Button.xaml" />
+                <ResourceDictionary Source="../Styles/Window.xaml" />
             </ResourceDictionary.MergedDictionaries>
         </ResourceDictionary>
     </Window.Resources>
 
-    <Grid Style="{DynamicResource ResourceKey=BackgroundGrid}">
-
-        <Border Name="AroundBorder" BorderBrush="{Binding AroundBorderColor.Value, TargetNullValue={StaticResource AroundBorderColor}, FallbackValue={StaticResource AroundBorderColor}}" Opacity="{Binding AroundBorderOpacity.Value}" BorderThickness="1" />
+    <Grid>
 
         <Grid Margin="{Binding MainWindowMargin}">
 
@@ -130,7 +129,7 @@
                                     <ColumnDefinition Width="30" />
                                 </Grid.ColumnDefinitions>
 
-                                <TextBox Text="{Binding FullPath, UpdateSourceTrigger=PropertyChanged}">
+                                <TextBox Text="{Binding FullPath, UpdateSourceTrigger=PropertyChanged}" VerticalContentAlignment="Center">
 
                                     <i:Interaction.Triggers>
                                         <i:EventTrigger EventName="GotFocus">
