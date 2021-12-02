@@ -23,6 +23,8 @@ Please forgive because I do not take any responsibility for damage caused by suc
 |Windows 8.x | - | - |
 |Windows 10 x86 | - | - |
 |Windows 10 x64 1903 | OK | - |
+|Windows 10 x64 20H2| OK | - |
+|Windows 11 x64 | - | - |
 
 # Copyright
 Copyright © Aona Suzutsuki 2018-2020  
