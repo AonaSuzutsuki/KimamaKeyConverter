@@ -73,12 +73,15 @@ namespace LowLevelKeyboardLib.Input
 
         protected override IntPtr HookProcedure(int nCode, IntPtr wParam, IntPtr lParam)
         {
+
             if (nCode >= 0 && (wParam == (IntPtr)WM_KEYDOWN || wParam == (IntPtr)WM_SYSKEYDOWN))
             {
                 KBDLLHOOKSTRUCT kb = (KBDLLHOOKSTRUCT)Marshal.PtrToStructure(lParam, typeof(KBDLLHOOKSTRUCT));
                 var vkCode = (int)kb.vkCode;
                 var key = KeyMapConverter.KeyCodeToKey(vkCode);
-                var isVirtualInput = kb.dwExtraInfo.ToUInt32() == MAGIC_NUMBER;
+
+                var isVirtualInput = kb.dwExtraInfo == MAGIC_NUMBER;
+
                 OnKeyDownEvent(vkCode, key, isVirtualInput);
                 return KeyDownFunction(key, isVirtualInput, () => base.HookProcedure(nCode, wParam, lParam));
             }
@@ -87,7 +90,9 @@ namespace LowLevelKeyboardLib.Input
                 KBDLLHOOKSTRUCT kb = (KBDLLHOOKSTRUCT)Marshal.PtrToStructure(lParam, typeof(KBDLLHOOKSTRUCT));
                 var vkCode = (int)kb.vkCode;
                 var key = KeyMapConverter.KeyCodeToKey(vkCode);
-                var isVirtualInput = kb.dwExtraInfo.ToUInt32() == MAGIC_NUMBER;
+
+                var isVirtualInput = kb.dwExtraInfo == MAGIC_NUMBER;
+
                 OnKeyUpEvent(vkCode, key, isVirtualInput);
                 return KeyUpFunction(key, isVirtualInput, () => base.HookProcedure(nCode, wParam, lParam));
             }
