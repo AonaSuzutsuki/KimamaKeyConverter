@@ -19,7 +19,7 @@ namespace LowLevelKeyboardLib.Input
             public int mouseData;
             public int dwFlags;
             public int time;
-            public UIntPtr dwExtraInfo;
+            public IntPtr dwExtraInfo;
         };
 
         [StructLayout(LayoutKind.Sequential)]
@@ -29,7 +29,7 @@ namespace LowLevelKeyboardLib.Input
             public short wScan;
             public int dwFlags;
             public int time;
-            public UIntPtr dwExtraInfo;
+            public IntPtr dwExtraInfo;
         };
 
         [StructLayout(LayoutKind.Sequential)]
@@ -75,7 +75,7 @@ namespace LowLevelKeyboardLib.Input
         #endregion
 
         #region Constants
-        public static readonly UIntPtr MAGIC_NUMBER = (UIntPtr)0x10209;
+        public static readonly IntPtr MAGIC_NUMBER = (IntPtr)0x10209;
         #endregion
 
         /// <summary>
