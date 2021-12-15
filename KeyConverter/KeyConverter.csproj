@@ -10,8 +10,8 @@
 	  <Authors>Aona Suzutsuki</Authors>
     <Company>Kimama Lab.</Company>
     <Copyright>Copyright (C) Aona Suzutsuki 2014 - 2021</Copyright>
-    <AssemblyVersion>1.1.10.8</AssemblyVersion>
-    <FileVersion>1.1.10.8</FileVersion>
+    <AssemblyVersion>1.1.11.9</AssemblyVersion>
+    <FileVersion>1.1.11.9</FileVersion>
     <AssemblyName>KimamaKeyConverter</AssemblyName>
     <Platforms>x86;x64</Platforms>
   </PropertyGroup>
