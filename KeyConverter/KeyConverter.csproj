@@ -1,27 +1,29 @@
 ﻿<Project Sdk="Microsoft.NET.Sdk.WindowsDesktop">
 
-  <PropertyGroup>
-    <OutputType>WinExe</OutputType>
-    <TargetFrameworks>net48;netcoreapp3.1</TargetFrameworks>
-    <UseWPF>true</UseWPF>
-    <RootNamespace>KeyConverterGUI</RootNamespace>
-    <LangVersion>latest</LangVersion>
-    <ApplicationManifest>app.manifest</ApplicationManifest>
-	  <Authors>Aona Suzutsuki</Authors>
-    <Company>Kimama Lab.</Company>
-    <Copyright>Copyright (C) Aona Suzutsuki 2014 - 2021</Copyright>
-    <AssemblyVersion>1.1.11.9</AssemblyVersion>
-    <FileVersion>1.1.11.9</FileVersion>
-    <AssemblyName>KimamaKeyConverter</AssemblyName>
-    <Platforms>x86;x64</Platforms>
-  </PropertyGroup>
+    <PropertyGroup>
+        <OutputType>WinExe</OutputType>
+        <TargetFrameworks>net6.0-windows</TargetFrameworks>
+        <UseWPF>true</UseWPF>
+        <RootNamespace>KeyConverterGUI</RootNamespace>
+        <LangVersion>latest</LangVersion>
+        <ApplicationManifest>app.manifest</ApplicationManifest>
+        <Authors>Aona Suzutsuki</Authors>
+        <Company>Kimama Lab.</Company>
+        <Copyright>Copyright (C) Aona Suzutsuki 2014 - 2023</Copyright>
+        <Version>1.1.12.10</Version>
+        <AssemblyName>KimamaKeyConverter</AssemblyName>
+        <Platforms>x86;x64;AnyCPU</Platforms>
+    </PropertyGroup>
 
-  <PropertyGroup Condition=" '$(Platform)' == 'x86' ">
-	<PlatformTarget>x86</PlatformTarget>
-  </PropertyGroup>
-  <PropertyGroup Condition=" '$(Platform)' == 'x64' ">
-	<PlatformTarget>x64</PlatformTarget>
-  </PropertyGroup>
+    <PropertyGroup Condition=" '$(Platform)' == 'x86' ">
+        <PlatformTarget>x86</PlatformTarget>
+    </PropertyGroup>
+    <PropertyGroup Condition=" '$(Platform)' == 'x64' ">
+        <PlatformTarget>x64</PlatformTarget>
+    </PropertyGroup>
+    <PropertyGroup Condition=" '$(Platform)' == 'Any CPU' ">
+        <PlatformTarget>AnyCPU</PlatformTarget>
+    </PropertyGroup>
 
   <ItemGroup>
     <PackageReference Include="CommonCoreLib" Version="1.0.4" />
@@ -30,8 +32,8 @@
     <PackageReference Include="Newtonsoft.Json" Version="13.0.1" />
   </ItemGroup>
 
-  <ItemGroup>
-    <ProjectReference Include="..\LowLevelKeyboardLib\LowLevelKeyboardLib.csproj" />
-  </ItemGroup>
+    <ItemGroup>
+        <ProjectReference Include="..\LowLevelKeyboardLib\LowLevelKeyboardLib.csproj" />
+    </ItemGroup>
 
 </Project>
