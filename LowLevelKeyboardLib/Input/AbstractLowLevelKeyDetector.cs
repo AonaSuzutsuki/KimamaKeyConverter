@@ -26,7 +26,7 @@ namespace LowLevelKeyboardLib.Input
             public uint scanCode;
             public KBDLLHOOKSTRUCTFlags flags;
             public uint time;
-            public UIntPtr dwExtraInfo;
+            public IntPtr dwExtraInfo;
         }
 
         [Flags]
