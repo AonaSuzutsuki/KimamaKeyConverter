@@ -25,12 +25,12 @@
         <PlatformTarget>AnyCPU</PlatformTarget>
     </PropertyGroup>
 
-  <ItemGroup>
-    <PackageReference Include="CommonCoreLib" Version="1.0.4" />
-    <PackageReference Include="CommonExtensionLib" Version="1.0.4" />
-    <PackageReference Include="CommonStyleLib" Version="1.0.5" />
-    <PackageReference Include="Newtonsoft.Json" Version="13.0.2" />
-  </ItemGroup>
+    <ItemGroup>
+        <PackageReference Include="CommonCoreLib" Version="1.0.6" />
+        <PackageReference Include="CommonExtensionLib" Version="1.0.5" />
+        <PackageReference Include="CommonStyleLib" Version="1.0.24" />
+        <PackageReference Include="Newtonsoft.Json" Version="13.0.3" />
+    </ItemGroup>
 
     <ItemGroup>
         <ProjectReference Include="..\LowLevelKeyboardLib\LowLevelKeyboardLib.csproj" />
