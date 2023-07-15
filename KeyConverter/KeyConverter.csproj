@@ -29,7 +29,7 @@
     <PackageReference Include="CommonCoreLib" Version="1.0.4" />
     <PackageReference Include="CommonExtensionLib" Version="1.0.4" />
     <PackageReference Include="CommonStyleLib" Version="1.0.5" />
-    <PackageReference Include="Newtonsoft.Json" Version="13.0.1" />
+    <PackageReference Include="Newtonsoft.Json" Version="13.0.2" />
   </ItemGroup>
 
     <ItemGroup>

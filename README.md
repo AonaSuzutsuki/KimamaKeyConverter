@@ -12,8 +12,11 @@ I made it so that there is no such fatal bug, but if it happens, please let me k
 In addition, this application capture the input key and only presses the key with software, so it will not get caught at this stage by anticheat tool, but it may be prohibited in the future.  
 Please forgive because I do not take any responsibility for damage caused by such things.  
 
+**\*ONLY SUPPORT JIS ARRAY KEYBOARD.**
+
 # Requirements
-1. .Net Framework 4.8
+1. .Net Core 3.1
+2. JIS Array Keyboard
 
 # Check environment
 | OS | Status | Remarks |
@@ -23,9 +26,11 @@ Please forgive because I do not take any responsibility for damage caused by suc
 |Windows 8.x | - | - |
 |Windows 10 x86 | - | - |
 |Windows 10 x64 1903 | OK | - |
+|Windows 10 x64 20H2| OK | - |
+|Windows 11 x64 | - | - |
 
 # Copyright
-Copyright © Aona Suzutsuki 2018-2020  
+Copyright © Aona Suzutsuki 2018-2023  
 
 # Special thanks
 1. [C#でSendInputを使う](https://gist.github.com/romichi/4971512)  
