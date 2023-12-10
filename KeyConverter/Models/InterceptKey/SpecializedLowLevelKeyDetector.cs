@@ -5,6 +5,7 @@ using System.Linq;
 using System.Runtime.InteropServices;
 using System.Text;
 using System.Threading.Tasks;
+using LowLevelKeyboardLib.KeyMap;
 
 namespace KeyConverterGUI.Models.InterceptKey
 {
@@ -21,6 +22,11 @@ namespace KeyConverterGUI.Models.InterceptKey
         #region Properties
         public int SpecificProcessId { get; set; } = 0;
         #endregion
+
+        public SpecializedLowLevelKeyDetector(KeyBoard keyBoard) : base(keyBoard)
+        {
+
+        }
 
         protected override IntPtr HookProcedure(int nCode, IntPtr wParam, IntPtr lParam)
         {

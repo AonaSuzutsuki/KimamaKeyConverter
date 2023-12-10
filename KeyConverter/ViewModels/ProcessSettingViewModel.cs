@@ -17,7 +17,7 @@ using Reactive.Bindings.Extensions;
 
 namespace KeyConverterGUI.ViewModels
 {
-    public class ProcessSettingViewModel : ViewModelBase, IDisposable
+    public class ProcessSettingViewModel : ViewModelWindowStyleBase, IDisposable
     {
         public ProcessSettingViewModel(ClearFocusWindowService windowService, ProcessSettingModel model) : base(windowService, model)
         {

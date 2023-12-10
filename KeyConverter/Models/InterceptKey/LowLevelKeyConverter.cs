@@ -13,8 +13,7 @@ namespace KeyConverterGUI.Models.InterceptKey
     public class LowLevelKeyConverter : LowLevelKeyDetector
     {
         #region Singleton
-        public static LowLevelKeyConverter Instance { get; } = new LowLevelKeyConverter();
-        private LowLevelKeyConverter()
+        public LowLevelKeyConverter(KeyBoard keyBoard) : base(keyBoard)
         {
         }
         #endregion
@@ -45,7 +44,7 @@ namespace KeyConverterGUI.Models.InterceptKey
         public HashSet<string> ProcessNames { get; set; }
         #endregion
 
-        public Dictionary<OriginalKey, OriginalKey> KeyMap { get; set; } = new Dictionary<OriginalKey, OriginalKey>();
+        public Dictionary<KeyEnum, KeyEnum> KeyMap { get; set; } = new();
 
         public override void Initialize()
         {
@@ -76,11 +75,11 @@ namespace KeyConverterGUI.Models.InterceptKey
             return true;
         }
 
-        protected override IntPtr KeyDownFunction(OriginalKey pushedKey, bool isVirtualInput, Func<IntPtr> defaultReturnFunc)
+        protected override IntPtr KeyDownFunction(KeyEnum pushedKey, bool isVirtualInput, Func<IntPtr> defaultReturnFunc)
         {
             if (!isVirtualInput && IsProcessName())
             {
-                if (pushedKey == OriginalKey.None)
+                if (pushedKey == KeyEnum.None)
                     return new IntPtr(1);
 
                 if (KeyMap.ContainsKey(pushedKey))
@@ -93,13 +92,13 @@ namespace KeyConverterGUI.Models.InterceptKey
             return base.KeyDownFunction(pushedKey, isVirtualInput, defaultReturnFunc);
         }
 
-        protected override IntPtr KeyUpFunction(OriginalKey upKey, bool isVirtualInput, Func<IntPtr> defaultReturnFunc)
+        protected override IntPtr KeyUpFunction(KeyEnum upKey, bool isVirtualInput, Func<IntPtr> defaultReturnFunc)
         {
-            if (inkeys.ContainsKey(upKey))
+            if (Inkeys.ContainsKey(upKey))
             {
-                var inkey = inkeys[upKey];
-                inkeys.Remove(upKey);
-                input.KeyUp(inkey);
+                var inkey = Inkeys[upKey];
+                Inkeys.Remove(upKey);
+                Input.KeyUp(inkey);
             }
 
             return base.KeyUpFunction(upKey, isVirtualInput, defaultReturnFunc);

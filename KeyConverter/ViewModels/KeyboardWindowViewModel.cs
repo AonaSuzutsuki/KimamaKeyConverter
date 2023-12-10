@@ -37,7 +37,7 @@ namespace KeyConverterGUI.ViewModels
                         return;
 
                     var newItem = objectList[0];
-                    if (!(newItem is KeyValuePair<OriginalKey, string> pair))
+                    if (!(newItem is KeyValuePair<KeyEnum, string> pair))
                         return;
 
                     var name = pair.Key.ToString();
@@ -72,7 +72,7 @@ namespace KeyConverterGUI.ViewModels
             #endregion
 
             #region Initialize Events
-            KeyboardBtClicked = new DelegateCommand<OriginalKey?>(KeyboardBt_Clicked);
+            KeyboardBtClicked = new DelegateCommand<KeyEnum?>(KeyboardBt_Clicked);
             DestroyInputButtonClicked = new DelegateCommand(DestroyInputButton_Clicked);
             OkPopupBtClicked = new DelegateCommand(OkPopupBt_Clicked);
             ClosePopupBtClicked = new DelegateCommand(ClosePopupBt_Clicked);
@@ -101,7 +101,7 @@ namespace KeyConverterGUI.ViewModels
         #endregion
 
         #region Events Methods
-        public void KeyboardBt_Clicked(OriginalKey? key)
+        public void KeyboardBt_Clicked(KeyEnum? key)
         {
             if (key != null)
                 _model.OpenPopup(key.Value);

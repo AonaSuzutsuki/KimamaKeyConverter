@@ -46,7 +46,7 @@
         </ResourceDictionary>
     </Window.Resources>
 
-    <Grid>
+    <Grid Style="{StaticResource ResourceKey=BackgroundGrid}">
 
         <Grid Margin="{Binding MainWindowMargin}">
 

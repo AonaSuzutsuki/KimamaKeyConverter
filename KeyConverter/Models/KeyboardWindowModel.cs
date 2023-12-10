@@ -18,8 +18,8 @@ namespace KeyConverterGUI.Models
     {
 
         #region Fields
-        private readonly Dictionary<OriginalKey, OriginalKey> _keyMap;
-        private ObservableDictionary<OriginalKey, string> _label = new ObservableDictionary<OriginalKey, string>()
+        private readonly Dictionary<KeyEnum, KeyEnum> _keyMap;
+        private ObservableDictionary<KeyEnum, string> _label = new()
         {
             Default = " "
         };
@@ -30,12 +30,12 @@ namespace KeyConverterGUI.Models
         private Visibility _settingWindowVisibility = Visibility.Collapsed;
         private string _sourceKeyText;
         private string _destKeyText;
-        private OriginalKey _srcKey;
-        private OriginalKey _destKey;
+        private KeyEnum _srcKey;
+        private KeyEnum _destKey;
         #endregion
 
         #region Properties
-        public ObservableDictionary<OriginalKey, string> Label
+        public ObservableDictionary<KeyEnum, string> Label
         {
             get => _label;
             set => SetProperty(ref _label, value);
@@ -66,12 +66,12 @@ namespace KeyConverterGUI.Models
         }
         #endregion
 
-        public KeyboardWindowModel(Dictionary<OriginalKey, OriginalKey> keyMap)
+        public KeyboardWindowModel(Dictionary<KeyEnum, KeyEnum> keyMap)
         {
             if (keyMap != null)
                 this._keyMap = keyMap;
             else
-                this._keyMap = new Dictionary<OriginalKey, OriginalKey>();
+                this._keyMap = new Dictionary<KeyEnum, KeyEnum>();
             Initialize();
         }
 
@@ -81,14 +81,14 @@ namespace KeyConverterGUI.Models
                 Label.Add(pair.Key, pair.Value.ToString());
         }
 
-        public void OpenPopup(OriginalKey key)
+        public void OpenPopup(KeyEnum key)
         {
             _srcKey = key;
             SourceKeyText = key.ToString();
             DestKeyText = "";
-            _destKey = OriginalKey.Unknown;
+            _destKey = KeyEnum.Unknown;
 
-            _interceptKeys = new SpecializedLowLevelKeyDetector();
+            _interceptKeys = new SpecializedLowLevelKeyDetector(new JapaneseKeyBoard());
             using (var process = Process.GetCurrentProcess())
             {
                 _interceptKeys.SpecificProcessId = process.Id;
@@ -100,7 +100,7 @@ namespace KeyConverterGUI.Models
             SettingWindowVisibility = Visibility.Visible;
         }
 
-        private void Keyinput_KeyDownEvent(object sender, LowLevelKeyDetector.OriginalKeyEventArg e)
+        private void Keyinput_KeyDownEvent(object sender, LowLevelKeyDetector.KeyEnumEventArg e)
         {
             DestKeyText = e.Key.ToString();
             _destKey = e.Key;
@@ -108,13 +108,13 @@ namespace KeyConverterGUI.Models
 
         public void DestroyInput()
         {
-            DestKeyText = OriginalKey.None.ToString();
-            _destKey = OriginalKey.None;
+            DestKeyText = KeyEnum.None.ToString();
+            _destKey = KeyEnum.None;
         }
 
         public void ApplyPopup()
         {
-            if (_destKey.Equals(OriginalKey.Unknown))
+            if (_destKey.Equals(KeyEnum.Unknown))
             {
                 if (Label.ContainsKey(_srcKey))
                     Label.Remove(_srcKey);
@@ -139,7 +139,7 @@ namespace KeyConverterGUI.Models
 
         public void ClosePopup()
         {
-            _interceptKeys.UnHook();
+            _interceptKeys.Dispose();
             _interceptKeys = null;
 
             KeyboardIsEnabled = true;

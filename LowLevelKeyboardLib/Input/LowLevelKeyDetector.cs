@@ -13,43 +13,51 @@ namespace LowLevelKeyboardLib.Input
     public class LowLevelKeyDetector : AbstractLowLevelKeyDetector
     {
         #region Fields
-        private bool isIntercepted = false;
+        private bool _isIntercepted = false;
 
-        protected LowLevelKeyInput input = new LowLevelKeyInput();
-        protected Dictionary<OriginalKey, INPUT> inkeys = new Dictionary<OriginalKey, INPUT>();
+        protected LowLevelKeyInput Input = new();
+
+        protected Dictionary<KeyEnum, INPUT> Inkeys = new();
+
+        protected KeyBoard KeyBoard;
         #endregion
 
         #region Properties
         #endregion
 
         #region InputEvent
-        public class OriginalKeyEventArg : EventArgs
+        public class KeyEnumEventArg : EventArgs
         {
             public int KeyCode { get; }
-            public OriginalKey Key { get; }
+            public KeyEnum Key { get; }
             public bool IsVirtualInput { get; }
 
-            public OriginalKeyEventArg(int keyCode, OriginalKey key, bool isVirtualInput)
+            public KeyEnumEventArg(int keyCode, KeyEnum key, bool isVirtualInput)
             {
                 KeyCode = keyCode;
                 Key = key;
                 IsVirtualInput = isVirtualInput;
             }
         }
-        public delegate void KeyEventHandler(object sender, OriginalKeyEventArg e);
+        public delegate void KeyEventHandler(object sender, KeyEnumEventArg e);
         public event KeyEventHandler KeyDownEvent;
         public event KeyEventHandler KeyUpEvent;
 
-        protected void OnKeyDownEvent(int keyCode, OriginalKey key, bool isVirtualInput)
+        protected void OnKeyDownEvent(int keyCode, KeyEnum key, bool isVirtualInput)
         {
-            KeyDownEvent?.Invoke(this, new OriginalKeyEventArg(keyCode, key, isVirtualInput));
+            KeyDownEvent?.Invoke(this, new KeyEnumEventArg(keyCode, key, isVirtualInput));
         }
 
-        protected void OnKeyUpEvent(int keyCode, OriginalKey key, bool isVirtualInput)
+        protected void OnKeyUpEvent(int keyCode, KeyEnum key, bool isVirtualInput)
         {
-            KeyUpEvent?.Invoke(this, new OriginalKeyEventArg(keyCode, key, isVirtualInput));
+            KeyUpEvent?.Invoke(this, new KeyEnumEventArg(keyCode, key, isVirtualInput));
         }
         #endregion
+
+        public LowLevelKeyDetector(KeyBoard keyBoard)
+        {
+            KeyBoard = keyBoard;
+        }
 
         /// <summary>
         /// Initialize WindowsHook and start to intercept.
@@ -61,11 +69,11 @@ namespace LowLevelKeyboardLib.Input
 
         public override void Hook()
         {
-            if (!isIntercepted)
+            if (!_isIntercepted)
             {
                 base.Hook();
-                inkeys = new Dictionary<OriginalKey, INPUT>();
-                isIntercepted = true;
+                Inkeys = new Dictionary<KeyEnum, INPUT>();
+                _isIntercepted = true;
             }
             else
                 throw new AlreadyInterceptedException("Can hook only once.");
@@ -78,7 +86,7 @@ namespace LowLevelKeyboardLib.Input
             {
                 KBDLLHOOKSTRUCT kb = (KBDLLHOOKSTRUCT)Marshal.PtrToStructure(lParam, typeof(KBDLLHOOKSTRUCT));
                 var vkCode = (int)kb.vkCode;
-                var key = KeyMapConverter.KeyCodeToKey(vkCode);
+                var key = KeyBoard.GetKey(vkCode);
 
                 var isVirtualInput = kb.dwExtraInfo == MAGIC_NUMBER;
 
@@ -89,7 +97,7 @@ namespace LowLevelKeyboardLib.Input
             {
                 KBDLLHOOKSTRUCT kb = (KBDLLHOOKSTRUCT)Marshal.PtrToStructure(lParam, typeof(KBDLLHOOKSTRUCT));
                 var vkCode = (int)kb.vkCode;
-                var key = KeyMapConverter.KeyCodeToKey(vkCode);
+                var key = KeyBoard.GetKey(vkCode);
 
                 var isVirtualInput = kb.dwExtraInfo == MAGIC_NUMBER;
 
@@ -106,12 +114,12 @@ namespace LowLevelKeyboardLib.Input
         /// <param name="pushedKey">Actually pushed key</param>
         /// <param name="destKey">Converted key</param>
         /// <returns></returns>
-        protected IntPtr InputKey(OriginalKey pushedKey, OriginalKey destKey)
+        protected IntPtr InputKey(KeyEnum pushedKey, KeyEnum destKey)
         {
-            var inputKey = KeyMapConverter.KeyToCode(destKey);
-            var inkey = input.KeyDown(inputKey);
-            if (!inkeys.ContainsKey(pushedKey))
-                inkeys.Add(pushedKey, inkey);
+            var inputKey = KeyBoard.GetKeyCode(destKey);
+            var inkey = Input.KeyDown(inputKey);
+            if (!Inkeys.ContainsKey(pushedKey))
+                Inkeys.Add(pushedKey, inkey);
             return new IntPtr(1);
         }
 
@@ -121,7 +129,7 @@ namespace LowLevelKeyboardLib.Input
         /// <param name="pushedKey">Actually pushed key</param>
         /// <param name="defaultReturnFunc">Default return func.</param>
         /// <returns></returns>
-        protected virtual IntPtr KeyDownFunction(OriginalKey pushedKey, bool isVirtualInput, Func<IntPtr> defaultReturnFunc)
+        protected virtual IntPtr KeyDownFunction(KeyEnum pushedKey, bool isVirtualInput, Func<IntPtr> defaultReturnFunc)
         {
             return defaultReturnFunc();
         }
@@ -130,7 +138,7 @@ namespace LowLevelKeyboardLib.Input
         /// KeyUp method. It is a method for override.
         /// </summary>
         /// <param name="upKey">Converted key</param>
-        protected virtual IntPtr KeyUpFunction(OriginalKey upKey, bool isVirtualInput, Func<IntPtr> defaultReturnFunc)
+        protected virtual IntPtr KeyUpFunction(KeyEnum upKey, bool isVirtualInput, Func<IntPtr> defaultReturnFunc)
         {
             return defaultReturnFunc();
         }
@@ -144,7 +152,7 @@ namespace LowLevelKeyboardLib.Input
         {
             AllKeyUp();
             base.UnHook();
-            isIntercepted = false;
+            _isIntercepted = false;
         }
 
         /// <summary>
@@ -152,9 +160,9 @@ namespace LowLevelKeyboardLib.Input
         /// </summary>
         public void AllKeyUp()
         {
-            var keys = inkeys.Values;
+            var keys = Inkeys.Values;
             foreach (var key in keys)
-                input.KeyUp(key);
+                Input.KeyUp(key);
         }
         #endregion
     }

@@ -8,7 +8,7 @@ using System.Threading.Tasks;
 
 namespace LowLevelKeyboardLib.Input
 {
-    public abstract class AbstractLowLevelKeyDetector
+    public abstract class AbstractLowLevelKeyDetector : IDisposable
     {
         #region Win32 Constants
         protected const int WH_KEYBOARD_LL = 0x000D;
@@ -90,6 +90,11 @@ namespace LowLevelKeyboardLib.Input
         protected virtual IntPtr HookProcedure(int nCode, IntPtr wParam, IntPtr lParam)
         {
             return CallNextHookEx(HookId, nCode, wParam, lParam);
+        }
+
+        public void Dispose()
+        {
+            UnHook();
         }
     }
 }

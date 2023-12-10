@@ -31,10 +31,10 @@ namespace KeyConverterGUI.Models
         private bool _isDetectMabinogi = true;
         private bool _isDetectMabinogiEnabled = true;
 
-        private readonly Dictionary<OriginalKey, OriginalKey> _keyMap = new Dictionary<OriginalKey, OriginalKey>()
+        private readonly Dictionary<KeyEnum, KeyEnum> _keyMap = new()
                 {
-                    { OriginalKey.LeftCtrl, OriginalKey.LeftAlt },
-                    { OriginalKey.LeftAlt, OriginalKey.LeftCtrl }
+                    { KeyEnum.LeftCtrl, KeyEnum.LeftAlt },
+                    { KeyEnum.LeftAlt, KeyEnum.LeftCtrl }
                 };
         #endregion
 
@@ -79,7 +79,7 @@ namespace KeyConverterGUI.Models
             {
                 var json = File.ReadAllText(Constants.KeyMapFileName);
                 if (!string.IsNullOrEmpty(json))
-                    _keyMap = JsonConvert.DeserializeObject<Dictionary<OriginalKey, OriginalKey>>(json);
+                    _keyMap = JsonConvert.DeserializeObject<Dictionary<KeyEnum, KeyEnum>>(json);
             }
 
             LoadDetectProcesses();
@@ -109,7 +109,7 @@ namespace KeyConverterGUI.Models
         {
             if (!_isEnabled)
             {
-                _interceptKeys = LowLevelKeyConverter.Instance;
+                _interceptKeys = new LowLevelKeyConverter(new JapaneseKeyBoard());
                 _interceptKeys.KeyMap = _keyMap;
                 _interceptKeys.Initialize();
 
@@ -129,7 +129,7 @@ namespace KeyConverterGUI.Models
             }
             else
             {
-                _interceptKeys.UnHook();
+                _interceptKeys.Dispose();
 
                 var resourceDictionary = new ResourceDictionary
                 {
