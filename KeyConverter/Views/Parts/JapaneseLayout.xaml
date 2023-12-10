@@ -1,0 +1,570 @@
+﻿<UserControl x:Class="KeyConverterGUI.Views.Parts.JapaneseLayout"
+             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
+             xmlns:lang="clr-namespace:LangResource"
+             xmlns:viewModels="clr-namespace:KeyConverterGUI.ViewModels"
+             xmlns:local="clr-namespace:KeyConverterGUI.Views.Parts"
+             xmlns:key="clr-namespace:LowLevelKeyboardLib.KeyMap;assembly=LowLevelKeyboardLib"
+             mc:Ignorable="d"
+             d:DataContext="{d:DesignInstance local:JapaneseLayout}">
+
+    <UserControl.Resources>
+        <ResourceDictionary>
+            <ResourceDictionary.MergedDictionaries>
+                <ResourceDictionary Source="pack://application:,,,/CommonStyleLib;component/Styles/Icon.xaml" />
+                <ResourceDictionary Source="pack://application:,,,/CommonStyleLib;component/Styles/Main.xaml" />
+                <ResourceDictionary Source="pack://application:,,,/CommonStyleLib;component/Styles/ListBoxStyle.xaml" />
+                <ResourceDictionary Source="../../Styles/Keyboard.xaml" />
+                <ResourceDictionary>
+                    <Style x:Key="CustomFlatButton" TargetType="{x:Type Button}" BasedOn="{StaticResource FlatButton}">
+                        <Setter Property="FontSize" Value="10" />
+                    </Style>
+                </ResourceDictionary>
+            </ResourceDictionary.MergedDictionaries>
+        </ResourceDictionary>
+    </UserControl.Resources>
+
+    <Grid>
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition Width="Auto" />
+            <ColumnDefinition Width="20" />
+            <ColumnDefinition Width="Auto" />
+            <ColumnDefinition Width="20" />
+            <ColumnDefinition Width="*" />
+        </Grid.ColumnDefinitions>
+
+        <StackPanel Height="Auto" HorizontalAlignment="Center">
+            <StackPanel Orientation="Horizontal" VerticalAlignment="Top">
+                <StackPanel Style="{DynamicResource StandardButtonStackPanel}">
+                    <Button Content="ESC" Width="40" Height="30" Style="{DynamicResource CustomFlatButton}" Command="{Binding KeyboardBtClicked}" CommandParameter="{x:Static key:KeyEnum.ESC}" />
+                    <Label Content="{Binding Path=KeyMaps[ESC], RelativeSource={RelativeSource FindAncestor, AncestorType={x:Type local:JapaneseLayout}}}" HorizontalAlignment="Center" Style="{DynamicResource DefinedLabel}" />
+                </StackPanel>
+                <StackPanel Margin="30,0,2,0">
+                    <Button Content="F1" Width="40" Height="30" Style="{DynamicResource CustomFlatButton}" Command="{Binding KeyboardBtClicked}" CommandParameter="{x:Static key:KeyEnum.F1}" />
+                    <Label Content="{Binding Path=KeyMaps[F1], RelativeSource={RelativeSource FindAncestor, AncestorType={x:Type local:JapaneseLayout}}}" HorizontalAlignment="Center" Style="{DynamicResource DefinedLabel}" />
+                </StackPanel>
+                <StackPanel Style="{DynamicResource StandardButtonStackPanel}">
+                    <Button Content="F2" Width="40" Height="30" Style="{DynamicResource CustomFlatButton}" Command="{Binding KeyboardBtClicked}" CommandParameter="{x:Static key:KeyEnum.F2}" />
+                    <Label Content="{Binding Path=KeyMaps[F2], RelativeSource={RelativeSource FindAncestor, AncestorType={x:Type local:JapaneseLayout}}}" HorizontalAlignment="Center" Style="{DynamicResource DefinedLabel}" />
+                </StackPanel>
+                <StackPanel Style="{DynamicResource StandardButtonStackPanel}">
+                    <Button Content="F3" Width="40" Height="30" Style="{DynamicResource CustomFlatButton}" Command="{Binding KeyboardBtClicked}" CommandParameter="{x:Static key:KeyEnum.F3}" />
+                    <Label Content="{Binding Path=KeyMaps[F3], RelativeSource={RelativeSource FindAncestor, AncestorType={x:Type local:JapaneseLayout}}}" HorizontalAlignment="Center" Style="{DynamicResource DefinedLabel}" />
+                </StackPanel>
+                <StackPanel Style="{DynamicResource StandardButtonStackPanel}">
+                    <Button Content="F4" Width="40" Height="30" Style="{DynamicResource CustomFlatButton}" Command="{Binding KeyboardBtClicked}" CommandParameter="{x:Static key:KeyEnum.F4}" />
+                    <Label Content="{Binding Path=KeyMaps[F4], RelativeSource={RelativeSource FindAncestor, AncestorType={x:Type local:JapaneseLayout}}}" HorizontalAlignment="Center" Style="{DynamicResource DefinedLabel}" />
+                </StackPanel>
+                <StackPanel Margin="20,0,2,0">
+                    <Button Content="F5" Width="40" Height="30" Style="{DynamicResource CustomFlatButton}" Command="{Binding KeyboardBtClicked}" CommandParameter="{x:Static key:KeyEnum.F5}" />
+                    <Label Content="{Binding Path=KeyMaps[F5], RelativeSource={RelativeSource FindAncestor, AncestorType={x:Type local:JapaneseLayout}}}" HorizontalAlignment="Center" Style="{DynamicResource DefinedLabel}" />
+                </StackPanel>
+                <StackPanel Style="{DynamicResource StandardButtonStackPanel}">
+                    <Button Content="F6" Width="40" Height="30" Style="{DynamicResource CustomFlatButton}" Command="{Binding KeyboardBtClicked}" CommandParameter="{x:Static key:KeyEnum.F6}" />
+                    <Label Content="{Binding Path=KeyMaps[F6], RelativeSource={RelativeSource FindAncestor, AncestorType={x:Type local:JapaneseLayout}}}" HorizontalAlignment="Center" Style="{DynamicResource DefinedLabel}" />
+                </StackPanel>
+                <StackPanel Style="{DynamicResource StandardButtonStackPanel}">
+                    <Button Content="F7" Width="40" Height="30" Style="{DynamicResource CustomFlatButton}" Command="{Binding KeyboardBtClicked}" CommandParameter="{x:Static key:KeyEnum.F7}" />
+                    <Label Content="{Binding Path=KeyMaps[F7], RelativeSource={RelativeSource FindAncestor, AncestorType={x:Type local:JapaneseLayout}}}" HorizontalAlignment="Center" Style="{DynamicResource DefinedLabel}" />
+                </StackPanel>
+                <StackPanel Style="{DynamicResource StandardButtonStackPanel}">
+                    <Button Content="F8" Width="40" Height="30" Style="{DynamicResource CustomFlatButton}" Command="{Binding KeyboardBtClicked}" CommandParameter="{x:Static key:KeyEnum.F8}" />
+                    <Label Content="{Binding Path=KeyMaps[F8], RelativeSource={RelativeSource FindAncestor, AncestorType={x:Type local:JapaneseLayout}}}" HorizontalAlignment="Center" Style="{DynamicResource DefinedLabel}" />
+                </StackPanel>
+                <StackPanel Margin="20,0,2,0">
+                    <Button Content="F9" Width="40" Height="30" Style="{DynamicResource CustomFlatButton}" Command="{Binding KeyboardBtClicked}" CommandParameter="{x:Static key:KeyEnum.F9}" />
+                    <Label Content="{Binding Path=KeyMaps[F9], RelativeSource={RelativeSource FindAncestor, AncestorType={x:Type local:JapaneseLayout}}}" HorizontalAlignment="Center" Style="{DynamicResource DefinedLabel}" />
+                </StackPanel>
+                <StackPanel Style="{DynamicResource StandardButtonStackPanel}">
+                    <Button Content="F10" Width="40" Height="30" Style="{DynamicResource CustomFlatButton}" Command="{Binding KeyboardBtClicked}" CommandParameter="{x:Static key:KeyEnum.F10}" />
+                    <Label Content="{Binding Path=KeyMaps[F10], RelativeSource={RelativeSource FindAncestor, AncestorType={x:Type local:JapaneseLayout}}}" HorizontalAlignment="Center" Style="{DynamicResource DefinedLabel}" />
+                </StackPanel>
+                <StackPanel Style="{DynamicResource StandardButtonStackPanel}">
+                    <Button Content="F11" Width="40" Height="30" Style="{DynamicResource CustomFlatButton}" Command="{Binding KeyboardBtClicked}" CommandParameter="{x:Static key:KeyEnum.F11}" />
+                    <Label Content="{Binding Path=KeyMaps[F11], RelativeSource={RelativeSource FindAncestor, AncestorType={x:Type local:JapaneseLayout}}}" HorizontalAlignment="Center" Style="{DynamicResource DefinedLabel}" />
+                </StackPanel>
+                <StackPanel Style="{DynamicResource StandardButtonStackPanel}">
+                    <Button Content="F12" Width="40" Height="30" Style="{DynamicResource CustomFlatButton}" Command="{Binding KeyboardBtClicked}" CommandParameter="{x:Static key:KeyEnum.F12}" />
+                    <Label Content="{Binding Path=KeyMaps[F12], RelativeSource={RelativeSource FindAncestor, AncestorType={x:Type local:JapaneseLayout}}}" HorizontalAlignment="Center" Style="{DynamicResource DefinedLabel}" />
+                </StackPanel>
+            </StackPanel>
+
+            <StackPanel Margin="0,0,0,0" Orientation="Horizontal" VerticalAlignment="Top">
+                <StackPanel Style="{DynamicResource StandardButtonStackPanel}">
+                    <Button Content="半/全" Width="40" Height="40" IsEnabled="False" Style="{DynamicResource CustomFlatButton}" Command="{Binding KeyboardBtClicked}" CommandParameter="{x:Static key:KeyEnum.HankakuZenkaku}" />
+                    <Label Content="{Binding Path=KeyMaps[HankakuZenkaku], RelativeSource={RelativeSource FindAncestor, AncestorType={x:Type local:JapaneseLayout}}}" HorizontalAlignment="Center" Style="{DynamicResource DefinedLabel}" />
+                </StackPanel>
+                <StackPanel Style="{DynamicResource StandardButtonStackPanel}">
+                    <Button Content="1" Width="40" Height="40" Style="{DynamicResource CustomFlatButton}" Command="{Binding KeyboardBtClicked}" CommandParameter="{x:Static key:KeyEnum.D1}" />
+                    <Label Content="{Binding Path=KeyMaps[D1], RelativeSource={RelativeSource FindAncestor, AncestorType={x:Type local:JapaneseLayout}}}" HorizontalAlignment="Center" Style="{DynamicResource DefinedLabel}" />
+                </StackPanel>
+                <StackPanel Style="{DynamicResource StandardButtonStackPanel}">
+                    <Button Content="2" Width="40" Height="40" Style="{DynamicResource CustomFlatButton}" Command="{Binding KeyboardBtClicked}" CommandParameter="{x:Static key:KeyEnum.D2}" />
+                    <Label Content="{Binding Path=KeyMaps[D2], RelativeSource={RelativeSource FindAncestor, AncestorType={x:Type local:JapaneseLayout}}}" HorizontalAlignment="Center" Style="{DynamicResource DefinedLabel}" />
+                </StackPanel>
+                <StackPanel Style="{DynamicResource StandardButtonStackPanel}">
+                    <Button Content="3" Width="40" Height="40" Style="{DynamicResource CustomFlatButton}" Command="{Binding KeyboardBtClicked}" CommandParameter="{x:Static key:KeyEnum.D3}" />
+                    <Label Content="{Binding Path=KeyMaps[D3], RelativeSource={RelativeSource FindAncestor, AncestorType={x:Type local:JapaneseLayout}}}" HorizontalAlignment="Center" Style="{DynamicResource DefinedLabel}" />
+                </StackPanel>
+                <StackPanel Style="{DynamicResource StandardButtonStackPanel}">
+                    <Button Content="4" Width="40" Height="40" Style="{DynamicResource CustomFlatButton}" Command="{Binding KeyboardBtClicked}" CommandParameter="{x:Static key:KeyEnum.D4}" />
+                    <Label Content="{Binding Path=KeyMaps[D4], RelativeSource={RelativeSource FindAncestor, AncestorType={x:Type local:JapaneseLayout}}}" HorizontalAlignment="Center" Style="{DynamicResource DefinedLabel}" />
+                </StackPanel>
+                <StackPanel Style="{DynamicResource StandardButtonStackPanel}">
+                    <Button Content="5" Width="40" Height="40" Style="{DynamicResource CustomFlatButton}" Command="{Binding KeyboardBtClicked}" CommandParameter="{x:Static key:KeyEnum.D5}" />
+                    <Label Content="{Binding Path=KeyMaps[D5], RelativeSource={RelativeSource FindAncestor, AncestorType={x:Type local:JapaneseLayout}}}" HorizontalAlignment="Center" Style="{DynamicResource DefinedLabel}" />
+                </StackPanel>
+                <StackPanel Style="{DynamicResource StandardButtonStackPanel}">
+                    <Button Content="6" Width="40" Height="40" Style="{DynamicResource CustomFlatButton}" Command="{Binding KeyboardBtClicked}" CommandParameter="{x:Static key:KeyEnum.D6}" />
+                    <Label Content="{Binding Path=KeyMaps[D6], RelativeSource={RelativeSource FindAncestor, AncestorType={x:Type local:JapaneseLayout}}}" HorizontalAlignment="Center" Style="{DynamicResource DefinedLabel}" />
+                </StackPanel>
+                <StackPanel Style="{DynamicResource StandardButtonStackPanel}">
+                    <Button Content="7" Width="40" Height="40" Style="{DynamicResource CustomFlatButton}" Command="{Binding KeyboardBtClicked}" CommandParameter="{x:Static key:KeyEnum.D7}" />
+                    <Label Content="{Binding Path=KeyMaps[D7], RelativeSource={RelativeSource FindAncestor, AncestorType={x:Type local:JapaneseLayout}}}" HorizontalAlignment="Center" Style="{DynamicResource DefinedLabel}" />
+                </StackPanel>
+                <StackPanel Style="{DynamicResource StandardButtonStackPanel}">
+                    <Button Content="8" Width="40" Height="40" Style="{DynamicResource CustomFlatButton}" Command="{Binding KeyboardBtClicked}" CommandParameter="{x:Static key:KeyEnum.D8}" />
+                    <Label Content="{Binding Path=KeyMaps[D8], RelativeSource={RelativeSource FindAncestor, AncestorType={x:Type local:JapaneseLayout}}}" HorizontalAlignment="Center" Style="{DynamicResource DefinedLabel}" />
+                </StackPanel>
+                <StackPanel Style="{DynamicResource StandardButtonStackPanel}">
+                    <Button Content="9" Width="40" Height="40" Style="{DynamicResource CustomFlatButton}" Command="{Binding KeyboardBtClicked}" CommandParameter="{x:Static key:KeyEnum.D9}" />
+                    <Label Content="{Binding Path=KeyMaps[D9], RelativeSource={RelativeSource FindAncestor, AncestorType={x:Type local:JapaneseLayout}}}" HorizontalAlignment="Center" Style="{DynamicResource DefinedLabel}" />
+                </StackPanel>
+                <StackPanel Style="{DynamicResource StandardButtonStackPanel}">
+                    <Button Content="0" Width="40" Height="40" Style="{DynamicResource CustomFlatButton}" Command="{Binding KeyboardBtClicked}" CommandParameter="{x:Static key:KeyEnum.D0}" />
+                    <Label Content="{Binding Path=KeyMaps[D0], RelativeSource={RelativeSource FindAncestor, AncestorType={x:Type local:JapaneseLayout}}}" HorizontalAlignment="Center" Style="{DynamicResource DefinedLabel}" />
+                </StackPanel>
+                <StackPanel Style="{DynamicResource StandardButtonStackPanel}">
+                    <Button Content="-" Width="40" Height="40" Style="{DynamicResource CustomFlatButton}" Command="{Binding KeyboardBtClicked}" CommandParameter="{x:Static key:KeyEnum.Equal}" />
+                    <Label Content="{Binding Path=KeyMaps[Equal], RelativeSource={RelativeSource FindAncestor, AncestorType={x:Type local:JapaneseLayout}}}" HorizontalAlignment="Center" Style="{DynamicResource DefinedLabel}" />
+                </StackPanel>
+                <StackPanel Style="{DynamicResource StandardButtonStackPanel}">
+                    <Button Content="^" Width="40" Height="40" Style="{DynamicResource CustomFlatButton}" Command="{Binding KeyboardBtClicked}" CommandParameter="{x:Static key:KeyEnum.Tilde}" />
+                    <Label Content="{Binding Path=KeyMaps[Tilde], RelativeSource={RelativeSource FindAncestor, AncestorType={x:Type local:JapaneseLayout}}}" HorizontalAlignment="Center" Style="{DynamicResource DefinedLabel}" />
+                </StackPanel>
+                <StackPanel Style="{DynamicResource StandardButtonStackPanel}">
+                    <Button Content="|" Width="40" Height="40" Style="{DynamicResource CustomFlatButton}" Command="{Binding KeyboardBtClicked}" CommandParameter="{x:Static key:KeyEnum.VerticalBar}" />
+                    <Label Content="{Binding Path=KeyMaps[VerticalBar], RelativeSource={RelativeSource FindAncestor, AncestorType={x:Type local:JapaneseLayout}}}" HorizontalAlignment="Center" Style="{DynamicResource DefinedLabel}" />
+                </StackPanel>
+                <StackPanel Style="{DynamicResource StandardButtonStackPanel}">
+                    <Button Content="Back&#xa;Space" FontSize="10" Width="40" Height="40" Style="{DynamicResource CustomFlatButton}" Command="{Binding KeyboardBtClicked}" CommandParameter="{x:Static key:KeyEnum.Back}" />
+                    <Label Content="{Binding Path=KeyMaps[Back], RelativeSource={RelativeSource FindAncestor, AncestorType={x:Type local:JapaneseLayout}}}" HorizontalAlignment="Center" Style="{DynamicResource DefinedLabel}" />
+                </StackPanel>
+            </StackPanel>
+
+            <StackPanel Orientation="Horizontal">
+                <StackPanel>
+                    <StackPanel Margin="0,0,0,0" Orientation="Horizontal" VerticalAlignment="Top">
+                        <StackPanel Style="{DynamicResource StandardButtonStackPanel}">
+                            <Button Content="TAB" Width="75" Height="40" Style="{DynamicResource CustomFlatButton}" Command="{Binding KeyboardBtClicked}" CommandParameter="{x:Static key:KeyEnum.Tab}" />
+                            <Label Content="{Binding Path=KeyMaps[Tab], RelativeSource={RelativeSource FindAncestor, AncestorType={x:Type local:JapaneseLayout}}}" HorizontalAlignment="Center" Style="{DynamicResource DefinedLabel}" />
+                        </StackPanel>
+                        <StackPanel Style="{DynamicResource StandardButtonStackPanel}">
+                            <Button Content="Q" Width="40" Height="40" Style="{DynamicResource CustomFlatButton}" Command="{Binding KeyboardBtClicked}" CommandParameter="{x:Static key:KeyEnum.Q}" />
+                            <Label Content="{Binding Path=KeyMaps[Q], RelativeSource={RelativeSource FindAncestor, AncestorType={x:Type local:JapaneseLayout}}}" HorizontalAlignment="Center" Style="{DynamicResource DefinedLabel}" />
+                        </StackPanel>
+                        <StackPanel Style="{DynamicResource StandardButtonStackPanel}">
+                            <Button Content="W" Width="40" Height="40" Style="{DynamicResource CustomFlatButton}" Command="{Binding KeyboardBtClicked}" CommandParameter="{x:Static key:KeyEnum.W}" />
+                            <Label Content="{Binding Path=KeyMaps[W], RelativeSource={RelativeSource FindAncestor, AncestorType={x:Type local:JapaneseLayout}}}" HorizontalAlignment="Center" Style="{DynamicResource DefinedLabel}" />
+                        </StackPanel>
+                        <StackPanel Style="{DynamicResource StandardButtonStackPanel}">
+                            <Button Content="E" Width="40" Height="40" Style="{DynamicResource CustomFlatButton}" Command="{Binding KeyboardBtClicked}" CommandParameter="{x:Static key:KeyEnum.E}" />
+                            <Label Content="{Binding Path=KeyMaps[E], RelativeSource={RelativeSource FindAncestor, AncestorType={x:Type local:JapaneseLayout}}}" HorizontalAlignment="Center" Style="{DynamicResource DefinedLabel}" />
+                        </StackPanel>
+                        <StackPanel Style="{DynamicResource StandardButtonStackPanel}">
+                            <Button Content="R" Width="40" Height="40" Style="{DynamicResource CustomFlatButton}" Command="{Binding KeyboardBtClicked}" CommandParameter="{x:Static key:KeyEnum.R}" />
+                            <Label Content="{Binding Path=KeyMaps[R], RelativeSource={RelativeSource FindAncestor, AncestorType={x:Type local:JapaneseLayout}}}" HorizontalAlignment="Center" Style="{DynamicResource DefinedLabel}" />
+                        </StackPanel>
+                        <StackPanel Style="{DynamicResource StandardButtonStackPanel}">
+                            <Button Content="T" Width="40" Height="40" Style="{DynamicResource CustomFlatButton}" Command="{Binding KeyboardBtClicked}" CommandParameter="{x:Static key:KeyEnum.T}" />
+                            <Label Content="{Binding Path=KeyMaps[T], RelativeSource={RelativeSource FindAncestor, AncestorType={x:Type local:JapaneseLayout}}}" HorizontalAlignment="Center" Style="{DynamicResource DefinedLabel}" />
+                        </StackPanel>
+                        <StackPanel Style="{DynamicResource StandardButtonStackPanel}">
+                            <Button Content="Y" Width="40" Height="40" Style="{DynamicResource CustomFlatButton}" Command="{Binding KeyboardBtClicked}" CommandParameter="{x:Static key:KeyEnum.Y}" />
+                            <Label Content="{Binding Path=KeyMaps[Y], RelativeSource={RelativeSource FindAncestor, AncestorType={x:Type local:JapaneseLayout}}}" HorizontalAlignment="Center" Style="{DynamicResource DefinedLabel}" />
+                        </StackPanel>
+                        <StackPanel Style="{DynamicResource StandardButtonStackPanel}">
+                            <Button Content="U" Width="40" Height="40" Style="{DynamicResource CustomFlatButton}" Command="{Binding KeyboardBtClicked}" CommandParameter="{x:Static key:KeyEnum.U}" />
+                            <Label Content="{Binding Path=KeyMaps[U], RelativeSource={RelativeSource FindAncestor, AncestorType={x:Type local:JapaneseLayout}}}" HorizontalAlignment="Center" Style="{DynamicResource DefinedLabel}" />
+                        </StackPanel>
+                        <StackPanel Style="{DynamicResource StandardButtonStackPanel}">
+                            <Button Content="I" Width="40" Height="40" Style="{DynamicResource CustomFlatButton}" Command="{Binding KeyboardBtClicked}" CommandParameter="{x:Static key:KeyEnum.I}" />
+                            <Label Content="{Binding Path=KeyMaps[I], RelativeSource={RelativeSource FindAncestor, AncestorType={x:Type local:JapaneseLayout}}}" HorizontalAlignment="Center" Style="{DynamicResource DefinedLabel}" />
+                        </StackPanel>
+                        <StackPanel Style="{DynamicResource StandardButtonStackPanel}">
+                            <Button Content="O" Width="40" Height="40" Style="{DynamicResource CustomFlatButton}" Command="{Binding KeyboardBtClicked}" CommandParameter="{x:Static key:KeyEnum.O}" />
+                            <Label Content="{Binding Path=KeyMaps[O], RelativeSource={RelativeSource FindAncestor, AncestorType={x:Type local:JapaneseLayout}}}" HorizontalAlignment="Center" Style="{DynamicResource DefinedLabel}" />
+                        </StackPanel>
+                        <StackPanel Style="{DynamicResource StandardButtonStackPanel}">
+                            <Button Content="P" Width="40" Height="40" Style="{DynamicResource CustomFlatButton}" Command="{Binding KeyboardBtClicked}" CommandParameter="{x:Static key:KeyEnum.P}" />
+                            <Label Content="{Binding Path=KeyMaps[P], RelativeSource={RelativeSource FindAncestor, AncestorType={x:Type local:JapaneseLayout}}}" HorizontalAlignment="Center" Style="{DynamicResource DefinedLabel}" />
+                        </StackPanel>
+                        <StackPanel Style="{DynamicResource StandardButtonStackPanel}">
+                            <Button Content="@" Width="40" Height="40" Style="{DynamicResource CustomFlatButton}" Command="{Binding KeyboardBtClicked}" CommandParameter="{x:Static key:KeyEnum.AtMark}" />
+                            <Label Content="{Binding Path=KeyMaps[AtMark], RelativeSource={RelativeSource FindAncestor, AncestorType={x:Type local:JapaneseLayout}}}" HorizontalAlignment="Center" Style="{DynamicResource DefinedLabel}" />
+                        </StackPanel>
+                        <StackPanel Style="{DynamicResource StandardButtonStackPanel}">
+                            <Button Content="{}{" Width="40" Height="40" Style="{DynamicResource CustomFlatButton}" Command="{Binding KeyboardBtClicked}" CommandParameter="{x:Static key:KeyEnum.LeftBrace}" />
+                            <Label Content="{Binding Path=KeyMaps[LeftBrace], RelativeSource={RelativeSource FindAncestor, AncestorType={x:Type local:JapaneseLayout}}}" HorizontalAlignment="Center" Style="{DynamicResource DefinedLabel}" />
+                        </StackPanel>
+                    </StackPanel>
+
+                    <StackPanel Margin="0,0,0,0" Orientation="Horizontal" VerticalAlignment="Top">
+                        <StackPanel Style="{DynamicResource StandardButtonStackPanel}">
+                            <Button Content="Caps" Width="75" Height="40" Style="{DynamicResource CustomFlatButton}" Command="{Binding KeyboardBtClicked}" CommandParameter="{x:Static key:KeyEnum.Caps}" />
+                            <Label Content="{Binding Path=KeyMaps[Caps], RelativeSource={RelativeSource FindAncestor, AncestorType={x:Type local:JapaneseLayout}}}" HorizontalAlignment="Center" Style="{DynamicResource DefinedLabel}" />
+                        </StackPanel>
+                        <StackPanel Style="{DynamicResource StandardButtonStackPanel}">
+                            <Button Content="A" Width="40" Height="40" Style="{DynamicResource CustomFlatButton}" Command="{Binding KeyboardBtClicked}" CommandParameter="{x:Static key:KeyEnum.A}" />
+                            <Label Content="{Binding Path=KeyMaps[A], RelativeSource={RelativeSource FindAncestor, AncestorType={x:Type local:JapaneseLayout}}}" HorizontalAlignment="Center" Style="{DynamicResource DefinedLabel}" />
+                        </StackPanel>
+                        <StackPanel Style="{DynamicResource StandardButtonStackPanel}">
+                            <Button Content="S" Width="40" Height="40" Style="{DynamicResource CustomFlatButton}" Command="{Binding KeyboardBtClicked}" CommandParameter="{x:Static key:KeyEnum.S}" />
+                            <Label Content="{Binding Path=KeyMaps[S], RelativeSource={RelativeSource FindAncestor, AncestorType={x:Type local:JapaneseLayout}}}" HorizontalAlignment="Center" Style="{DynamicResource DefinedLabel}" />
+                        </StackPanel>
+                        <StackPanel Style="{DynamicResource StandardButtonStackPanel}">
+                            <Button Content="D" Width="40" Height="40" Style="{DynamicResource CustomFlatButton}" Command="{Binding KeyboardBtClicked}" CommandParameter="{x:Static key:KeyEnum.D}" />
+                            <Label Content="{Binding Path=KeyMaps[D], RelativeSource={RelativeSource FindAncestor, AncestorType={x:Type local:JapaneseLayout}}}" HorizontalAlignment="Center" Style="{DynamicResource DefinedLabel}" />
+                        </StackPanel>
+                        <StackPanel Style="{DynamicResource StandardButtonStackPanel}">
+                            <Button Content="F" Width="40" Height="40" Style="{DynamicResource CustomFlatButton}" Command="{Binding KeyboardBtClicked}" CommandParameter="{x:Static key:KeyEnum.F}" />
+                            <Label Content="{Binding Path=KeyMaps[F], RelativeSource={RelativeSource FindAncestor, AncestorType={x:Type local:JapaneseLayout}}}" HorizontalAlignment="Center" Style="{DynamicResource DefinedLabel}" />
+                        </StackPanel>
+                        <StackPanel Style="{DynamicResource StandardButtonStackPanel}">
+                            <Button Content="G" Width="40" Height="40" Style="{DynamicResource CustomFlatButton}" Command="{Binding KeyboardBtClicked}" CommandParameter="{x:Static key:KeyEnum.G}" />
+                            <Label Content="{Binding Path=KeyMaps[G], RelativeSource={RelativeSource FindAncestor, AncestorType={x:Type local:JapaneseLayout}}}" HorizontalAlignment="Center" Style="{DynamicResource DefinedLabel}" />
+                        </StackPanel>
+                        <StackPanel Style="{DynamicResource StandardButtonStackPanel}">
+                            <Button Content="H" Width="40" Height="40" Style="{DynamicResource CustomFlatButton}" Command="{Binding KeyboardBtClicked}" CommandParameter="{x:Static key:KeyEnum.H}" />
+                            <Label Content="{Binding Path=KeyMaps[H], RelativeSource={RelativeSource FindAncestor, AncestorType={x:Type local:JapaneseLayout}}}" HorizontalAlignment="Center" Style="{DynamicResource DefinedLabel}" />
+                        </StackPanel>
+                        <StackPanel Style="{DynamicResource StandardButtonStackPanel}">
+                            <Button Content="J" Width="40" Height="40" Style="{DynamicResource CustomFlatButton}" Command="{Binding KeyboardBtClicked}" CommandParameter="{x:Static key:KeyEnum.J}" />
+                            <Label Content="{Binding Path=KeyMaps[J], RelativeSource={RelativeSource FindAncestor, AncestorType={x:Type local:JapaneseLayout}}}" HorizontalAlignment="Center" Style="{DynamicResource DefinedLabel}" />
+                        </StackPanel>
+                        <StackPanel Style="{DynamicResource StandardButtonStackPanel}">
+                            <Button Content="K" Width="40" Height="40" Style="{DynamicResource CustomFlatButton}" Command="{Binding KeyboardBtClicked}" CommandParameter="{x:Static key:KeyEnum.K}" />
+                            <Label Content="{Binding Path=KeyMaps[K], RelativeSource={RelativeSource FindAncestor, AncestorType={x:Type local:JapaneseLayout}}}" HorizontalAlignment="Center" Style="{DynamicResource DefinedLabel}" />
+                        </StackPanel>
+                        <StackPanel Style="{DynamicResource StandardButtonStackPanel}">
+                            <Button Content="L" Width="40" Height="40" Style="{DynamicResource CustomFlatButton}" Command="{Binding KeyboardBtClicked}" CommandParameter="{x:Static key:KeyEnum.L}" />
+                            <Label Content="{Binding Path=KeyMaps[L], RelativeSource={RelativeSource FindAncestor, AncestorType={x:Type local:JapaneseLayout}}}" HorizontalAlignment="Center" Style="{DynamicResource DefinedLabel}" />
+                        </StackPanel>
+                        <StackPanel Style="{DynamicResource StandardButtonStackPanel}">
+                            <Button Content=";" Width="40" Height="40" Style="{DynamicResource CustomFlatButton}" Command="{Binding KeyboardBtClicked}" CommandParameter="{x:Static key:KeyEnum.Plus}" />
+                            <Label Content="{Binding Path=KeyMaps[Plus], RelativeSource={RelativeSource FindAncestor, AncestorType={x:Type local:JapaneseLayout}}}" HorizontalAlignment="Center" Style="{DynamicResource DefinedLabel}" />
+                        </StackPanel>
+                        <StackPanel Style="{DynamicResource StandardButtonStackPanel}">
+                            <Button Content=":" Width="40" Height="40" Style="{DynamicResource CustomFlatButton}" Command="{Binding KeyboardBtClicked}" CommandParameter="{x:Static key:KeyEnum.Multiply}" />
+                            <Label Content="{Binding Path=KeyMaps[Multiply], RelativeSource={RelativeSource FindAncestor, AncestorType={x:Type local:JapaneseLayout}}}" HorizontalAlignment="Center" Style="{DynamicResource DefinedLabel}" />
+                        </StackPanel>
+                        <StackPanel Style="{DynamicResource StandardButtonStackPanel}">
+                            <Button Content="{}}" Width="40" Height="40" Style="{DynamicResource CustomFlatButton}" Command="{Binding KeyboardBtClicked}" CommandParameter="{x:Static key:KeyEnum.RightBrace}" />
+                            <Label Content="{Binding Path=KeyMaps[RightBrace], RelativeSource={RelativeSource FindAncestor, AncestorType={x:Type local:JapaneseLayout}}}" HorizontalAlignment="Center" Style="{DynamicResource DefinedLabel}" />
+                        </StackPanel>
+                    </StackPanel>
+                </StackPanel>
+
+                <StackPanel Margin="2,0,2,0">
+                    <Button Content="Enter" Width="50" Height="103" Style="{DynamicResource CustomFlatButton}" Command="{Binding KeyboardBtClicked}" CommandParameter="{x:Static key:KeyEnum.Enter}" />
+                    <Label Content="{Binding Path=KeyMaps[Enter], RelativeSource={RelativeSource FindAncestor, AncestorType={x:Type local:JapaneseLayout}}}" HorizontalAlignment="Center" Style="{DynamicResource DefinedLabel}" />
+                </StackPanel>
+            </StackPanel>
+
+            <StackPanel Margin="0,0,0,0" Orientation="Horizontal" VerticalAlignment="Top">
+                <StackPanel Style="{DynamicResource StandardButtonStackPanel}">
+                    <Button Content="Shift" Width="85" Height="40" Style="{DynamicResource CustomFlatButton}" Command="{Binding KeyboardBtClicked}" CommandParameter="{x:Static key:KeyEnum.LeftShift}" />
+                    <Label Content="{Binding Path=KeyMaps[LeftShift], RelativeSource={RelativeSource FindAncestor, AncestorType={x:Type local:JapaneseLayout}}}" HorizontalAlignment="Center" Style="{DynamicResource DefinedLabel}" />
+                </StackPanel>
+                <StackPanel Style="{DynamicResource StandardButtonStackPanel}">
+                    <Button Content="Z" Width="40" Height="40" Style="{DynamicResource CustomFlatButton}" Command="{Binding KeyboardBtClicked}" CommandParameter="{x:Static key:KeyEnum.Z}" />
+                    <Label Content="{Binding Path=KeyMaps[Z], RelativeSource={RelativeSource FindAncestor, AncestorType={x:Type local:JapaneseLayout}}}" HorizontalAlignment="Center" Style="{DynamicResource DefinedLabel}" />
+                </StackPanel>
+                <StackPanel Style="{DynamicResource StandardButtonStackPanel}">
+                    <Button Content="X" Width="40" Height="40" Style="{DynamicResource CustomFlatButton}" Command="{Binding KeyboardBtClicked}" CommandParameter="{x:Static key:KeyEnum.X}" />
+                    <Label Content="{Binding Path=KeyMaps[X], RelativeSource={RelativeSource FindAncestor, AncestorType={x:Type local:JapaneseLayout}}}" HorizontalAlignment="Center" Style="{DynamicResource DefinedLabel}" />
+                </StackPanel>
+                <StackPanel Style="{DynamicResource StandardButtonStackPanel}">
+                    <Button Content="C" Width="40" Height="40" Style="{DynamicResource CustomFlatButton}" Command="{Binding KeyboardBtClicked}" CommandParameter="{x:Static key:KeyEnum.C}" />
+                    <Label Content="{Binding Path=KeyMaps[C], RelativeSource={RelativeSource FindAncestor, AncestorType={x:Type local:JapaneseLayout}}}" HorizontalAlignment="Center" Style="{DynamicResource DefinedLabel}" />
+                </StackPanel>
+                <StackPanel Style="{DynamicResource StandardButtonStackPanel}">
+                    <Button Content="V" Width="40" Height="40" Style="{DynamicResource CustomFlatButton}" Command="{Binding KeyboardBtClicked}" CommandParameter="{x:Static key:KeyEnum.V}" />
+                    <Label Content="{Binding Path=KeyMaps[V], RelativeSource={RelativeSource FindAncestor, AncestorType={x:Type local:JapaneseLayout}}}" HorizontalAlignment="Center" Style="{DynamicResource DefinedLabel}" />
+                </StackPanel>
+                <StackPanel Style="{DynamicResource StandardButtonStackPanel}">
+                    <Button Content="B" Width="40" Height="40" Style="{DynamicResource CustomFlatButton}" Command="{Binding KeyboardBtClicked}" CommandParameter="{x:Static key:KeyEnum.B}" />
+                    <Label Content="{Binding Path=KeyMaps[B], RelativeSource={RelativeSource FindAncestor, AncestorType={x:Type local:JapaneseLayout}}}" HorizontalAlignment="Center" Style="{DynamicResource DefinedLabel}" />
+                </StackPanel>
+                <StackPanel Style="{DynamicResource StandardButtonStackPanel}">
+                    <Button Content="N" Width="40" Height="40" Style="{DynamicResource CustomFlatButton}" Command="{Binding KeyboardBtClicked}" CommandParameter="{x:Static key:KeyEnum.N}" />
+                    <Label Content="{Binding Path=KeyMaps[N], RelativeSource={RelativeSource FindAncestor, AncestorType={x:Type local:JapaneseLayout}}}" HorizontalAlignment="Center" Style="{DynamicResource DefinedLabel}" />
+                </StackPanel>
+                <StackPanel Style="{DynamicResource StandardButtonStackPanel}">
+                    <Button Content="M" Width="40" Height="40" Style="{DynamicResource CustomFlatButton}" Command="{Binding KeyboardBtClicked}" CommandParameter="{x:Static key:KeyEnum.M}" />
+                    <Label Content="{Binding Path=KeyMaps[M], RelativeSource={RelativeSource FindAncestor, AncestorType={x:Type local:JapaneseLayout}}}" HorizontalAlignment="Center" Style="{DynamicResource DefinedLabel}" />
+                </StackPanel>
+                <StackPanel Style="{DynamicResource StandardButtonStackPanel}">
+                    <Button Content="&lt;" Width="40" Height="40" Style="{DynamicResource CustomFlatButton}" Command="{Binding KeyboardBtClicked}" CommandParameter="{x:Static key:KeyEnum.Comma}" />
+                    <Label Content="{Binding Path=KeyMaps[Comma], RelativeSource={RelativeSource FindAncestor, AncestorType={x:Type local:JapaneseLayout}}}" HorizontalAlignment="Center" Style="{DynamicResource DefinedLabel}" />
+                </StackPanel>
+                <StackPanel Style="{DynamicResource StandardButtonStackPanel}">
+                    <Button Content="&gt;" Width="40" Height="40" Style="{DynamicResource CustomFlatButton}" Command="{Binding KeyboardBtClicked}" CommandParameter="{x:Static key:KeyEnum.Period}" />
+                    <Label Content="{Binding Path=KeyMaps[Period], RelativeSource={RelativeSource FindAncestor, AncestorType={x:Type local:JapaneseLayout}}}" HorizontalAlignment="Center" Style="{DynamicResource DefinedLabel}" />
+                </StackPanel>
+                <StackPanel Style="{DynamicResource StandardButtonStackPanel}">
+                    <Button Content="?" Width="40" Height="40" Style="{DynamicResource CustomFlatButton}" Command="{Binding KeyboardBtClicked}" CommandParameter="{x:Static key:KeyEnum.Question}" />
+                    <Label Content="{Binding Path=KeyMaps[Question], RelativeSource={RelativeSource FindAncestor, AncestorType={x:Type local:JapaneseLayout}}}" HorizontalAlignment="Center" Style="{DynamicResource DefinedLabel}" />
+                </StackPanel>
+                <StackPanel Style="{DynamicResource StandardButtonStackPanel}">
+                    <Button Content="_" Width="40" Height="40" Style="{DynamicResource CustomFlatButton}" Command="{Binding KeyboardBtClicked}" CommandParameter="{x:Static key:KeyEnum.UnderBar}" />
+                    <Label Content="{Binding Path=KeyMaps[UnderBar], RelativeSource={RelativeSource FindAncestor, AncestorType={x:Type local:JapaneseLayout}}}" HorizontalAlignment="Center" Style="{DynamicResource DefinedLabel}" />
+                </StackPanel>
+                <StackPanel Style="{DynamicResource StandardButtonStackPanel}">
+                    <Button Content="Shift" Width="85" Height="40" Style="{DynamicResource CustomFlatButton}" Command="{Binding KeyboardBtClicked}" CommandParameter="{x:Static key:KeyEnum.RightShift}" />
+                    <Label Content="{Binding Path=KeyMaps[RightShift], RelativeSource={RelativeSource FindAncestor, AncestorType={x:Type local:JapaneseLayout}}}" HorizontalAlignment="Center" Style="{DynamicResource DefinedLabel}" />
+                </StackPanel>
+            </StackPanel>
+
+            <StackPanel Margin="0,0,0,0" Orientation="Horizontal" VerticalAlignment="Top">
+                <StackPanel Style="{DynamicResource StandardButtonStackPanel}">
+                    <Button Content="Ctrl" Width="49" Height="40" Style="{DynamicResource CustomFlatButton}" Command="{Binding KeyboardBtClicked}" CommandParameter="{x:Static key:KeyEnum.LeftCtrl}" />
+                    <Label Content="{Binding Path=KeyMaps[LeftCtrl], RelativeSource={RelativeSource FindAncestor, AncestorType={x:Type local:JapaneseLayout}}}" HorizontalAlignment="Center" Style="{DynamicResource DefinedLabel}" />
+                </StackPanel>
+                <StackPanel Style="{DynamicResource StandardButtonStackPanel}">
+                    <Button Content="Win" Width="40" Height="40" Style="{DynamicResource CustomFlatButton}" Command="{Binding KeyboardBtClicked}" CommandParameter="{x:Static key:KeyEnum.LeftWindows}" />
+                    <Label Content="{Binding Path=KeyMaps[LeftWindows], RelativeSource={RelativeSource FindAncestor, AncestorType={x:Type local:JapaneseLayout}}}" HorizontalAlignment="Center" Style="{DynamicResource DefinedLabel}" />
+                </StackPanel>
+                <StackPanel Style="{DynamicResource StandardButtonStackPanel}">
+                    <Button Content="Alt" Width="40" Height="40" Style="{DynamicResource CustomFlatButton}" Command="{Binding KeyboardBtClicked}" CommandParameter="{x:Static key:KeyEnum.LeftAlt}" />
+                    <Label Content="{Binding Path=KeyMaps[LeftAlt], RelativeSource={RelativeSource FindAncestor, AncestorType={x:Type local:JapaneseLayout}}}" HorizontalAlignment="Center" Style="{DynamicResource DefinedLabel}" />
+                </StackPanel>
+                <StackPanel Style="{DynamicResource StandardButtonStackPanel}">
+                    <Button Content="無変換" Width="40" Height="40" FontSize="10" Style="{DynamicResource CustomFlatButton}" Command="{Binding KeyboardBtClicked}" CommandParameter="{x:Static key:KeyEnum.Muhenkan}" />
+                    <Label Content="{Binding Path=KeyMaps[Muhenkan], RelativeSource={RelativeSource FindAncestor, AncestorType={x:Type local:JapaneseLayout}}}" HorizontalAlignment="Center" Style="{DynamicResource DefinedLabel}" />
+                </StackPanel>
+                <StackPanel Style="{DynamicResource StandardButtonStackPanel}">
+                    <Button Content=" " Width="200" Height="40" Style="{DynamicResource CustomFlatButton}" Command="{Binding KeyboardBtClicked}" CommandParameter="{x:Static key:KeyEnum.Space}" />
+                    <Label Content="{Binding Path=KeyMaps[Space], RelativeSource={RelativeSource FindAncestor, AncestorType={x:Type local:JapaneseLayout}}}" HorizontalAlignment="Center" Style="{DynamicResource DefinedLabel}" />
+                </StackPanel>
+                <StackPanel Style="{DynamicResource StandardButtonStackPanel}">
+                    <Button Content="変換" Width="40" Height="40" FontSize="10" Style="{DynamicResource CustomFlatButton}" Command="{Binding KeyboardBtClicked}" CommandParameter="{x:Static key:KeyEnum.Henkan}" />
+                    <Label Content="{Binding Path=KeyMaps[Henkan], RelativeSource={RelativeSource FindAncestor, AncestorType={x:Type local:JapaneseLayout}}}" HorizontalAlignment="Center" Style="{DynamicResource DefinedLabel}" />
+                </StackPanel>
+                <StackPanel Style="{DynamicResource StandardButtonStackPanel}">
+                    <Button Content="カナ&#xa;かな" Width="40" Height="40" FontSize="10" IsEnabled="False" Style="{DynamicResource CustomFlatButton}" Command="{Binding KeyboardBtClicked}" CommandParameter="{x:Static key:KeyEnum.Kana}" />
+                    <Label Content="{Binding Path=KeyMaps[Kana], RelativeSource={RelativeSource FindAncestor, AncestorType={x:Type local:JapaneseLayout}}}" HorizontalAlignment="Center" Style="{DynamicResource DefinedLabel}" />
+                </StackPanel>
+                <StackPanel Style="{DynamicResource StandardButtonStackPanel}">
+                    <Button Content="Alt" Width="40" Height="40" Style="{DynamicResource CustomFlatButton}" Command="{Binding KeyboardBtClicked}" CommandParameter="{x:Static key:KeyEnum.RightAlt}" />
+                    <Label Content="{Binding Path=KeyMaps[RightAlt], RelativeSource={RelativeSource FindAncestor, AncestorType={x:Type local:JapaneseLayout}}}" HorizontalAlignment="Center" Style="{DynamicResource DefinedLabel}" />
+                </StackPanel>
+                <StackPanel Style="{DynamicResource StandardButtonStackPanel}">
+                    <Button Content="Win" Width="40" Height="40" Style="{DynamicResource CustomFlatButton}" Command="{Binding KeyboardBtClicked}" CommandParameter="{x:Static key:KeyEnum.RightWindows}" />
+                    <Label Content="{Binding Path=KeyMaps[RightWindows], RelativeSource={RelativeSource FindAncestor, AncestorType={x:Type local:JapaneseLayout}}}" HorizontalAlignment="Center" Style="{DynamicResource DefinedLabel}" />
+                </StackPanel>
+                <StackPanel Style="{DynamicResource StandardButtonStackPanel}">
+                    <Button Content="App." Width="40" Height="40" Style="{DynamicResource CustomFlatButton}" Command="{Binding KeyboardBtClicked}" CommandParameter="{x:Static key:KeyEnum.Menu}" />
+                    <Label Content="{Binding Path=KeyMaps[Menu], RelativeSource={RelativeSource FindAncestor, AncestorType={x:Type local:JapaneseLayout}}}" HorizontalAlignment="Center" Style="{DynamicResource DefinedLabel}" />
+                </StackPanel>
+                <StackPanel Style="{DynamicResource StandardButtonStackPanel}">
+                    <Button Content="Ctrl" Width="49" Height="40" Style="{DynamicResource CustomFlatButton}" Command="{Binding KeyboardBtClicked}" CommandParameter="{x:Static key:KeyEnum.RightCtrl}" />
+                    <Label Content="{Binding Path=KeyMaps[RightCtrl], RelativeSource={RelativeSource FindAncestor, AncestorType={x:Type local:JapaneseLayout}}}" HorizontalAlignment="Center" Style="{DynamicResource DefinedLabel}" />
+                </StackPanel>
+            </StackPanel>
+
+        </StackPanel>
+
+        <Grid Grid.Column="2">
+            <Grid.RowDefinitions>
+                <RowDefinition />
+                <RowDefinition />
+            </Grid.RowDefinitions>
+
+            <StackPanel>
+                <StackPanel Orientation="Horizontal">
+                    <StackPanel Style="{DynamicResource StandardButtonStackPanel}">
+                        <Button Content="Print&#xa;Screen" FontSize="10" Width="40" Height="40" Style="{DynamicResource CustomFlatButton}" Command="{Binding KeyboardBtClicked}" CommandParameter="{x:Static key:KeyEnum.PrintScreen}" />
+                        <Label Content="{Binding Path=KeyMaps[PrintScreen], RelativeSource={RelativeSource FindAncestor, AncestorType={x:Type local:JapaneseLayout}}}" HorizontalAlignment="Center" Style="{DynamicResource DefinedLabel}" />
+                    </StackPanel>
+                    <StackPanel Style="{DynamicResource StandardButtonStackPanel}">
+                        <Button Content="Scroll&#xa;Lock" FontSize="10" Width="40" Height="40" Style="{DynamicResource CustomFlatButton}" Command="{Binding KeyboardBtClicked}" CommandParameter="{x:Static key:KeyEnum.ScrollLock}" />
+                        <Label Content="{Binding Path=KeyMaps[ScrollLock], RelativeSource={RelativeSource FindAncestor, AncestorType={x:Type local:JapaneseLayout}}}" HorizontalAlignment="Center" Style="{DynamicResource DefinedLabel}" />
+                    </StackPanel>
+                    <StackPanel Style="{DynamicResource StandardButtonStackPanel}">
+                        <Button Content="Pause&#xa;Break" FontSize="10" Width="40" Height="40" Style="{DynamicResource CustomFlatButton}" Command="{Binding KeyboardBtClicked}" CommandParameter="{x:Static key:KeyEnum.Pause}" />
+                        <Label Content="{Binding Path=KeyMaps[Pause], RelativeSource={RelativeSource FindAncestor, AncestorType={x:Type local:JapaneseLayout}}}" HorizontalAlignment="Center" Style="{DynamicResource DefinedLabel}" />
+                    </StackPanel>
+                </StackPanel>
+
+                <StackPanel Orientation="Horizontal">
+                    <StackPanel Style="{DynamicResource StandardButtonStackPanel}">
+                        <Button Content="Insert" Width="40" Height="40" Style="{DynamicResource CustomFlatButton}" Command="{Binding KeyboardBtClicked}" CommandParameter="{x:Static key:KeyEnum.Insert}" />
+                        <Label Content="{Binding Path=KeyMaps[Insert], RelativeSource={RelativeSource FindAncestor, AncestorType={x:Type local:JapaneseLayout}}}" HorizontalAlignment="Center" Style="{DynamicResource DefinedLabel}" />
+                    </StackPanel>
+                    <StackPanel Style="{DynamicResource StandardButtonStackPanel}">
+                        <Button Content="Home" Width="40" Height="40" Style="{DynamicResource CustomFlatButton}" Command="{Binding KeyboardBtClicked}" CommandParameter="{x:Static key:KeyEnum.Home}" />
+                        <Label Content="{Binding Path=KeyMaps[Home], RelativeSource={RelativeSource FindAncestor, AncestorType={x:Type local:JapaneseLayout}}}" HorizontalAlignment="Center" Style="{DynamicResource DefinedLabel}" />
+                    </StackPanel>
+                    <StackPanel Style="{DynamicResource StandardButtonStackPanel}">
+                        <Button Content="Page&#xa;Up" FontSize="10" Width="40" Height="40" Style="{DynamicResource CustomFlatButton}" Command="{Binding KeyboardBtClicked}" CommandParameter="{x:Static key:KeyEnum.PageUp}" />
+                        <Label Content="{Binding Path=KeyMaps[PageUp], RelativeSource={RelativeSource FindAncestor, AncestorType={x:Type local:JapaneseLayout}}}" HorizontalAlignment="Center" Style="{DynamicResource DefinedLabel}" />
+                    </StackPanel>
+                </StackPanel>
+
+                <StackPanel Orientation="Horizontal">
+                    <StackPanel Style="{DynamicResource StandardButtonStackPanel}">
+                        <Button Content="Delete" Width="40" Height="40" Style="{DynamicResource CustomFlatButton}" Command="{Binding KeyboardBtClicked}" CommandParameter="{x:Static key:KeyEnum.Delete}" />
+                        <Label Content="{Binding Path=KeyMaps[Delete], RelativeSource={RelativeSource FindAncestor, AncestorType={x:Type local:JapaneseLayout}}}" HorizontalAlignment="Center" Style="{DynamicResource DefinedLabel}" />
+                    </StackPanel>
+                    <StackPanel Style="{DynamicResource StandardButtonStackPanel}">
+                        <Button Content="End" Width="40" Height="40" Style="{DynamicResource CustomFlatButton}" Command="{Binding KeyboardBtClicked}" CommandParameter="{x:Static key:KeyEnum.End}" />
+                        <Label Content="{Binding Path=KeyMaps[End], RelativeSource={RelativeSource FindAncestor, AncestorType={x:Type local:JapaneseLayout}}}" HorizontalAlignment="Center" Style="{DynamicResource DefinedLabel}" />
+                    </StackPanel>
+                    <StackPanel Style="{DynamicResource StandardButtonStackPanel}">
+                        <Button Content="Page&#xa;Down" FontSize="10" Width="40" Height="40" Style="{DynamicResource CustomFlatButton}" Command="{Binding KeyboardBtClicked}" CommandParameter="{x:Static key:KeyEnum.PageDown}" />
+                        <Label Content="{Binding Path=KeyMaps[PageDown], RelativeSource={RelativeSource FindAncestor, AncestorType={x:Type local:JapaneseLayout}}}" HorizontalAlignment="Center" Style="{DynamicResource DefinedLabel}" />
+                    </StackPanel>
+                </StackPanel>
+            </StackPanel>
+
+            <StackPanel Grid.Row="1">
+                <StackPanel Orientation="Horizontal">
+                    <StackPanel Style="{DynamicResource StandardButtonStackPanel}">
+                        <Grid Width="40" Height="40" />
+                    </StackPanel>
+                    <StackPanel Style="{DynamicResource StandardButtonStackPanel}">
+                        <Button Content="↑" Width="40" Height="40" Style="{DynamicResource CustomFlatButton}" Command="{Binding KeyboardBtClicked}" CommandParameter="{x:Static key:KeyEnum.Up}" />
+                        <Label Content="{Binding Path=KeyMaps[Up], RelativeSource={RelativeSource FindAncestor, AncestorType={x:Type local:JapaneseLayout}}}" HorizontalAlignment="Center" Style="{DynamicResource DefinedLabel}" />
+                    </StackPanel>
+                    <StackPanel Style="{DynamicResource StandardButtonStackPanel}">
+                        <Grid Width="40" Height="40" />
+                    </StackPanel>
+                </StackPanel>
+
+                <StackPanel Orientation="Horizontal">
+                    <StackPanel Style="{DynamicResource StandardButtonStackPanel}">
+                        <Button Content="←" Width="40" Height="40" Style="{DynamicResource CustomFlatButton}" Command="{Binding KeyboardBtClicked}" CommandParameter="{x:Static key:KeyEnum.Left}" />
+                        <Label Content="{Binding Path=KeyMaps[Left], RelativeSource={RelativeSource FindAncestor, AncestorType={x:Type local:JapaneseLayout}}}" HorizontalAlignment="Center" Style="{DynamicResource DefinedLabel}" />
+                    </StackPanel>
+                    <StackPanel Style="{DynamicResource StandardButtonStackPanel}">
+                        <Button Content="↓" Width="40" Height="40" Style="{DynamicResource CustomFlatButton}" Command="{Binding KeyboardBtClicked}" CommandParameter="{x:Static key:KeyEnum.Down}" />
+                        <Label Content="{Binding Path=KeyMaps[Down], RelativeSource={RelativeSource FindAncestor, AncestorType={x:Type local:JapaneseLayout}}}" HorizontalAlignment="Center" Style="{DynamicResource DefinedLabel}" />
+                    </StackPanel>
+                    <StackPanel Style="{DynamicResource StandardButtonStackPanel}">
+                        <Button Content="→" Width="40" Height="40" Style="{DynamicResource CustomFlatButton}" Command="{Binding KeyboardBtClicked}" CommandParameter="{x:Static key:KeyEnum.Right}" />
+                        <Label Content="{Binding Path=KeyMaps[Right], RelativeSource={RelativeSource FindAncestor, AncestorType={x:Type local:JapaneseLayout}}}" HorizontalAlignment="Center" Style="{DynamicResource DefinedLabel}" />
+                    </StackPanel>
+                </StackPanel>
+            </StackPanel>
+        </Grid>
+
+        <Grid Grid.Column="4">
+            <StackPanel>
+                <StackPanel Orientation="Horizontal">
+                    <StackPanel Style="{DynamicResource StandardButtonStackPanel}">
+                        <Grid Width="40" Height="40"></Grid>
+                    </StackPanel>
+                </StackPanel>
+
+                <StackPanel Orientation="Horizontal">
+                    <StackPanel Style="{DynamicResource StandardButtonStackPanel}">
+                        <Button Content="Num&#xa;Lock" IsEnabled="False" Width="40" Height="40" Style="{DynamicResource CustomFlatButton}" Command="{Binding KeyboardBtClicked}" CommandParameter="{x:Static key:KeyEnum.NumLock}" />
+                        <Label Content="{Binding Path=KeyMaps[NumLock], RelativeSource={RelativeSource FindAncestor, AncestorType={x:Type local:JapaneseLayout}}}" HorizontalAlignment="Center" Style="{DynamicResource DefinedLabel}" />
+                    </StackPanel>
+                    <StackPanel Style="{DynamicResource StandardButtonStackPanel}">
+                        <Button Content="/" Width="40" Height="40" Style="{DynamicResource CustomFlatButton}" Command="{Binding KeyboardBtClicked}" CommandParameter="{x:Static key:KeyEnum.NDiv}" />
+                        <Label Content="{Binding Path=KeyMaps[NDiv], RelativeSource={RelativeSource FindAncestor, AncestorType={x:Type local:JapaneseLayout}}}" HorizontalAlignment="Center" Style="{DynamicResource DefinedLabel}" />
+                    </StackPanel>
+                    <StackPanel Style="{DynamicResource StandardButtonStackPanel}">
+                        <Button Content="*" FontSize="10" Width="40" Height="40" Style="{DynamicResource CustomFlatButton}" Command="{Binding KeyboardBtClicked}" CommandParameter="{x:Static key:KeyEnum.NMul}" />
+                        <Label Content="{Binding Path=KeyMaps[NMul], RelativeSource={RelativeSource FindAncestor, AncestorType={x:Type local:JapaneseLayout}}}" HorizontalAlignment="Center" Style="{DynamicResource DefinedLabel}" />
+                    </StackPanel>
+                    <StackPanel Style="{DynamicResource StandardButtonStackPanel}">
+                        <Button Content="-" FontSize="10" Width="40" Height="40" Style="{DynamicResource CustomFlatButton}" Command="{Binding KeyboardBtClicked}" CommandParameter="{x:Static key:KeyEnum.NMinus}" />
+                        <Label Content="{Binding Path=KeyMaps[NMinus], RelativeSource={RelativeSource FindAncestor, AncestorType={x:Type local:JapaneseLayout}}}" HorizontalAlignment="Center" Style="{DynamicResource DefinedLabel}" />
+                    </StackPanel>
+                </StackPanel>
+
+                <StackPanel Orientation="Horizontal">
+                    <StackPanel>
+                        <StackPanel Style="{DynamicResource StandardButtonStackPanel}">
+                            <Button Content="7" Width="40" Height="40" Style="{DynamicResource CustomFlatButton}" Command="{Binding KeyboardBtClicked}" CommandParameter="{x:Static key:KeyEnum.N7}" />
+                            <Label Content="{Binding Path=KeyMaps[N7], RelativeSource={RelativeSource FindAncestor, AncestorType={x:Type local:JapaneseLayout}}}" HorizontalAlignment="Center" Style="{DynamicResource DefinedLabel}" />
+                        </StackPanel>
+                        <StackPanel Style="{DynamicResource StandardButtonStackPanel}">
+                            <Button Content="4" Width="40" Height="40" Style="{DynamicResource CustomFlatButton}" Command="{Binding KeyboardBtClicked}" CommandParameter="{x:Static key:KeyEnum.N4}" />
+                            <Label Content="{Binding Path=KeyMaps[N4], RelativeSource={RelativeSource FindAncestor, AncestorType={x:Type local:JapaneseLayout}}}" HorizontalAlignment="Center" Style="{DynamicResource DefinedLabel}" />
+                        </StackPanel>
+                    </StackPanel>
+
+                    <StackPanel>
+                        <StackPanel Style="{DynamicResource StandardButtonStackPanel}">
+                            <Button Content="8" Width="40" Height="40" Style="{DynamicResource CustomFlatButton}" Command="{Binding KeyboardBtClicked}" CommandParameter="{x:Static key:KeyEnum.N8}" />
+                            <Label Content="{Binding Path=KeyMaps[N8], RelativeSource={RelativeSource FindAncestor, AncestorType={x:Type local:JapaneseLayout}}}" HorizontalAlignment="Center" Style="{DynamicResource DefinedLabel}" />
+                        </StackPanel>
+                        <StackPanel Style="{DynamicResource StandardButtonStackPanel}">
+                            <Button Content="5" Width="40" Height="40" Style="{DynamicResource CustomFlatButton}" Command="{Binding KeyboardBtClicked}" CommandParameter="{x:Static key:KeyEnum.N5}" />
+                            <Label Content="{Binding Path=KeyMaps[N5], RelativeSource={RelativeSource FindAncestor, AncestorType={x:Type local:JapaneseLayout}}}" HorizontalAlignment="Center" Style="{DynamicResource DefinedLabel}" />
+                        </StackPanel>
+                    </StackPanel>
+
+                    <StackPanel>
+                        <StackPanel Style="{DynamicResource StandardButtonStackPanel}">
+                            <Button Content="9" Width="40" Height="40" Style="{DynamicResource CustomFlatButton}" Command="{Binding KeyboardBtClicked}" CommandParameter="{x:Static key:KeyEnum.N9}" />
+                            <Label Content="{Binding Path=KeyMaps[N9], RelativeSource={RelativeSource FindAncestor, AncestorType={x:Type local:JapaneseLayout}}}" HorizontalAlignment="Center" Style="{DynamicResource DefinedLabel}" />
+                        </StackPanel>
+                        <StackPanel Style="{DynamicResource StandardButtonStackPanel}">
+                            <Button Content="6" Width="40" Height="40" Style="{DynamicResource CustomFlatButton}" Command="{Binding KeyboardBtClicked}" CommandParameter="{x:Static key:KeyEnum.N6}" />
+                            <Label Content="{Binding Path=KeyMaps[N6], RelativeSource={RelativeSource FindAncestor, AncestorType={x:Type local:JapaneseLayout}}}" HorizontalAlignment="Center" Style="{DynamicResource DefinedLabel}" />
+                        </StackPanel>
+                    </StackPanel>
+
+                    <StackPanel Style="{DynamicResource StandardButtonStackPanel}">
+                        <Button Content="+" FontSize="10" Width="40" Height="103" Style="{DynamicResource CustomFlatButton}" Command="{Binding KeyboardBtClicked}" CommandParameter="{x:Static key:KeyEnum.NPlus}" />
+                        <Label Content="{Binding Path=KeyMaps[NPlus], RelativeSource={RelativeSource FindAncestor, AncestorType={x:Type local:JapaneseLayout}}}" HorizontalAlignment="Center" Style="{DynamicResource DefinedLabel}" />
+                    </StackPanel>
+                </StackPanel>
+
+                <StackPanel Orientation="Horizontal">
+                    <StackPanel>
+                        <StackPanel Style="{DynamicResource StandardButtonStackPanel}">
+                            <Button Content="1" Width="40" Height="40" Style="{DynamicResource CustomFlatButton}" Command="{Binding KeyboardBtClicked}" CommandParameter="{x:Static key:KeyEnum.N1}" />
+                            <Label Content="{Binding Path=KeyMaps[N1], RelativeSource={RelativeSource FindAncestor, AncestorType={x:Type local:JapaneseLayout}}}" HorizontalAlignment="Center" Style="{DynamicResource DefinedLabel}" />
+                        </StackPanel>
+                        <StackPanel Style="{DynamicResource StandardButtonStackPanel}">
+                            <Button Content="0" Width="40" Height="40" Style="{DynamicResource CustomFlatButton}" Command="{Binding KeyboardBtClicked}" CommandParameter="{x:Static key:KeyEnum.N0}" />
+                            <Label Content="{Binding Path=KeyMaps[N0], RelativeSource={RelativeSource FindAncestor, AncestorType={x:Type local:JapaneseLayout}}}" HorizontalAlignment="Center" Style="{DynamicResource DefinedLabel}" />
+                        </StackPanel>
+                    </StackPanel>
+
+                    <StackPanel>
+                        <StackPanel Style="{DynamicResource StandardButtonStackPanel}">
+                            <Button Content="2" Width="40" Height="40" Style="{DynamicResource CustomFlatButton}" Command="{Binding KeyboardBtClicked}" CommandParameter="{x:Static key:KeyEnum.N2}" />
+                            <Label Content="{Binding Path=KeyMaps[N2], RelativeSource={RelativeSource FindAncestor, AncestorType={x:Type local:JapaneseLayout}}}" HorizontalAlignment="Center" Style="{DynamicResource DefinedLabel}" />
+                        </StackPanel>
+                    </StackPanel>
+
+                    <StackPanel>
+                        <StackPanel Style="{DynamicResource StandardButtonStackPanel}">
+                            <Button Content="3" Width="40" Height="40" Style="{DynamicResource CustomFlatButton}" Command="{Binding KeyboardBtClicked}" CommandParameter="{x:Static key:KeyEnum.N3}" />
+                            <Label Content="{Binding Path=KeyMaps[N3], RelativeSource={RelativeSource FindAncestor, AncestorType={x:Type local:JapaneseLayout}}}" HorizontalAlignment="Center" Style="{DynamicResource DefinedLabel}" />
+                        </StackPanel>
+                        <StackPanel Style="{DynamicResource StandardButtonStackPanel}">
+                            <Button Content="." Width="40" Height="40" Style="{DynamicResource CustomFlatButton}" Command="{Binding KeyboardBtClicked}" CommandParameter="{x:Static key:KeyEnum.NDot}" />
+                            <Label Content="{Binding Path=KeyMaps[NDot], RelativeSource={RelativeSource FindAncestor, AncestorType={x:Type local:JapaneseLayout}}}" HorizontalAlignment="Center" Style="{DynamicResource DefinedLabel}" />
+                        </StackPanel>
+                    </StackPanel>
+
+                    <StackPanel Style="{DynamicResource StandardButtonStackPanel}">
+                        <Button Content="Enter" IsEnabled="False" Width="40" Height="103" Style="{DynamicResource CustomFlatButton}" Command="{Binding KeyboardBtClicked}" CommandParameter="{x:Static key:KeyEnum.Enter}" />
+                        <Label Content="{Binding Path=KeyMaps[Enter], RelativeSource={RelativeSource FindAncestor, AncestorType={x:Type local:JapaneseLayout}}}" HorizontalAlignment="Center" Style="{DynamicResource DefinedLabel}" />
+                    </StackPanel>
+                </StackPanel>
+
+            </StackPanel>
+        </Grid>
+    </Grid>
+</UserControl>

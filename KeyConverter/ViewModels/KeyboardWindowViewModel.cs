@@ -21,7 +21,7 @@ using CommonStyleLib.Views;
 
 namespace KeyConverterGUI.ViewModels
 {
-    public class KeyboardWindowViewModel : ViewModelBase, IDisposable
+    public class KeyboardWindowViewModel : ViewModelWindowStyleBase, IDisposable
     {
         public KeyboardWindowViewModel(IWindowService windowService, KeyboardWindowModel model) : base(windowService, model)
         {
