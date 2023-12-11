@@ -70,14 +70,6 @@
                 <Button Name="MainWindowMinimumBt" Content="{Binding MainWindowMinimumBtContent}" Style="{DynamicResource CaptionButtonStyleKey}" Command="{Binding MainWindowMinimumBtClick}" />
                 <Button Name="MainWindowCloseBt" Content="{Binding MainWindowCloseBtContent}" Style="{DynamicResource CaptionButtonStyleKey}" Command="{Binding MainWindowCloseBtClick}" />
             </StackPanel>
-            <!--<StackPanel Margin="1,25,1,0" HorizontalAlignment="Stretch" VerticalAlignment="Top">
-                <Menu IsMainMenu="True" Name="Menu" Height="25" Padding="3" VerticalAlignment="Top">
-                    <MenuItem Header="File(_F)">
-                        <Separator Style="{DynamicResource MLB_Separator}" />
-                        <MenuItem Header="Exit(_X)" Command="{Binding MainWindowCloseBTClick}" />
-                    </MenuItem>
-                </Menu>
-            </StackPanel>-->
 
             <Grid Margin="10,25,10,10">
                 <Grid IsEnabled="{Binding KeyboardIsEnabled.Value}" VerticalAlignment="Center" HorizontalAlignment="Center">

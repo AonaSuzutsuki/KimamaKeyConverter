@@ -3,8 +3,6 @@
              xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
              xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
-             xmlns:lang="clr-namespace:LangResource"
-             xmlns:viewModels="clr-namespace:KeyConverterGUI.ViewModels"
              xmlns:local="clr-namespace:KeyConverterGUI.Views.Parts"
              xmlns:key="clr-namespace:LowLevelKeyboardLib.KeyMap;assembly=LowLevelKeyboardLib"
              mc:Ignorable="d"

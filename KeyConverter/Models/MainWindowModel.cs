@@ -13,6 +13,7 @@ using System.Security.Policy;
 using System.Text;
 using System.Windows;
 using System.Windows.Media;
+using KeyConverterGUI.Models.Data;
 
 namespace KeyConverterGUI.Models
 {
@@ -79,7 +80,13 @@ namespace KeyConverterGUI.Models
             {
                 var json = File.ReadAllText(Constants.KeyMapFileName);
                 if (!string.IsNullOrEmpty(json))
-                    _keyMap = JsonConvert.DeserializeObject<Dictionary<KeyEnum, KeyEnum>>(json);
+                {
+                    var jsonObject = JsonConvert.DeserializeObject<SavedJson>(json);
+                    if (jsonObject is { KeyMaps: { } })
+                    {
+                        _keyMap = jsonObject.KeyMaps;
+                    }
+                }
             }
 
             LoadDetectProcesses();
@@ -148,7 +155,13 @@ namespace KeyConverterGUI.Models
 
         public void SaveKeyMap()
         {
-            var json = JsonConvert.SerializeObject(_keyMap);
+            var jsonObject = new SavedJson
+            {
+                Layout = KeyboardLayout.Jis,
+                KeyMaps = _keyMap
+            };
+
+            var json = JsonConvert.SerializeObject(jsonObject);
             using var fs = new FileStream(Constants.KeyMapFileName, FileMode.Create, FileAccess.Write, FileShare.None);
             using var sw = new StreamWriter(fs, Encoding.UTF8);
             sw.Write(json);

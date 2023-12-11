@@ -1,0 +1,45 @@
+﻿<UserControl x:Class="KeyConverterGUI.Views.Parts.UsLayout"
+             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
+             xmlns:key="clr-namespace:LowLevelKeyboardLib.KeyMap;assembly=LowLevelKeyboardLib"
+             xmlns:local="clr-namespace:KeyConverterGUI.Views.Parts"
+             mc:Ignorable="d" 
+             d:DataContext="{d:DesignInstance local:UsLayout}">
+
+    <UserControl.Resources>
+        <ResourceDictionary>
+            <ResourceDictionary.MergedDictionaries>
+                <ResourceDictionary Source="pack://application:,,,/CommonStyleLib;component/Styles/Icon.xaml" />
+                <ResourceDictionary Source="pack://application:,,,/CommonStyleLib;component/Styles/Main.xaml" />
+                <ResourceDictionary Source="pack://application:,,,/CommonStyleLib;component/Styles/ListBoxStyle.xaml" />
+                <ResourceDictionary Source="../../Styles/Keyboard.xaml" />
+                <ResourceDictionary>
+                    <Style x:Key="CustomFlatButton" TargetType="{x:Type Button}" BasedOn="{StaticResource FlatButton}">
+                        <Setter Property="FontSize" Value="10" />
+                    </Style>
+                </ResourceDictionary>
+            </ResourceDictionary.MergedDictionaries>
+        </ResourceDictionary>
+    </UserControl.Resources>
+
+    <Grid>
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition Width="Auto" />
+            <ColumnDefinition Width="20" />
+            <ColumnDefinition Width="Auto" />
+            <ColumnDefinition Width="20" />
+            <ColumnDefinition Width="*" />
+        </Grid.ColumnDefinitions>
+
+        <StackPanel Height="Auto" HorizontalAlignment="Center">
+            <StackPanel Orientation="Horizontal" VerticalAlignment="Top">
+                <StackPanel Style="{DynamicResource StandardButtonStackPanel}">
+                    <Button Content="ESC" Width="40" Height="30" Style="{DynamicResource CustomFlatButton}" Command="{Binding KeyboardBtClicked}" CommandParameter="{x:Static key:KeyEnum.ESC}" />
+                    <Label Content="{Binding Path=KeyMaps[ESC], RelativeSource={RelativeSource FindAncestor, AncestorType={x:Type local:JapaneseLayout}}}" HorizontalAlignment="Center" Style="{DynamicResource DefinedLabel}" />
+                </StackPanel>
+            </StackPanel>
+        </StackPanel>
+    </Grid>
+</UserControl>
