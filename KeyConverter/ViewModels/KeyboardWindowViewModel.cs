@@ -11,6 +11,7 @@ using System.Windows;
 using LowLevelKeyboardLib.KeyMap;
 using System.Windows.Input;
 using System.Collections.Concurrent;
+using System.Collections.ObjectModel;
 using System.Reactive.Disposables;
 using System.Reactive.Linq;
 using Reactive.Bindings;
@@ -18,6 +19,8 @@ using Reactive.Bindings.Extensions;
 using KeyConverterGUI.Views;
 using System.Windows.Controls.Primitives;
 using CommonStyleLib.Views;
+using System.Diagnostics;
+using KeyConverterGUI.Models.Data;
 
 namespace KeyConverterGUI.ViewModels
 {
@@ -33,6 +36,12 @@ namespace KeyConverterGUI.ViewModels
             {
                 void ChangeValue(IList objectList, string value = null)
                 {
+                    if (objectList == null)
+                    {
+                        Label.Value.Clear();
+                        return;
+                    }
+
                     if (objectList.Count <= 0)
                         return;
 
@@ -65,6 +74,8 @@ namespace KeyConverterGUI.ViewModels
                 Value = new ObservableDictionary<string, string>(
                     model.Label.ToDictionary(key => key.Key.ToString(), pair => pair.Value))
             };
+            Processes = model.Processes.ToReadOnlyReactiveCollection();
+            ProcessesSelectedItem = model.ObserveProperty(m => m.ProcessesSelectedItem).ToReactiveProperty();
             KeyboardIsEnabled = model.ToReactivePropertyAsSynchronized(m => m.KeyboardIsEnabled).AddTo(_compositeDisposable);
             SettingWindowVisibility = model.ToReactivePropertyAsSynchronized(m => m.SettingWindowVisibility).AddTo(_compositeDisposable);
             SourceKeyText = model.ToReactivePropertyAsSynchronized(m => m.SourceKeyText).AddTo(_compositeDisposable);
@@ -72,10 +83,13 @@ namespace KeyConverterGUI.ViewModels
             #endregion
 
             #region Initialize Events
+
+            ProcessesSelectionChangedCommand = new DelegateCommand(ProcessesSelectionChanged);
             KeyboardBtClicked = new DelegateCommand<KeyEnum?>(KeyboardBt_Clicked);
             DestroyInputButtonClicked = new DelegateCommand(DestroyInputButton_Clicked);
             OkPopupBtClicked = new DelegateCommand(OkPopupBt_Clicked);
             ClosePopupBtClicked = new DelegateCommand(ClosePopupBt_Clicked);
+
             #endregion
         }
 
@@ -86,6 +100,9 @@ namespace KeyConverterGUI.ViewModels
         #endregion
 
         #region Properties
+        public ReadOnlyReactiveCollection<ProcessItem> Processes { get; set; }
+        public ReactiveProperty<ProcessItem> ProcessesSelectedItem { get; set; }
+
         public ReactiveProperty<bool> KeyboardIsEnabled { get; set; }
         public ReactiveProperty<Visibility> SettingWindowVisibility { get; set; }
         public ReactiveProperty<string> SourceKeyText { get; set; }
@@ -93,6 +110,8 @@ namespace KeyConverterGUI.ViewModels
         #endregion
 
         #region Events Properties
+        public ICommand ProcessesSelectionChangedCommand { get; set; }
+
         public ICommand KeyboardBtClicked { get; set; }
         public ICommand DestroyInputButtonClicked { get; set; }
         
@@ -101,6 +120,15 @@ namespace KeyConverterGUI.ViewModels
         #endregion
 
         #region Events Methods
+
+        public void ProcessesSelectionChanged()
+        {
+            if (ProcessesSelectedItem.Value == null)
+                return;
+            
+            _model.ChangePreset(ProcessesSelectedItem.Value);
+        }
+
         public void KeyboardBt_Clicked(KeyEnum? key)
         {
             if (key != null)
@@ -120,6 +148,7 @@ namespace KeyConverterGUI.ViewModels
         {
             _model.ClosePopup();
         }
+
         #endregion
 
 

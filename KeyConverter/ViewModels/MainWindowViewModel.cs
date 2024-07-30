@@ -74,23 +74,23 @@ namespace KeyConverterGUI.ViewModels
         public void KeyboardMappingBtClick()
         {
             _model.EnabledBtEnabled = false;
-            using (var keyboardModel = _model.CreateKeyboardWindowModel())
-            {
-                using var vm = new KeyboardWindowViewModel(new WindowService(), keyboardModel);
-                WindowManageService.ShowDialog<KeyboardWindow>(vm);
-            }
+            using var keyboardModel = _model.CreateKeyboardWindowModel();
+            using var vm = new KeyboardWindowViewModel(new WindowService(), keyboardModel);
+            WindowManageService.ShowDialog<KeyboardWindow>(vm);
+
             _model.EnabledBtEnabled = true;
-            
-            _model.SaveKeyMap();
+            var dict = keyboardModel.GetProcessItems();
+            _model.SaveKeyMap(dict);
         }
 
         public void ProcessSettingBtClick()
         {
             _model.EnabledBtEnabled = false;
-            var processModel = new ProcessSettingModel(Constants.DetectProcessesFileName);
+            var processModel = new ProcessSettingModel(_model.DetectProcesses);
             using var vm = new ProcessSettingViewModel(new ClearFocusWindowService(), processModel);
             WindowManageService.ShowDialog<ProcessSetting>(vm);
-            _model.SetLowerHashSet(processModel.Save());
+            _model.SetLowerHashSet(processModel.GetProcesses());
+            _model.SaveKeyMap();
             _model.EnabledBtEnabled = true;
         }
         #endregion

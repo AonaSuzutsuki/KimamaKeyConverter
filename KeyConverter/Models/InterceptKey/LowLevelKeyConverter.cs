@@ -1,4 +1,5 @@
-﻿using LowLevelKeyboardLib.Input;
+﻿using KeyConverterGUI.Models.Data;
+using LowLevelKeyboardLib.Input;
 using LowLevelKeyboardLib.KeyMap;
 using System;
 using System.Collections.Generic;
@@ -41,50 +42,73 @@ namespace KeyConverterGUI.Models.InterceptKey
 
         #region Properties
         public int SpecificProcessId { get; set; } = 0;
-        public HashSet<string> ProcessNames { get; set; }
+        public Dictionary<string, ProcessItem> ProcessNames { get; set; }
+        public bool IgnoreAnyProcess { get; set; }
         #endregion
 
         public Dictionary<KeyEnum, KeyEnum> KeyMap { get; set; } = new();
 
         public override void Initialize()
         {
-            ProcessNames = new HashSet<string>();
+            ProcessNames = new Dictionary<string, ProcessItem>();
 
             base.Initialize();
+        }
+
+        private string GetCurrentProcessName()
+        {
+            var handle = GetForegroundWindow();
+            var threadId = GetWindowThreadProcessId(handle, out var processId);
+
+            var hnd = OpenProcess(0x0400 | 0x0010, false, processId);
+
+            var buffer2 = new StringBuilder(255);
+            GetModuleFileNameEx(hnd, IntPtr.Zero, buffer2, (uint)buffer2.Capacity);
+
+            CloseHandle(hnd);
+
+            var fullPath = buffer2.ToString().ToLower();
+
+            return fullPath;
         }
 
         private bool IsProcessName()
         {
             if (ProcessNames != null && ProcessNames.Count > 0)
             {
-                var handle = GetForegroundWindow();
-                var threadId = GetWindowThreadProcessId(handle, out var processId);
+                var fullPath = GetCurrentProcessName();
 
-                var hnd = OpenProcess(0x0400 | 0x0010 , false, processId);
-
-                var buffer2 = new StringBuilder(255);
-                GetModuleFileNameEx(hnd, IntPtr.Zero, buffer2, (uint) buffer2.Capacity);
-
-                CloseHandle(hnd);
-                
-                var fullPath = buffer2.ToString().ToLower();
-
-                return ProcessNames.Contains(fullPath);
+                return ProcessNames.ContainsKey(fullPath);
             }
 
             return true;
         }
 
+        private Dictionary<KeyEnum, KeyEnum> GetKeyMap()
+        {
+            var fullPath = GetCurrentProcessName();
+
+            if (ProcessNames.ContainsKey(fullPath))
+                return ProcessNames[fullPath].KeyMaps;
+
+            return KeyMap;
+        }
+
         protected override IntPtr KeyDownFunction(KeyEnum pushedKey, bool isVirtualInput, Func<IntPtr> defaultReturnFunc)
         {
-            if (!isVirtualInput && IsProcessName())
+            if (IgnoreAnyProcess && !IsProcessName())
+                return base.KeyDownFunction(pushedKey, isVirtualInput, defaultReturnFunc);
+
+            if (!isVirtualInput)
             {
                 if (pushedKey == KeyEnum.None)
                     return new IntPtr(1);
 
-                if (KeyMap.ContainsKey(pushedKey))
+                var keyMap = GetKeyMap();
+
+                if (keyMap.ContainsKey(pushedKey))
                 {
-                    var input = KeyMap[pushedKey];
+                    var input = keyMap[pushedKey];
                     return InputKey(pushedKey, input);
                 }
             }

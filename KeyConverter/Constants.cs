@@ -15,5 +15,7 @@ namespace KeyConverterGUI
 
         public static readonly string AppDirectoryPath = AppInfo.GetAppPath();
         public static string IniFileName = AppDirectoryPath + @"\setting.ini";
+
+        public const string AnyName = "Any";
     }
 }

@@ -23,6 +23,7 @@ namespace KeyConverterGUI.Models
         #endregion
 
         #region Fields
+
         private string _buttonText = LangResource.Resources.Resources.UI_Disabled;
         private bool _enabledBtEnabled = true;
         private bool _keymappingBtEnabled = true;
@@ -32,11 +33,6 @@ namespace KeyConverterGUI.Models
         private bool _isDetectMabinogi = true;
         private bool _isDetectMabinogiEnabled = true;
 
-        private readonly Dictionary<KeyEnum, KeyEnum> _keyMap = new()
-                {
-                    { KeyEnum.LeftCtrl, KeyEnum.LeftAlt },
-                    { KeyEnum.LeftAlt, KeyEnum.LeftCtrl }
-                };
         #endregion
 
         #region Properties
@@ -67,7 +63,20 @@ namespace KeyConverterGUI.Models
             set => SetProperty(ref _isDetectMabinogiEnabled, value);
         }
 
-        public HashSet<string> DetectProcesses { get; set; } = new HashSet<string>();
+        public Dictionary<string, ProcessItem> DetectProcesses { get; set; } = new()
+        {
+            { Constants.AnyName, new ProcessItem
+                {
+                    FullPath = Constants.AnyName,
+                    KeyMaps = new()
+                    {
+                        { KeyEnum.LeftCtrl, KeyEnum.LeftAlt },
+                        { KeyEnum.LeftAlt, KeyEnum.LeftCtrl }
+                    }
+                }
+            }
+        };
+
         #endregion
 
         #region Actions
@@ -82,34 +91,32 @@ namespace KeyConverterGUI.Models
                 if (!string.IsNullOrEmpty(json))
                 {
                     var jsonObject = JsonConvert.DeserializeObject<SavedJson>(json);
-                    if (jsonObject is { KeyMaps: { } })
+                    if (jsonObject is { Processes: { } })
                     {
-                        _keyMap = jsonObject.KeyMaps;
+                        foreach (var process in jsonObject.Processes)
+                        {
+                            process.KeyMaps ??= new Dictionary<KeyEnum, KeyEnum>();
+                        }
+
+                        DetectProcesses = new Dictionary<string, ProcessItem>(jsonObject.Processes.ToDictionary(x => x.FullPath));
                     }
                 }
             }
 
-            LoadDetectProcesses();
-
             LoadSetting();
         }
 
-        public void LoadDetectProcesses()
+        public void SetLowerHashSet(Dictionary<string, ProcessItem> dict)
         {
-            if (File.Exists(Constants.DetectProcessesFileName))
+            var any = DetectProcesses.First();
+            DetectProcesses.Clear();
+            DetectProcesses.Add(any.Key, any.Value);
+
+            foreach (var pair in dict)
             {
-                var json = File.ReadAllText(Constants.DetectProcessesFileName);
-                if (!string.IsNullOrEmpty(json))
-                    SetLowerHashSet(JsonConvert.DeserializeObject<HashSet<string>>(json));
+                pair.Value.KeyMaps ??= new Dictionary<KeyEnum, KeyEnum>();
+                DetectProcesses.Add(pair.Key, pair.Value);
             }
-        }
-
-        private static HashSet<string> ConvertLowerHashSet(IEnumerable<string> enumerable) =>
-            new HashSet<string>(from x in enumerable select x.ToLower());
-
-        public void SetLowerHashSet(HashSet<string> hashSet)
-        {
-            DetectProcesses = ConvertLowerHashSet(hashSet);
         }
 
         public void EnabledOrDisabled()
@@ -117,13 +124,12 @@ namespace KeyConverterGUI.Models
             if (!_isEnabled)
             {
                 _interceptKeys = new LowLevelKeyConverter(new JapaneseKeyBoard());
-                _interceptKeys.KeyMap = _keyMap;
+                _interceptKeys.KeyMap = DetectProcesses.First().Value.KeyMaps;
                 _interceptKeys.Initialize();
+                _interceptKeys.ProcessNames = DetectProcesses;
+                _interceptKeys.IgnoreAnyProcess = IsDetectMabinogi;
 
-                if (IsDetectMabinogi)
-                    _interceptKeys.ProcessNames = DetectProcesses;
-                
-                
+
                 var resourceDictionary = new ResourceDictionary
                 {
                     Source = new Uri("../Styles/Constants.xaml", UriKind.Relative)
@@ -151,14 +157,23 @@ namespace KeyConverterGUI.Models
             KeymappingBtEnabled = !_isEnabled;
         }
 
-        public KeyboardWindowModel CreateKeyboardWindowModel() => new KeyboardWindowModel(_keyMap);
+        public KeyboardWindowModel CreateKeyboardWindowModel() => new(DetectProcesses);
 
         public void SaveKeyMap()
+        {
+            SaveKeyMap(DetectProcesses);
+        }
+
+        public void SaveKeyMap(Dictionary<string, ProcessItem> dict)
         {
             var jsonObject = new SavedJson
             {
                 Layout = KeyboardLayout.Jis,
-                KeyMaps = _keyMap
+                Processes = dict.Select(x => new ProcessItem
+                {
+                    FullPath = x.Key,
+                    KeyMaps = x.Value.KeyMaps
+                }).ToList()
             };
 
             var json = JsonConvert.SerializeObject(jsonObject);

@@ -74,10 +74,35 @@
             <Grid Margin="10,25,10,10">
                 <Grid IsEnabled="{Binding KeyboardIsEnabled.Value}" VerticalAlignment="Center" HorizontalAlignment="Center">
 
-                    <parts:JapaneseLayout KeyMaps="{Binding Label.Value}" KeyboardBtClicked="{Binding KeyboardBtClicked}" />
+                    <Grid.RowDefinitions>
+                        <RowDefinition Height="30" />
+                        <RowDefinition Height="10" />
+                        <RowDefinition />
+                    </Grid.RowDefinitions>
+
+                    <StackPanel Orientation="Horizontal">
+                        <Label Content="Preset: " VerticalAlignment="Center" VerticalContentAlignment="Center" />
+                        <ComboBox ItemsSource="{Binding Processes}" Width="250" HorizontalAlignment="Left" SelectedItem="{Binding ProcessesSelectedItem.Value}">
+                            <ComboBox.ItemTemplate>
+                                <DataTemplate>
+                                    <Grid>
+                                        <Label Content="{Binding FullPath}" />
+                                    </Grid>
+                                </DataTemplate>
+                            </ComboBox.ItemTemplate>
+
+                            <i:Interaction.Triggers>
+                                <i:EventTrigger EventName="SelectionChanged">
+                                    <i:InvokeCommandAction Command="{Binding ProcessesSelectionChangedCommand}" />
+                                </i:EventTrigger>
+                            </i:Interaction.Triggers>
+                        </ComboBox>
+                    </StackPanel>
+
+                    <parts:JapaneseLayout Grid.Row="2" KeyMaps="{Binding Label.Value}" KeyboardBtClicked="{Binding KeyboardBtClicked}" />
                 </Grid>
 
-                <Grid Margin="20" Height="150" VerticalAlignment="Top" Visibility="{Binding SettingWindowVisibility.Value}" Style="{DynamicResource BackgroundGrid}">
+                <Grid Margin="20" Height="150" VerticalAlignment="Top" Visibility="{Binding SettingWindowVisibility.Value, FallbackValue=Hidden}" Style="{DynamicResource BackgroundGrid}">
                     <!--Visibility="{Binding SettingWindowVisibility.Value}"-->
                     <Border BorderBrush="{Binding AroundBorderColor.Value}" Opacity="{Binding AroundBorderOpacity.Value}" BorderThickness="1" />
                     <Grid Margin="10">

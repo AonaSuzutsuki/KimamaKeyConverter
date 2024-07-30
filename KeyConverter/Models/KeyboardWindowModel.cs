@@ -6,11 +6,14 @@ using KeyConverterGUI.Views;
 using System;
 using System.Collections.Concurrent;
 using System.Collections.Generic;
+using System.Collections.ObjectModel;
 using System.Diagnostics;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows;
+using CommonExtensionLib.Extensions;
+using KeyConverterGUI.Models.Data;
 
 namespace KeyConverterGUI.Models
 {
@@ -18,11 +21,15 @@ namespace KeyConverterGUI.Models
     {
 
         #region Fields
-        private readonly Dictionary<KeyEnum, KeyEnum> _keyMap;
+
+        private Dictionary<KeyEnum, KeyEnum> _keyMap;
         private ObservableDictionary<KeyEnum, string> _label = new()
         {
             Default = " "
         };
+
+        private readonly ObservableCollection<ProcessItem> _processes;
+        private ProcessItem _processesSelectedItem;
 
         private SpecializedLowLevelKeyDetector _interceptKeys;
 
@@ -32,13 +39,23 @@ namespace KeyConverterGUI.Models
         private string _destKeyText;
         private KeyEnum _srcKey;
         private KeyEnum _destKey;
+
         #endregion
 
         #region Properties
+
         public ObservableDictionary<KeyEnum, string> Label
         {
             get => _label;
             set => SetProperty(ref _label, value);
+        }
+
+        public ObservableCollection<ProcessItem> Processes => _processes;
+
+        public ProcessItem ProcessesSelectedItem
+        {
+            get => _processesSelectedItem;
+            set => SetProperty(ref _processesSelectedItem, value);
         }
 
         public bool KeyboardIsEnabled
@@ -64,21 +81,31 @@ namespace KeyConverterGUI.Models
             get => _destKeyText;
             set => SetProperty(ref _destKeyText, value);
         }
+
         #endregion
 
-        public KeyboardWindowModel(Dictionary<KeyEnum, KeyEnum> keyMap)
+        public KeyboardWindowModel(Dictionary<string, ProcessItem> dict)
         {
-            if (keyMap != null)
-                this._keyMap = keyMap;
-            else
-                this._keyMap = new Dictionary<KeyEnum, KeyEnum>();
-            Initialize();
+            _processes = new ObservableCollection<ProcessItem>();
+            _processes.AddRange(dict.Select(x => x.Value));
+
+            ProcessesSelectedItem = _processes[0];
+
+            ChangePreset(_processes[0]);
         }
 
         private void Initialize()
         {
+            Label.Clear();
             foreach (var pair in _keyMap)
                 Label.Add(pair.Key, pair.Value.ToString());
+        }
+
+        public void ChangePreset(ProcessItem processItem)
+        {
+            _keyMap = processItem.KeyMaps;
+
+            Initialize();
         }
 
         public void OpenPopup(KeyEnum key)
@@ -146,7 +173,10 @@ namespace KeyConverterGUI.Models
             SettingWindowVisibility = Visibility.Collapsed;
         }
 
-
+        public Dictionary<string, ProcessItem> GetProcessItems()
+        {
+            return Processes.ToDictionary(x => x.FullPath);
+        }
 
         #region IDisposable
         // Flag: Has Dispose already been called?

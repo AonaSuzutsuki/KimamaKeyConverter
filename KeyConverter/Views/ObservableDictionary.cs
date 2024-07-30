@@ -1,4 +1,5 @@
-﻿using System;
+﻿using Newtonsoft.Json.Linq;
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using System.Collections.Specialized;
@@ -8,6 +9,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Data;
+using System.Windows.Input;
 
 namespace KeyConverterGUI.Views
 {
@@ -106,6 +108,16 @@ namespace KeyConverterGUI.Views
         }
 
         #region IDictionary<TKey,TValue> Members
+
+        public void Clear()
+        {
+            _dictionary.Clear();
+
+            CollectionChanged(this, new NotifyCollectionChangedEventArgs(NotifyCollectionChangedAction.Reset));
+            PropertyChanged(this, new PropertyChangedEventArgs("Count"));
+            PropertyChanged(this, new PropertyChangedEventArgs("Keys"));
+            PropertyChanged(this, new PropertyChangedEventArgs(Binding.IndexerName));
+        }
 
         /// <summary>
         /// Adds an element with the provided key and value to the <see cref="T:System.Collections.Generic.IDictionary`2" />.

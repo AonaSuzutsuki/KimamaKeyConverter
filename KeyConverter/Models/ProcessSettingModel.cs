@@ -9,6 +9,8 @@ using System.Threading.Tasks;
 using System.Windows.Input;
 using CommonStyleLib.File;
 using CommonStyleLib.Models;
+using KeyConverterGUI.Models.Data;
+using LowLevelKeyboardLib.KeyMap;
 using Newtonsoft.Json;
 using Prism.Commands;
 using Prism.Mvvm;
@@ -24,6 +26,8 @@ namespace KeyConverterGUI.Models
     public class ProcessItemInfo : BindableBase
     {
         private string _fullPath = string.Empty;
+
+        public Dictionary<KeyEnum, KeyEnum> KeyMaps { get; set; }
 
         public Action<ProcessItemInfo> RemovoeItemAction { get; set; }
 
@@ -111,16 +115,13 @@ namespace KeyConverterGUI.Models
 
         #endregion
 
-        public ProcessSettingModel(string jsonPath)
+        public ProcessSettingModel(Dictionary<string, ProcessItem> processes)
         {
-            this._jsonPath = jsonPath;
-
-            if (File.Exists(jsonPath))
+            if (processes.Count > 1)
             {
-                var json = File.ReadAllText(jsonPath);
-                var processesSet = JsonConvert.DeserializeObject<HashSet<string>>(json);
+                var processesSet = processes.Where(x => x.Key != "Any");
                 ProcessItems = new ObservableCollection<ProcessItemInfo>(from x in processesSet
-                    select CreateProcessItemInfo(new ProcessItemInfo {FullPath = x}))
+                    select CreateProcessItemInfo(new ProcessItemInfo { FullPath = x.Key, KeyMaps = x.Value.KeyMaps}))
                 {
                     CreateDummyProcessItemInfo()
                 };
@@ -174,12 +175,17 @@ namespace KeyConverterGUI.Models
                 ProcessItems.Remove(item);
         }
 
-        public HashSet<string> Save()
+        public Dictionary<string, ProcessItem> GetProcesses()
         {
-            var processesSet = new HashSet<string>(from x in ProcessItems where !string.IsNullOrEmpty(x.FullPath) select x.FullPath);
-
-            var json = JsonConvert.SerializeObject(processesSet);
-            File.WriteAllText(_jsonPath, json);
+            var processesSet = (
+                    from x in ProcessItems
+                    where !string.IsNullOrEmpty(x.FullPath)
+                    select new ProcessItem
+                    {
+                        FullPath = x.FullPath.ToLower(),
+                        KeyMaps = x.KeyMaps
+                    }
+                ).ToDictionary(x => x.FullPath);
 
             return processesSet;
         }

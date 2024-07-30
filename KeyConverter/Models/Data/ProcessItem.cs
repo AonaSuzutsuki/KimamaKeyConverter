@@ -7,20 +7,10 @@ using LowLevelKeyboardLib.KeyMap;
 
 namespace KeyConverterGUI.Models.Data
 {
-    public enum KeyboardLayout
+    public class ProcessItem
     {
-        Us,
-        Jis
-    }
-
-    public class SavedJson
-    {
-        public KeyboardLayout Layout { get; set; }
+        public string FullPath { get; set; }
 
         public Dictionary<KeyEnum, KeyEnum> KeyMaps { get; set; }
-
-        public List<ProcessItem> Processes { get; set; }
-
-        public string Version { get; set; } = "1.1";
     }
 }
