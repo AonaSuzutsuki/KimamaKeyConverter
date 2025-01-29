@@ -10,8 +10,9 @@
         xmlns:viewModels="clr-namespace:KeyConverterGUI.ViewModels"
         mc:Ignorable="d"
         d:DataContext="{d:DesignInstance viewModels:MainWindowViewModel}"
+        d:DesignWidth="400" d:DesignHeight="250"
         Icon="pack://application:,,,/CommonStyleLib;component/Resources/1.ico"
-        Title="Kimama Key Converter" Height="250" Width="400" ResizeMode="CanMinimize"
+        Title="Kimama Key Converter" Height="{Binding Path=Height.Value,Mode=TwoWay}" Width="{Binding Path=Width.Value,Mode=TwoWay}" Top="{Binding Path=Top.Value,Mode=TwoWay}" Left="{Binding Path=Left.Value,Mode=TwoWay}" ResizeMode="CanMinimize"
         TextOptions.TextFormattingMode="Display" TextOptions.TextRenderingMode="ClearType" Style="{DynamicResource WindowStyle}">
 
     <i:Interaction.Triggers>
