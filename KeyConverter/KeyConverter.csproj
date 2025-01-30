@@ -9,8 +9,8 @@
         <ApplicationManifest>app.manifest</ApplicationManifest>
         <Authors>Aona Suzutsuki</Authors>
         <Company>Kimama Lab.</Company>
-        <Copyright>Copyright (C) Aona Suzutsuki 2014 - 2023</Copyright>
-        <Version>1.1.12.10</Version>
+        <Copyright>Copyright (C) Aona Suzutsuki 2014 - 2025</Copyright>
+        <Version>1.1.13.11</Version>
         <AssemblyName>KimamaKeyConverter</AssemblyName>
         <Platforms>x86;x64;AnyCPU</Platforms>
     </PropertyGroup>

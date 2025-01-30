@@ -159,11 +159,18 @@ namespace KeyConverterGUI.Models
         {
             var iniLoader = new IniLoader(Constants.IniFileName);
             iniLoader.SetValue("Main", "IsDetectMabinogi", IsDetectMabinogi);
+            iniLoader.SetValue("Main", "Top", Top);
+            iniLoader.SetValue("Main", "Left", Left);
         }
         public void LoadSetting()
         {
             var iniLoader = new IniLoader(Constants.IniFileName);
             IsDetectMabinogi = iniLoader.GetValue("Main", "IsDetectMabinogi", true);
+
+            Width = 400;
+            Height = 250;
+            Top = iniLoader.GetValue("Main", "Top", 10);
+            Left = iniLoader.GetValue("Main", "Left", 10);
         }
         #endregion
 
