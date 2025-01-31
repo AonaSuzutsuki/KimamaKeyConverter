@@ -13,6 +13,7 @@ using System.Security.Policy;
 using System.Text;
 using System.Windows;
 using System.Windows.Media;
+using CommonCoreLib.Parser;
 
 namespace KeyConverterGUI.Models
 {
@@ -67,6 +68,8 @@ namespace KeyConverterGUI.Models
         }
 
         public HashSet<string> DetectProcesses { get; set; } = new HashSet<string>();
+
+        public CommandLineParameterParser ParameterParser { get; set; }
         #endregion
 
         #region Actions
@@ -169,8 +172,17 @@ namespace KeyConverterGUI.Models
 
             Width = 400;
             Height = 250;
-            Top = iniLoader.GetValue("Main", "Top", 10);
-            Left = iniLoader.GetValue("Main", "Left", 10);
+
+            if (!ParameterParser.ContainsParameter("reset-position"))
+            {
+                Top = iniLoader.GetValue("Main", "Top", 10);
+                Left = iniLoader.GetValue("Main", "Left", 10);
+            }
+            else
+            {
+                Top = 10;
+                Left = 10;
+            }
         }
         #endregion
 

@@ -13,6 +13,7 @@ using System.Windows.Media.Animation;
 using System.Windows.Media.Imaging;
 using System.Windows.Navigation;
 using System.Windows.Shapes;
+using CommonCoreLib.Parser;
 using CommonStyleLib.Views;
 using KeyConverterGUI.Models;
 using KeyConverterGUI.ViewModels;
@@ -31,9 +32,17 @@ namespace KeyConverterGUI.Views
         {
             InitializeComponent();
 
+            var cmds = new List<string>(Environment.GetCommandLineArgs());
+            cmds.RemoveAt(0);
+
+            var parser = new CommandLineParameterParser(cmds);
+            parser.AddParameter("rp", "reset-position", 0);
+            parser.Parse();
+
             _model = new MainWindowModel
             {
-                ChangeBaseBackground = ChangeBaseBackground
+                ChangeBaseBackground = ChangeBaseBackground,
+                ParameterParser = parser
             };
             _viewModel = new MainWindowViewModel(new WindowService(this), _model);
             DataContext = _viewModel;
