@@ -15,7 +15,7 @@ Please forgive because I do not take any responsibility for damage caused by suc
 **\*ONLY SUPPORT JIS ARRAY KEYBOARD.**
 
 # Requirements
-1. .Net Core 3.1
+1. .Net 8.0 ([https://dotnet.microsoft.com/ja-jp/download/dotnet/8.0](https://dotnet.microsoft.com/ja-jp/download/dotnet/8.0))
 2. JIS Array Keyboard
 
 # Check environment
@@ -27,10 +27,10 @@ Please forgive because I do not take any responsibility for damage caused by suc
 |Windows 10 x86 | - | - |
 |Windows 10 x64 1903 | OK | - |
 |Windows 10 x64 20H2| OK | - |
-|Windows 11 x64 | - | - |
+|Windows 11 x64 24H2 | OK | - |
 
 # Copyright
-Copyright © Aona Suzutsuki 2018-2023  
+Copyright © Aona Suzutsuki 2018-2025  
 
 # Special thanks
 1. [C#でSendInputを使う](https://gist.github.com/romichi/4971512)  
