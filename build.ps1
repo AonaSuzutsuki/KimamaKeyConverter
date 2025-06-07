@@ -6,7 +6,7 @@ if ( [string]::IsNullOrEmpty($outName) ) {
 
 $CurrentDirectory = Split-Path $MyInvocation.MyCommand.Path -Parent
 $OutBinDirectory = "$CurrentDirectory\$outName"
-$Framework = "net6.0-windows"
+$Framework = "net8.0-windows7.0"
 $Profile = "Release"
 
 $KeyConverter = "$CurrentDirectory\KeyConverter\bin\$Profile\$Framework"
