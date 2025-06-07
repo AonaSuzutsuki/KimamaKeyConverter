@@ -39,10 +39,9 @@ namespace KeyConverterGUI.Views
             parser.AddParameter("rp", "reset-position", 0);
             parser.Parse();
 
-            _model = new MainWindowModel
+            _model = new MainWindowModel(parser)
             {
-                ChangeBaseBackground = ChangeBaseBackground,
-                ParameterParser = parser
+                ChangeBaseBackground = ChangeBaseBackground
             };
             _viewModel = new MainWindowViewModel(new WindowService(this), _model);
             DataContext = _viewModel;
