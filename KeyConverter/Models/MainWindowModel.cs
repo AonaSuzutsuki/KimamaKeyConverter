@@ -76,8 +76,10 @@ namespace KeyConverterGUI.Models
         public Action<SolidColorBrush> ChangeBaseBackground { get; set; } = null;
         #endregion
 
-        public MainWindowModel()
+        public MainWindowModel(CommandLineParameterParser parser)
         {
+            ParameterParser = parser;
+
             if (File.Exists(Constants.KeyMapFileName))
             {
                 var json = File.ReadAllText(Constants.KeyMapFileName);
